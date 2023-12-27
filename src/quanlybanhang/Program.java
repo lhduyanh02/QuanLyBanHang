@@ -11,6 +11,8 @@ import java.sql.Connection;
  * @author Admin
  */
 public class Program {
+    
+    //CHỈNH SỬA TẠI PROGRAM
     public static Connection con;
     
     public static void main(String[] args) {
