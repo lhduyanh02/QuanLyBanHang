@@ -12,7 +12,7 @@ import java.sql.Connection;
  */
 public class Program {
     
-    //CHẠY CHƯƠNG TRÌNH QUẢN LÝ BÁN HÀNG
+    //GIT COMMIT 19:18 29/12/2023
     public static Connection con;
     
     public static void main(String[] args) {
