@@ -12,7 +12,7 @@ import java.sql.Connection;
  */
 public class Program {
     
-    //CHỈNH SỬA TẠI PROGRAM
+    //CHẠY CHƯƠNG TRÌNH QUẢN LÝ BÁN HÀNG
     public static Connection con;
     
     public static void main(String[] args) {
