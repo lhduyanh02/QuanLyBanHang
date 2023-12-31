@@ -4,7 +4,6 @@
  */
 package quanlybanhang;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Robot;
@@ -18,6 +17,7 @@ import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -26,11 +26,11 @@ import static quanlybanhang.Program.con;
  *
  * @author Admin
  */
-public class ThucDon extends javax.swing.JFrame {
-    private static ThucDon instance;
+public class AnotherUI extends javax.swing.JFrame {
+    private static AnotherUI instance;
     private DrawerController drawer;
     
-    public ThucDon() {
+    public AnotherUI() {
         initComponents();
         this.buildDrawer();
         
@@ -84,9 +84,9 @@ public class ThucDon extends javax.swing.JFrame {
                 .build();
     }
     
-    public static synchronized ThucDon getInstance(){
+    public static synchronized AnotherUI getInstance(){
         if(instance==null){
-            instance = new ThucDon();
+            instance = new AnotherUI();
             instance.setVisible(true);
             return instance;
         } else {
@@ -132,14 +132,14 @@ public class ThucDon extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabelMenu = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        AddBtn = new javax.swing.JButton();
-        EditBtn = new javax.swing.JButton();
-        DelBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -154,27 +154,27 @@ public class ThucDon extends javax.swing.JFrame {
         jLabel1.setText("QUẢN LÝ THỰC ĐƠN");
         jLabel1.setAlignmentY(0.0F);
 
-        jLabelMenu.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelMenu.setFont(jLabelMenu.getFont().deriveFont(jLabelMenu.getFont().getStyle() | java.awt.Font.BOLD, jLabelMenu.getFont().getSize()+11));
-        jLabelMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMenu.setText("☰");
-        jLabelMenu.setAlignmentY(0.0F);
-        jLabelMenu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabelMenu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabelMenu.setMinimumSize(new java.awt.Dimension(15, 15));
-        jLabelMenu.setOpaque(true);
-        jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, jLabel2.getFont().getSize()+11));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("☰");
+        jLabel2.setAlignmentY(0.0F);
+        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel2.setMinimumSize(new java.awt.Dimension(15, 15));
+        jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelMenuMouseClicked(evt);
+                jLabel2MouseClicked(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabelMenuMouseExited(evt);
+                jLabel2MouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelMenuMousePressed(evt);
+                jLabel2MousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabelMenuMouseReleased(evt);
+                jLabel2MouseReleased(evt);
             }
         });
 
@@ -184,7 +184,7 @@ public class ThucDon extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE))
         );
@@ -192,7 +192,7 @@ public class ThucDon extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                .addComponent(jLabelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -232,26 +232,21 @@ public class ThucDon extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
 
-        AddBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        AddBtn.setText("Thêm");
-        AddBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        AddBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
-            }
-        });
-        jPanel3.add(AddBtn);
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton1.setText("jButton1");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(jButton1);
 
-        EditBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        EditBtn.setText("Sửa");
-        EditBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel3.add(EditBtn);
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton2.setText("jButton1");
+        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(jButton2);
 
-        DelBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        DelBtn.setText("Xóa");
-        DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel3.add(DelBtn);
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton3.setText("jButton1");
+        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(jButton3);
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton4.setText("jButton1");
@@ -306,48 +301,41 @@ public class ThucDon extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabelMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseExited
-        jLabelMenu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-    }//GEN-LAST:event_jLabelMenuMouseExited
+    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
+        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-    private void jLabelMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseReleased
-        jLabelMenu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-    }//GEN-LAST:event_jLabelMenuMouseReleased
+    }//GEN-LAST:event_jLabel2MouseExited
 
-    private void jLabelMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMousePressed
-        jLabelMenu.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-    }//GEN-LAST:event_jLabelMenuMousePressed
+    private void jLabel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseReleased
+        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+    }//GEN-LAST:event_jLabel2MouseReleased
 
-    private void jLabelMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseClicked
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+    }//GEN-LAST:event_jLabel2MousePressed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         if(drawer.isShow()){
             drawer.hide();
         }
         else {
             drawer.show();
         }
-    }//GEN-LAST:event_jLabelMenuMouseClicked
-
-    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        addMenu();
-    }//GEN-LAST:event_AddBtnActionPerformed
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddBtn;
-    private javax.swing.JButton DelBtn;
-    private javax.swing.JButton EditBtn;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-
-    private void addMenu() {
-        new AddDialog(this, rootPaneCheckingEnabled).setVisible(true);
-    }
 }
