@@ -51,7 +51,10 @@ public class ThucDon extends javax.swing.JFrame {
     
     private void buildDrawer(){
         drawer = Drawer.newDrawer(this)
-                .header(new JLabel("Header"))
+                .header(new HeaderDrawer())
+//                .separator(2, new Color(0, 0, 0))
+                .drawerWidth(290)
+                .backgroundTransparent(0.5f)
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -62,7 +65,7 @@ public class ThucDon extends javax.swing.JFrame {
                     @Override
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
-                        if(i== 5) {
+                        if(i == 5) {
                             try {
                                 // Sử dụng Robot để giả lập sự kiện nhấn nút X
                                 Robot robot = new Robot();
