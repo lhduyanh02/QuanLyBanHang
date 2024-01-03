@@ -67,12 +67,12 @@ public class ThucDon extends javax.swing.JFrame {
 //                        System.out.println(i + " - "+ di);
                         if(i == 5) {
                             try {
-                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
-                                Robot robot = new Robot();
-                                robot.keyPress(KeyEvent.VK_ALT);
-                                robot.keyPress(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_ALT);
+                                if (JOptionPane.showConfirmDialog(null,
+                                        "Are you sure you want to close this window?", "Close Window?",
+                                        JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                                    System.exit(0);
+                                }
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
