@@ -4,11 +4,8 @@
  */
 package quanlybanhang;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
