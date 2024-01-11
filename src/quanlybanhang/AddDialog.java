@@ -5,7 +5,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 public class AddDialog extends javax.swing.JDialog {
 
@@ -15,8 +23,11 @@ public class AddDialog extends javax.swing.JDialog {
     public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        CapNhatLabel.addMouseListener(new AddDialog.SharedMouseListener()); //THÊM SỰ KIỆN CHUỘT CHO jlABEL NÚT THÊM
+        //THÊM SỰ KIỆN CHUỘT CHO jlABEL NÚT THÊM
+        CapNhatLabel.addMouseListener(new AddDialog.SharedMouseListener());
+        DatLaiLabel.addMouseListener(new AddDialog.SharedMouseListener());
+        ThoatLabel.addMouseListener(new AddDialog.SharedMouseListener());
+
         MaMonTF.addKeyListener(new KeyListener() { // KIỂM TRA TEXTFIELD MÃ MÓN
             @Override
             public void keyTyped(KeyEvent e) {
@@ -43,6 +54,49 @@ public class AddDialog extends javax.swing.JDialog {
                 // không cần xử lý
             }
         });
+
+        GiaMonTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char typedChar = e.getKeyChar();
+                if (!Character.isDigit(typedChar)) {
+                    e.consume(); // Loại bỏ ký tự không phải số
+                }
+
+                String content = GiaMonTF.getText();
+                GiaMonTF.setText(formatWithCustomSeparator(content));
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+//                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+//                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+        });
+    }
+
+    private static String formatWithCustomSeparator(String input) {
+        // Đảm bảo rằng chuỗi không rỗng và là số
+        if (input == null || !input.matches("\\d+")) {
+            System.out.println("Invalid input: " + input);
+            return input;
+        }
+
+        // Lấy độ dài của chuỗi
+        int length = input.length();
+
+        if (length > 3) {
+            input = input.replace(",", "");
+            long number = Long.parseLong(input);
+            input = String.format("%,d", number);
+        }
+
+        return input;
     }
 
     @SuppressWarnings("unchecked")
@@ -55,8 +109,8 @@ public class AddDialog extends javax.swing.JDialog {
         GiaMonTF = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         CapNhatLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        DatLaiLabel = new javax.swing.JLabel();
+        ThoatLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -106,15 +160,25 @@ public class AddDialog extends javax.swing.JDialog {
         CapNhatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         CapNhatLabel.setOpaque(true);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Đặt Lại");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel3.setOpaque(true);
+        DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DatLaiLabel.setText("Đặt Lại");
+        DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        DatLaiLabel.setOpaque(true);
+        DatLaiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DatLaiLabelMouseClicked(evt);
+            }
+        });
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Thoát");
-        jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel4.setOpaque(true);
+        ThoatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ThoatLabel.setText("Thoát");
+        ThoatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ThoatLabel.setOpaque(true);
+        ThoatLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ThoatLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -124,9 +188,9 @@ public class AddDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(CapNhatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ThoatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -135,8 +199,8 @@ public class AddDialog extends javax.swing.JDialog {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CapNhatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ThoatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -177,21 +241,31 @@ public class AddDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ThoatLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThoatLabelMouseClicked
+        dispose();
+    }//GEN-LAST:event_ThoatLabelMouseClicked
+
+    private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
+        GiaMonTF.setText("");
+        MaMonTF.setText("");
+        TenMonTF.setText("");
+    }//GEN-LAST:event_DatLaiLabelMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CapNhatLabel;
+    private javax.swing.JLabel DatLaiLabel;
     private javax.swing.JTextField GiaMonTF;
     private javax.swing.JTextField MaMonTF;
     private javax.swing.JTextField TenMonTF;
+    private javax.swing.JLabel ThoatLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 
-public class SharedMouseListener extends MouseAdapter {
+    public class SharedMouseListener extends MouseAdapter {
 
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -221,4 +295,64 @@ public class SharedMouseListener extends MouseAdapter {
 
         return specialCharacters.contains(String.valueOf(c));
     }
+
+//    private static void formatTextField(JTextField textField) {
+//        // Sử dụng PlainDocument để kiểm soát nội dung của JTextField
+//        PlainDocument document = new PlainDocument() {
+//            @Override
+//            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+//                // Kiểm tra xem chuỗi mới có phải là số hay không
+//                if (isNumeric(str)) {
+//                    super.insertString(offs, str, a);
+//                    formatText();
+//                }
+//            }
+//
+//            @Override
+//            public void remove(int offs, int len) throws BadLocationException {
+//                super.remove(offs, len);
+//                formatText();
+//            }
+//
+//            private void formatText() {
+//                // Lấy giá trị hiện tại từ JTextField và định dạng nó với dấu phân cách phần ngàn
+//                try {
+//                    String text = getText(0, getLength());
+//                    NumberFormat format = NumberFormat.getInstance();
+//                    String formattedText = format.format(format.parse(text));
+//                    replace(0, getLength(), formattedText, null);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            private boolean isNumeric(String str) {
+//                return str.matches("\\d*");
+//            }
+//        };
+//
+//        textField.setDocument(document);
+//
+//        // Thêm DocumentListener để lắng nghe sự thay đổi trong JTextField
+////        document.addDocumentListener(new DocumentListener() {
+////            @Override
+////            public void insertUpdate(DocumentEvent e) {
+////                changeText();
+////            }
+////
+////            @Override
+////            public void removeUpdate(DocumentEvent e) {
+////                changeText();
+////            }
+////
+////            @Override
+////            public void changedUpdate(DocumentEvent e) {
+////                changeText();
+////            }
+////
+////            private void changeText() {
+////                
+////            }
+////        });
+//    }
 }
