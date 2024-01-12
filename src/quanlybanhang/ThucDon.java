@@ -155,7 +155,7 @@ public class ThucDon extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ THỰC ĐƠN");
+        jLabel1.setText("QUẢN LÝ THỰC ĐƠN MÓN ĂN");
         jLabel1.setAlignmentY(0.0F);
 
         jLabelMenu.setBackground(new java.awt.Color(255, 255, 255));
