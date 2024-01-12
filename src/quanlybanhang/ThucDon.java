@@ -8,7 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
@@ -39,8 +42,12 @@ public class ThucDon extends javax.swing.JFrame {
                         "Are you sure you want to close this window?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    con.close();
-                    System.exit(0);
+                    try {
+                        con.close();
+                        System.exit(0);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ThucDon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
