@@ -260,6 +260,11 @@ public class ThucDon extends javax.swing.JFrame {
         ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ReloadButton.setText("Reload");
         ReloadButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ReloadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReloadButtonActionPerformed(evt);
+            }
+        });
         jPanel3.add(ReloadButton);
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -334,6 +339,24 @@ public class ThucDon extends javax.swing.JFrame {
     private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
         addMenu();
     }//GEN-LAST:event_AddBtnActionPerformed
+
+    private void ReloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReloadButtonActionPerformed
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
+            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+            m.setRowCount(0);
+            int stt = 1;
+            while(rs.next()){
+                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+                m.addRow(obj);
+                stt++;
+            }
+            s.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_ReloadButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
