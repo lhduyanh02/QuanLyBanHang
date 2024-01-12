@@ -144,7 +144,7 @@ public class ThucDon extends javax.swing.JFrame {
         AddBtn = new javax.swing.JButton();
         EditBtn = new javax.swing.JButton();
         DelBtn = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        ReloadButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -257,10 +257,10 @@ public class ThucDon extends javax.swing.JFrame {
         DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel3.add(DelBtn);
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton4.setText("jButton1");
-        jButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel3.add(jButton4);
+        ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ReloadButton.setText("Reload");
+        ReloadButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.add(ReloadButton);
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton5.setText("jButton1");
@@ -339,7 +339,7 @@ public class ThucDon extends javax.swing.JFrame {
     private javax.swing.JButton AddBtn;
     private javax.swing.JButton DelBtn;
     private javax.swing.JButton EditBtn;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton ReloadButton;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
