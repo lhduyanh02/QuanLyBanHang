@@ -5,15 +5,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
+import static quanlybanhang.Program.con;
 
 public class AddDialog extends javax.swing.JDialog {
 
@@ -28,15 +29,15 @@ public class AddDialog extends javax.swing.JDialog {
         DatLaiLabel.addMouseListener(new AddDialog.SharedMouseListener());
         ThoatLabel.addMouseListener(new AddDialog.SharedMouseListener());
 
+        // RÀNG BUỘC MÃ MÓN
         MaMonTF.addKeyListener(new KeyListener() { // KIỂM TRA TEXTFIELD MÃ MÓN
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-
                 // Kiểm tra nếu ký tự là đặc biệt hoặc dấu cách
-                if (isSpecialCharacter(c) || Character.isWhitespace(c)) {
+                if (isSpecialCharacter(c) || Character.isWhitespace(c) || MaMonTF.getText().length() > 9) {
                     // Hiển thị tooltip và không cho phép nhập ký tự
-                    MaMonTF.setToolTipText("Không nhập ký tự đặc biệt hoặc dấu cách");
+                    MaMonTF.setToolTipText("Chỉ nhập 10 ký tự, không nhập ký tự đặc biệt hoặc dấu cách");
                     e.consume(); // Ngăn chặn ký tự được nhập vào
                 } else {
                     // Nếu ký tự hợp lệ, đặt tooltip thành null
@@ -55,48 +56,66 @@ public class AddDialog extends javax.swing.JDialog {
             }
         });
 
-        GiaMonTF.addKeyListener(new KeyListener() {
+        // RÀNG BUỘC TÊN MÓN
+        TenMonTF.addKeyListener(new KeyListener() { // KIỂM TRA TEXTFIELD MÃ MÓN
             @Override
             public void keyTyped(KeyEvent e) {
-                char typedChar = e.getKeyChar();
-                if (!Character.isDigit(typedChar)) {
-                    e.consume(); // Loại bỏ ký tự không phải số
+                char c = e.getKeyChar();
+                // Kiểm tra nếu ký tự là đặc biệt hoặc dấu cách
+                if (isSpecialCharacter(c) || TenMonTF.getText().length() > 49) {
+                    // Hiển thị tooltip và không cho phép nhập ký tự
+                    TenMonTF.setToolTipText("Chỉ nhập 50 ký tự, không nhập ký tự đặc biệt");
+                    e.consume(); // Ngăn chặn ký tự được nhập vào
+                } else {
+                    // Nếu ký tự hợp lệ, đặt tooltip thành null
+                    TenMonTF.setToolTipText(null);
                 }
-
-                String content = GiaMonTF.getText();
-                GiaMonTF.setText(formatWithCustomSeparator(content));
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-//                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                // không cần xử lý
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-//                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                // không cần xử lý
+            }
+        });
+
+        // RÀNG BUỘC GIÁ MÓN
+        GiaMonTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char typedChar = e.getKeyChar();
+                if (!Character.isDigit(typedChar) || GiaMonTF.getText().length() > 10) {
+                    e.consume(); // Loại bỏ ký tự không phải số
+                    return;
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+//                addSeparator(GiaMonTF);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (!GiaMonTF.getText().equals("")) {
+                    addSeparator(GiaMonTF);
+                }
             }
 
         });
     }
 
-    private static String formatWithCustomSeparator(String input) {
-        // Đảm bảo rằng chuỗi không rỗng và là số
-        if (input == null || !input.matches("\\d+")) {
-            System.out.println("Invalid input: " + input);
-            return input;
-        }
-
-        // Lấy độ dài của chuỗi
-        int length = input.length();
-
-        if (length > 3) {
-            input = input.replace(",", "");
-            long number = Long.parseLong(input);
-            input = String.format("%,d", number);
-        }
-
-        return input;
+    // Thêm dấu phẩy vào sau mỗi 3 chữ số
+    private static void addSeparator(JTextField TF) {
+        String content = TF.getText();
+        content = content.replaceAll("[.,]", "");
+        int l = Integer.parseInt(content);
+        content = String.format("%,d", l);
+        TF.setText(content);
     }
 
     @SuppressWarnings("unchecked")
@@ -159,6 +178,11 @@ public class AddDialog extends javax.swing.JDialog {
         CapNhatLabel.setText("Cập Nhật");
         CapNhatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         CapNhatLabel.setOpaque(true);
+        CapNhatLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CapNhatLabelMouseClicked(evt);
+            }
+        });
 
         DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         DatLaiLabel.setText("Đặt Lại");
@@ -249,7 +273,41 @@ public class AddDialog extends javax.swing.JDialog {
         GiaMonTF.setText("");
         MaMonTF.setText("");
         TenMonTF.setText("");
+        MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã món"));
+        TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên món"));
+        GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món"));
+
     }//GEN-LAST:event_DatLaiLabelMouseClicked
+
+    private void CapNhatLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CapNhatLabelMouseClicked
+        if (MaMonTF.getText().equals("") ||containsSpecialChars(MaMonTF) || containsWhitespace(MaMonTF) || containsVietnamese(MaMonTF) || MaMonTF.getText().length() > 10) {
+            JOptionPane.showMessageDialog(this, "Mã món không hợp lệ, vui lòng kiểm tra lại",
+                    "Lỗi Mã Món", JOptionPane.ERROR_MESSAGE);
+            MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Mã món"));
+        }
+        if (TenMonTF.getText().equals("") ||containsSpecialChars(TenMonTF) || TenMonTF.getText().length() > 50) {
+            JOptionPane.showMessageDialog(this, "Tên món không hợp lệ, vui lòng kiểm tra lại",
+                    "Lỗi Tên Món", JOptionPane.ERROR_MESSAGE);
+            TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Tên món"));
+        }
+        if (GiaMonTF.getText().equals("") || !isValidPrice(GiaMonTF) || GiaMonTF.getText().length() > 11) {
+            JOptionPane.showMessageDialog(this, "Giá món không hợp lệ, vui lòng kiểm tra lại",
+                    "Lỗi Giá Món", JOptionPane.ERROR_MESSAGE);
+            GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Giá món"));
+        }
+        
+        try {
+            Statement s = con.createStatement();
+            int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
+            System.out.println("Mã món: "+MaMonTF.getText()+" || "
+                    + "Tên món: "+TenMonTF.getText()+" || "
+                            + "Giá: " +gia);
+            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
+                    + "(MaSP, TenSP, GiaSP) VALUES (N'"+MaMonTF.getText()+"', N'"+TenMonTF.getText()+"', '"+gia+"');");
+        } catch (SQLException ex) {
+            Logger.getLogger(AddDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_CapNhatLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -292,67 +350,40 @@ public class AddDialog extends javax.swing.JDialog {
     private static boolean isSpecialCharacter(char c) {
         // Bạn có thể thêm hoặc bớt đi các ký tự đặc biệt tùy thuộc vào yêu cầu của bạn
         String specialCharacters = "!@#$%^&*()-_+=<>?";
-
         return specialCharacters.contains(String.valueOf(c));
     }
 
-//    private static void formatTextField(JTextField textField) {
-//        // Sử dụng PlainDocument để kiểm soát nội dung của JTextField
-//        PlainDocument document = new PlainDocument() {
-//            @Override
-//            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-//                // Kiểm tra xem chuỗi mới có phải là số hay không
-//                if (isNumeric(str)) {
-//                    super.insertString(offs, str, a);
-//                    formatText();
-//                }
-//            }
-//
-//            @Override
-//            public void remove(int offs, int len) throws BadLocationException {
-//                super.remove(offs, len);
-//                formatText();
-//            }
-//
-//            private void formatText() {
-//                // Lấy giá trị hiện tại từ JTextField và định dạng nó với dấu phân cách phần ngàn
-//                try {
-//                    String text = getText(0, getLength());
-//                    NumberFormat format = NumberFormat.getInstance();
-//                    String formattedText = format.format(format.parse(text));
-//                    replace(0, getLength(), formattedText, null);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            private boolean isNumeric(String str) {
-//                return str.matches("\\d*");
-//            }
-//        };
-//
-//        textField.setDocument(document);
-//
-//        // Thêm DocumentListener để lắng nghe sự thay đổi trong JTextField
-////        document.addDocumentListener(new DocumentListener() {
-////            @Override
-////            public void insertUpdate(DocumentEvent e) {
-////                changeText();
-////            }
-////
-////            @Override
-////            public void removeUpdate(DocumentEvent e) {
-////                changeText();
-////            }
-////
-////            @Override
-////            public void changedUpdate(DocumentEvent e) {
-////                changeText();
-////            }
-////
-////            private void changeText() {
-////                
-////            }
-////        });
-//    }
+    public static boolean containsSpecialChars(JTextField TF) {
+        String input = TF.getText();
+        // Biểu thức chính quy kiểm tra xem có ký tự đặc biệt không
+        String regex = ".*[\\p{P}].*";
+        return Pattern.matches(regex, input);
+    }
+
+    public static boolean containsWhitespace(JTextField TF) {
+        String input = TF.getText();
+        // Biểu thức chính quy kiểm tra xem có khoảng trắng không
+        String regex = ".*[\\s].*";
+        return Pattern.matches(regex, input);
+    }
+
+    public static boolean containsVietnamese(JTextField TF) {
+        String input = TF.getText();
+        // Biểu thức chính quy kiểm tra xem có ký tự tiếng Việt không
+        String regex = ".*[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ].*";
+
+        // Sử dụng phương thức matches() để kiểm tra
+        return Pattern.matches(regex, input);
+    }
+
+    public static boolean isValidPrice(JTextField TF) {
+        String input = TF.getText();
+        // Biểu thức chính quy kiểm tra xem chuỗi chỉ chứa số và dấu chấm
+        String regex = "^[0-9.]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        // Kiểm tra xem chuỗi có khớp với biểu thức chính quy không
+        return matcher.matches();
+    }
 }

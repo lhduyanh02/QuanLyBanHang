@@ -39,6 +39,7 @@ public class ThucDon extends javax.swing.JFrame {
                         "Are you sure you want to close this window?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    con.close();
                     System.exit(0);
                 }
             }
@@ -111,7 +112,6 @@ public class ThucDon extends javax.swing.JFrame {
                 stt++;
             }
             s.close();
-            con.close();
         } catch (Exception e) {
             //e.printStackTrace();
             System.out.println("Lỗi kết nối dữ liệu");
