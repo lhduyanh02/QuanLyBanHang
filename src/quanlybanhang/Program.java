@@ -12,7 +12,6 @@ import java.sql.Connection;
  */
 public class Program {
     
-    //GIT COMMIT 19:18 29/12/2023
     public static Connection con;
     
     public static void main(String[] args) {

@@ -305,7 +305,7 @@ public class AddDialog extends javax.swing.JDialog {
             s.executeUpdate("INSERT INTO htql_banhang.sanpham "
                     + "(MaSP, TenSP, GiaSP) VALUES (N'"+MaMonTF.getText()+"', N'"+TenMonTF.getText()+"', '"+gia+"');");
         } catch (SQLException ex) {
-            Logger.getLogger(AddDialog.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Dữ liệu không hợp lệ!");
         }
     }//GEN-LAST:event_CapNhatLabelMouseClicked
 
@@ -379,7 +379,7 @@ public class AddDialog extends javax.swing.JDialog {
     public static boolean isValidPrice(JTextField TF) {
         String input = TF.getText();
         // Biểu thức chính quy kiểm tra xem chuỗi chỉ chứa số và dấu chấm
-        String regex = "^[0-9.]+$";
+        String regex = "^[0-9.,]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
