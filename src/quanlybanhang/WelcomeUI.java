@@ -17,20 +17,21 @@ import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import static quanlybanhang.Program.con;
 /**
  *
  * @author Admin
  */
-public class AnotherUI extends javax.swing.JFrame {
-    private static AnotherUI instance;
+public class WelcomeUI extends javax.swing.JFrame {
+    private static WelcomeUI instance;
     private DrawerController drawer;
     
-    public AnotherUI() {
+    public WelcomeUI() {
         initComponents();
         this.buildDrawer();
         
@@ -46,7 +47,7 @@ public class AnotherUI extends javax.swing.JFrame {
                 }
             }
         });
-        ConnectDB();
+//        ConnectDB();
     }
     
     private void buildDrawer(){
@@ -55,8 +56,8 @@ public class AnotherUI extends javax.swing.JFrame {
 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
-                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -65,6 +66,7 @@ public class AnotherUI extends javax.swing.JFrame {
                     @Override
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
+                        //Nút thoát
                         if(i == 5) {
                             try {
                                 // Sử dụng Robot để giả lập sự kiện nhấn nút X
@@ -77,6 +79,10 @@ public class AnotherUI extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
+                        if(i == 0){
+                            closeThisUI();
+                            ThucDonMonAn.getInstance();
+                        }
                     }
 
                 })
@@ -84,9 +90,9 @@ public class AnotherUI extends javax.swing.JFrame {
                 .build();
     }
     
-    public static synchronized AnotherUI getInstance(){
+    public static synchronized WelcomeUI getInstance(){
         if(instance==null){
-            instance = new AnotherUI();
+            instance = new WelcomeUI();
             instance.setVisible(true);
             return instance;
         } else {
@@ -95,31 +101,35 @@ public class AnotherUI extends javax.swing.JFrame {
         }
     }
     
-    public void ConnectDB(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
-            String userDB = "user0";
-            String passDB = "123Abc@@";
-            con = DriverManager.getConnection(dbUrl,userDB, passDB);
-            
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
-            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
-            m.setRowCount(0);
-            int stt = 1;
-            while(rs.next()){
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
-                m.addRow(obj);
-                stt++;
-            }
-            s.close();
-            con.close();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            System.out.println("Lỗi kết nối dữ liệu");
-        }
+    private static void closeThisUI(){
+        instance.dispose();
     }
+    
+//    public void ConnectDB(){
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
+//            String userDB = "user0";
+//            String passDB = "123Abc@@";
+//            con = DriverManager.getConnection(dbUrl,userDB, passDB);
+//            
+//            Statement s = con.createStatement();
+//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
+//            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+//            m.setRowCount(0);
+//            int stt = 1;
+//            while(rs.next()){
+//                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+//                m.addRow(obj);
+//                stt++;
+//            }
+//            s.close();
+//            con.close();
+//        } catch (Exception e) {
+//            //e.printStackTrace();
+//            System.out.println("Lỗi kết nối dữ liệu");
+//        }
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,8 +144,6 @@ public class AnotherUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -143,6 +151,8 @@ public class AnotherUI extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,7 +161,7 @@ public class AnotherUI extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ THỰC ĐƠN");
+        jLabel1.setText("HỆ THỐNG QUẢN LÝ QUÁN ĂN");
         jLabel1.setAlignmentY(0.0F);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -197,37 +207,6 @@ public class AnotherUI extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "STT", "MÃ MÓN", "TÊN MÓN", "GIÁ TIỀN"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        JTableHeader tableHeader = jTable1.getTableHeader();
-        Font customFont = new Font("Segoe UI", Font.BOLD, 18);
-        tableHeader.setFont(customFont);
-        jTable1.setRowHeight(30);
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(80);
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(500);
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(80);
-        jScrollPane1.setViewportView(jTable1);
-        jScrollPane1.getViewport().setBackground(Color.WHITE);
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
@@ -263,21 +242,27 @@ public class AnotherUI extends javax.swing.JFrame {
         jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel3.add(jButton6);
 
+        jTextPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 30)); // NOI18N
+        jTextPane1.setText("Chọn một chức năng trong menu để tiếp tục, hehe.");
+        jTextPane1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jTextPane1.setEnabled(false);
+        jScrollPane2.setViewportView(jTextPane1);
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        jTextPane1.setParagraphAttributes(center, false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
         );
@@ -335,7 +320,7 @@ public class AnotherUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,6 +15,7 @@ public class Program {
     public static Connection con;
     
     public static void main(String[] args) {
-        new ThucDon().setVisible(true);
+//        new ThucDonMonAn().setVisible(true);
+        DangNhap.getInstance();
     }
 }
