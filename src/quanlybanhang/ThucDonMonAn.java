@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
@@ -19,18 +21,21 @@ import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import static quanlybanhang.Program.con;
+
 /**
  *
  * @author Admin
  */
-public class ThucDon extends javax.swing.JFrame {
-    private static ThucDon instance;
+public class ThucDonMonAn extends javax.swing.JFrame {
+    private static ThucDonMonAn instance;
     private DrawerController drawer;
     
-    public ThucDon() {
+    public ThucDonMonAn() {
         initComponents();
         this.buildDrawer();
         
@@ -46,7 +51,7 @@ public class ThucDon extends javax.swing.JFrame {
                         con.close();
                         System.exit(0);
                     } catch (SQLException ex) {
-                        Logger.getLogger(ThucDon.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ThucDonMonAn.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -89,13 +94,15 @@ public class ThucDon extends javax.swing.JFrame {
                 .build();
     }
     
-    public static synchronized ThucDon getInstance(){
+    public static synchronized ThucDonMonAn getInstance(){
         if(instance==null){
-            instance = new ThucDon();
+            instance = new ThucDonMonAn();
             instance.setVisible(true);
+            instance.reloadMenu();
             return instance;
         } else {
             instance.setVisible(true);
+            instance.reloadMenu();
             return instance;
         }
     }
@@ -107,24 +114,24 @@ public class ThucDon extends javax.swing.JFrame {
             String userDB = "user0";
             String passDB = "123Abc@@";
             con = DriverManager.getConnection(dbUrl,userDB, passDB);
-            
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
-            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
-            m.setRowCount(0);
-            int stt = 1;
-            while(rs.next()){
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
-                m.addRow(obj);
-                stt++;
-            }
-            s.close();
+            reloadMenu();
+//            Statement s = con.createStatement();
+//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
+//            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+//            m.setRowCount(0);
+//            int stt = 1;
+//            while(rs.next()){
+//                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+//                m.addRow(obj);
+//                stt++;
+//            }
+//            s.close();
         } catch (Exception e) {
             //e.printStackTrace();
             System.out.println("Lỗi kết nối dữ liệu");
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,6 +164,7 @@ public class ThucDon extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ THỰC ĐƠN MÓN ĂN");
         jLabel1.setAlignmentY(0.0F);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabelMenu.setBackground(new java.awt.Color(255, 255, 255));
         jLabelMenu.setFont(jLabelMenu.getFont().deriveFont(jLabelMenu.getFont().getStyle() | java.awt.Font.BOLD, jLabelMenu.getFont().getSize()+11));
@@ -195,7 +203,7 @@ public class ThucDon extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -231,6 +239,10 @@ public class ThucDon extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(80);
         jScrollPane1.setViewportView(jTable1);
         jScrollPane1.getViewport().setBackground(Color.WHITE);
+
+        int columnIndex = 3;
+        TableColumnModel columnModel = jTable1.getColumnModel();
+        columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
@@ -281,19 +293,19 @@ public class ThucDon extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -341,21 +353,7 @@ public class ThucDon extends javax.swing.JFrame {
     }//GEN-LAST:event_AddBtnActionPerformed
 
     private void ReloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReloadButtonActionPerformed
-        try {
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
-            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
-            m.setRowCount(0);
-            int stt = 1;
-            while(rs.next()){
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
-                m.addRow(obj);
-                stt++;
-            }
-            s.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        reloadMenu();
     }//GEN-LAST:event_ReloadButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -377,4 +375,44 @@ public class ThucDon extends javax.swing.JFrame {
     private void addMenu() {
         new AddDialog(this, rootPaneCheckingEnabled).setVisible(true);
     }
+
+    public void reloadMenu() {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '0';");
+            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+            m.setRowCount(0);
+            int stt = 1;
+            while(rs.next()){
+                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+                m.addRow(obj);
+                stt++;
+            }
+            s.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Lớp tùy chỉnh để định dạng cột số int với dấu cách ngăn cách phần ngàn
+    class CustomTableCellRenderer extends DefaultTableCellRenderer {
+        private DecimalFormat formatter;
+        public CustomTableCellRenderer() {
+            // Sử dụng ký tự ngăn cách phần ngàn là dấu cách
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+            symbols.setGroupingSeparator(' ');
+            formatter = new DecimalFormat("#,###", symbols);
+        }
+
+        @Override
+        public void setValue(Object value) {
+            if (value instanceof Number) {
+                setText(formatter.format(value));
+            } else {
+                super.setValue(value);
+            }
+        }
+    }
+    
+    
 }

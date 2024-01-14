@@ -7,10 +7,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -25,7 +26,7 @@ public class AddDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         //THÊM SỰ KIỆN CHUỘT CHO jlABEL NÚT THÊM
-        CapNhatLabel.addMouseListener(new AddDialog.SharedMouseListener());
+        ThemLabel.addMouseListener(new AddDialog.SharedMouseListener());
         DatLaiLabel.addMouseListener(new AddDialog.SharedMouseListener());
         ThoatLabel.addMouseListener(new AddDialog.SharedMouseListener());
 
@@ -122,16 +123,22 @@ public class AddDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ChonLoai = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         MaMonTF = new javax.swing.JTextField();
         TenMonTF = new javax.swing.JTextField();
         GiaMonTF = new javax.swing.JTextField();
+        MonAnRadioBtn = new javax.swing.JRadioButton();
+        NuocRadioBtn = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
-        CapNhatLabel = new javax.swing.JLabel();
+        ThemLabel = new javax.swing.JLabel();
         DatLaiLabel = new javax.swing.JLabel();
         ThoatLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+
+        ChonLoai.add(MonAnRadioBtn);
+        ChonLoai.add(NuocRadioBtn);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -147,17 +154,31 @@ public class AddDialog extends javax.swing.JDialog {
         GiaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món"));
 
+        MonAnRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
+        MonAnRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        MonAnRadioBtn.setText("Món ăn");
+        MonAnRadioBtn.setPreferredSize(new java.awt.Dimension(91, 31));
+
+        NuocRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
+        NuocRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NuocRadioBtn.setText("Nước");
+        NuocRadioBtn.setPreferredSize(new java.awt.Dimension(73, 31));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(NuocRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(MaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,19 +189,23 @@ public class AddDialog extends javax.swing.JDialog {
                 .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NuocRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
-        CapNhatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CapNhatLabel.setText("Cập Nhật");
-        CapNhatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        CapNhatLabel.setOpaque(true);
-        CapNhatLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        ThemLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ThemLabel.setText("Thêm");
+        ThemLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ThemLabel.setOpaque(true);
+        ThemLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CapNhatLabelMouseClicked(evt);
+                ThemLabelMouseClicked(evt);
             }
         });
 
@@ -210,10 +235,10 @@ public class AddDialog extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(CapNhatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ThemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(ThoatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -222,10 +247,10 @@ public class AddDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CapNhatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ThemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ThoatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 32)); // NOI18N
@@ -279,43 +304,65 @@ public class AddDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_DatLaiLabelMouseClicked
 
-    private void CapNhatLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CapNhatLabelMouseClicked
-        if (MaMonTF.getText().equals("") ||containsSpecialChars(MaMonTF) || containsWhitespace(MaMonTF) || containsVietnamese(MaMonTF) || MaMonTF.getText().length() > 10) {
+    private void ThemLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThemLabelMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+        if (MaMonTF.getText().equals("") || containsSpecialChars(MaMonTF) || containsWhitespace(MaMonTF) || containsVietnamese(MaMonTF) || MaMonTF.getText().length() > 10) {
             JOptionPane.showMessageDialog(this, "Mã món không hợp lệ, vui lòng kiểm tra lại",
-                    "Lỗi Mã Món", JOptionPane.ERROR_MESSAGE);
+                    "Lỗi Mã Món", JOptionPane.ERROR_MESSAGE, icon);
             MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Mã món"));
+            return;
         }
-        if (TenMonTF.getText().equals("") ||containsSpecialChars(TenMonTF) || TenMonTF.getText().length() > 50) {
+        if (TenMonTF.getText().equals("") || containsSpecialChars(TenMonTF) || TenMonTF.getText().length() > 50) {
             JOptionPane.showMessageDialog(this, "Tên món không hợp lệ, vui lòng kiểm tra lại",
-                    "Lỗi Tên Món", JOptionPane.ERROR_MESSAGE);
+                    "Lỗi Tên Món", JOptionPane.ERROR_MESSAGE, icon);
             TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Tên món"));
+            return;
         }
         if (GiaMonTF.getText().equals("") || !isValidPrice(GiaMonTF) || GiaMonTF.getText().length() > 11) {
             JOptionPane.showMessageDialog(this, "Giá món không hợp lệ, vui lòng kiểm tra lại",
-                    "Lỗi Giá Món", JOptionPane.ERROR_MESSAGE);
+                    "Lỗi Giá Món", JOptionPane.ERROR_MESSAGE, icon);
             GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Giá món"));
+            return;
         }
+        if (ChonLoai.getSelection() == null){
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 loại sản phẩm!",
+                    "Chưa chọn loại", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
+
         
         try {
             Statement s = con.createStatement();
             int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
-            System.out.println("Mã món: "+MaMonTF.getText()+" || "
-                    + "Tên món: "+TenMonTF.getText()+" || "
-                            + "Giá: " +gia);
+            System.out.println("Mã món: " + MaMonTF.getText() + " || "
+                    + "Tên món: " + TenMonTF.getText() + " || "
+                    + "Giá: " + gia);
+            int loai=0;
+            if(MonAnRadioBtn.isSelected()){
+                loai = 0;
+            } else if(NuocRadioBtn.isSelected()){
+                loai = 1;
+            }
             s.executeUpdate("INSERT INTO htql_banhang.sanpham "
-                    + "(MaSP, TenSP, GiaSP) VALUES (N'"+MaMonTF.getText()+"', N'"+TenMonTF.getText()+"', '"+gia+"');");
+                    + "(MaSP, TenSP, GiaSP, LoaiSP) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '"+loai+"');");
+            s.close();
+            updateNoti(1, this);
         } catch (SQLException ex) {
-            System.out.println("Dữ liệu không hợp lệ!");
+            System.out.println("Data is not valid!");
+            updateNoti(0, this);
         }
-    }//GEN-LAST:event_CapNhatLabelMouseClicked
+    }//GEN-LAST:event_ThemLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CapNhatLabel;
+    private javax.swing.ButtonGroup ChonLoai;
     private javax.swing.JLabel DatLaiLabel;
     private javax.swing.JTextField GiaMonTF;
     private javax.swing.JTextField MaMonTF;
+    private javax.swing.JRadioButton MonAnRadioBtn;
+    private javax.swing.JRadioButton NuocRadioBtn;
     private javax.swing.JTextField TenMonTF;
+    private javax.swing.JLabel ThemLabel;
     private javax.swing.JLabel ThoatLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -353,6 +400,7 @@ public class AddDialog extends javax.swing.JDialog {
         return specialCharacters.contains(String.valueOf(c));
     }
 
+    //Kiểm tra có chứa ký tự đặc biệt
     public static boolean containsSpecialChars(JTextField TF) {
         String input = TF.getText();
         // Biểu thức chính quy kiểm tra xem có ký tự đặc biệt không
@@ -360,6 +408,7 @@ public class AddDialog extends javax.swing.JDialog {
         return Pattern.matches(regex, input);
     }
 
+    //Kiểm tra chứa khoảng trắng
     public static boolean containsWhitespace(JTextField TF) {
         String input = TF.getText();
         // Biểu thức chính quy kiểm tra xem có khoảng trắng không
@@ -367,6 +416,7 @@ public class AddDialog extends javax.swing.JDialog {
         return Pattern.matches(regex, input);
     }
 
+    //Kiểm tra chứa tiếng Việt
     public static boolean containsVietnamese(JTextField TF) {
         String input = TF.getText();
         // Biểu thức chính quy kiểm tra xem có ký tự tiếng Việt không
@@ -376,6 +426,7 @@ public class AddDialog extends javax.swing.JDialog {
         return Pattern.matches(regex, input);
     }
 
+    //Kiểm tra giá hợp lệ
     public static boolean isValidPrice(JTextField TF) {
         String input = TF.getText();
         // Biểu thức chính quy kiểm tra xem chuỗi chỉ chứa số và dấu chấm
@@ -385,5 +436,18 @@ public class AddDialog extends javax.swing.JDialog {
 
         // Kiểm tra xem chuỗi có khớp với biểu thức chính quy không
         return matcher.matches();
+    }
+    
+    private void updateNoti(int state, JDialog dialog){
+        if(state == 1){
+            Icon icon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+            JOptionPane.showMessageDialog(this, "Thêm món thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, icon);
+            dialog.dispose();
+        }
+        if(state == 0){
+            Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+            JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Không thể thêm món", JOptionPane.INFORMATION_MESSAGE, icon);
+            dialog.dispose();
+        }
     }
 }
