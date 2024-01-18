@@ -75,7 +75,7 @@
               <Font name="Calibri" size="36" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; TH&#x1ef0;C &#x110;&#x1a0;N M&#xd3;N &#x102;N"/>
+            <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; TH&#x1ef0;C &#x110;&#x1a0;N N&#x1af;&#x1eda;C"/>
             <Property name="alignmentY" type="float" value="0.0"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>

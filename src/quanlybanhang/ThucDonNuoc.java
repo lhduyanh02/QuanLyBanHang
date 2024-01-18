@@ -6,6 +6,8 @@ package quanlybanhang;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,14 +61,49 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         ConnectDB();
     }
     
-    private void buildDrawer(){
+//    private void buildDrawer(){
+//        drawer = Drawer.newDrawer(this)
+//                .header(new HeaderDrawer())
+////                .separator(2, new Color(0, 0, 0))
+//                .drawerWidth(290)
+//                .backgroundTransparent(0.5f)
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .event(new EventDrawer() {
+//                    @Override
+//                    public void selected(int i, DrawerItem di) {
+////                        System.out.println(i + " - "+ di);
+//                        if(i == 5) {
+//                            try {
+//                                if (JOptionPane.showConfirmDialog(null,
+//                                        "Are you sure you want to close this window?", "Close Window?",
+//                                        JOptionPane.YES_NO_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+//                                    System.exit(0);
+//                                }
+//                            } catch (Exception ex) {
+//                                ex.printStackTrace();
+//                            }
+//                        }
+//                    }
+//
+//                })
+//                .enableScroll(true)
+//                .build();
+//    }
+    
+     private void buildDrawer(){
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
-                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -75,23 +112,32 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                     @Override
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
+                        //Nút thoát
                         if(i == 5) {
                             try {
-                                if (JOptionPane.showConfirmDialog(null,
-                                        "Are you sure you want to close this window?", "Close Window?",
-                                        JOptionPane.YES_NO_OPTION,
-                                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                                    System.exit(0);
-                                }
+                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
+                                Robot robot = new Robot();
+                                robot.keyPress(KeyEvent.VK_ALT);
+                                robot.keyPress(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_ALT);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
+                        }
+                        if(i == 0){
+                            closeThisUI();
+                            ThucDonMonAn.getInstance();
                         }
                     }
 
                 })
                 .enableScroll(true)
                 .build();
+    }
+     
+    private static void closeThisUI(){
+        instance.dispose();
     }
     
     public static synchronized ThucDonNuoc getInstance(){
@@ -162,7 +208,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ THỰC ĐƠN MÓN ĂN");
+        jLabel1.setText("QUẢN LÝ THỰC ĐƠN NƯỚC");
         jLabel1.setAlignmentY(0.0F);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -379,7 +425,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     public void reloadMenu() {
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '0';");
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '1';");
             DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
