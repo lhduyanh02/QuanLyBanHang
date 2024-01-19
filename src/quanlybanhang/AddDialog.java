@@ -157,12 +157,16 @@ public class AddDialog extends javax.swing.JDialog {
         MonAnRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
         MonAnRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         MonAnRadioBtn.setText("Món ăn");
-        MonAnRadioBtn.setPreferredSize(new java.awt.Dimension(91, 31));
+        MonAnRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MonAnRadioBtnActionPerformed(evt);
+            }
+        });
 
         NuocRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
         NuocRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         NuocRadioBtn.setText("Nước");
-        NuocRadioBtn.setPreferredSize(new java.awt.Dimension(73, 31));
+        NuocRadioBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,15 +174,15 @@ public class AddDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(NuocRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(57, 57, 57)
+                        .addComponent(NuocRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(MaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(88, 88, 88))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,8 +195,8 @@ public class AddDialog extends javax.swing.JDialog {
                 .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NuocRadioBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MonAnRadioBtn)
+                    .addComponent(NuocRadioBtn))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -238,7 +242,7 @@ public class AddDialog extends javax.swing.JDialog {
                 .addComponent(ThemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ThoatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -324,27 +328,31 @@ public class AddDialog extends javax.swing.JDialog {
             GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Giá món"));
             return;
         }
-        if (ChonLoai.getSelection() == null){
+        if (ChonLoai.getSelection() == null) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 loại sản phẩm!",
                     "Chưa chọn loại", JOptionPane.ERROR_MESSAGE, icon);
             return;
         }
 
-        
         try {
             Statement s = con.createStatement();
             int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
+            int loai = 0;
+            String type = "";
+            if (MonAnRadioBtn.isSelected()) {
+                loai = 0;
+                type = "Món ăn";
+            } else if (NuocRadioBtn.isSelected()) {
+                loai = 1;
+                type = "Nước";
+            }
             System.out.println("Mã món: " + MaMonTF.getText() + " || "
                     + "Tên món: " + TenMonTF.getText() + " || "
-                    + "Giá: " + gia);
-            int loai=0;
-            if(MonAnRadioBtn.isSelected()){
-                loai = 0;
-            } else if(NuocRadioBtn.isSelected()){
-                loai = 1;
-            }
+                    + "Giá: " + gia + " || "
+                    + "Loại: " + type);
+            
             s.executeUpdate("INSERT INTO htql_banhang.sanpham "
-                    + "(MaSP, TenSP, GiaSP, LoaiSP) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '"+loai+"');");
+                    + "(MaSP, TenSP, GiaSP, LoaiSP) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '" + loai + "');");
             s.close();
             updateNoti(1, this);
         } catch (SQLException ex) {
@@ -352,6 +360,10 @@ public class AddDialog extends javax.swing.JDialog {
             updateNoti(0, this);
         }
     }//GEN-LAST:event_ThemLabelMouseClicked
+
+    private void MonAnRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonAnRadioBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MonAnRadioBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -437,17 +449,22 @@ public class AddDialog extends javax.swing.JDialog {
         // Kiểm tra xem chuỗi có khớp với biểu thức chính quy không
         return matcher.matches();
     }
-    
-    private void updateNoti(int state, JDialog dialog){
-        if(state == 1){
+
+    private void updateNoti(int state, JDialog dialog) {
+        if (state == 1) {
             Icon icon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
             JOptionPane.showMessageDialog(this, "Thêm món thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, icon);
             dialog.dispose();
+            if (MonAnRadioBtn.isSelected()) {
+                ThucDonMonAn.getInvisibleInstance().reloadMenu();
+            } else if (NuocRadioBtn.isSelected()) {
+                ThucDonNuoc.getInvisibleInstance().reloadMenu();
+            }
         }
-        if(state == 0){
+        if (state == 0) {
             Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Không thể thêm món", JOptionPane.INFORMATION_MESSAGE, icon);
-            dialog.dispose();
+//            dialog.dispose();
         }
     }
 }
