@@ -34,13 +34,14 @@ import static quanlybanhang.Program.con;
  * @author Admin
  */
 public class ThucDonMonAn extends javax.swing.JFrame {
+
     private static ThucDonMonAn instance;
     private DrawerController drawer;
-    
+
     public ThucDonMonAn() {
         initComponents();
         this.buildDrawer();
-        
+
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -60,7 +61,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         });
         ConnectDB();
     }
-    
+
 //    private void buildDrawer(){
 //        drawer = Drawer.newDrawer(this)
 //                .header(new HeaderDrawer())
@@ -95,11 +96,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 //                .enableScroll(true)
 //                .build();
 //    }
-    
-    private void buildDrawer(){
+    private void buildDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
-//                .separator(2, new Color(0, 0, 0))
+                //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
                 .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -113,7 +113,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if(i == 5) {
+                        if (i == 5) {
                             try {
                                 // Sử dụng Robot để giả lập sự kiện nhấn nút X
                                 Robot robot = new Robot();
@@ -125,10 +125,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                        if(i == 1){
+                        if (i == 1) {
                             closeThisUI();
                             ThucDonNuoc.getInstance();
-                            
+
                         }
                     }
 
@@ -136,14 +136,13 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 .enableScroll(true)
                 .build();
     }
-     
-    private static void closeThisUI(){
+
+    private static void closeThisUI() {
         instance.dispose();
     }
-    
-    
-    public static synchronized ThucDonMonAn getInstance(){
-        if(instance==null){
+
+    public static synchronized ThucDonMonAn getInstance() {
+        if (instance == null) {
             instance = new ThucDonMonAn();
             instance.setVisible(true);
             instance.reloadMenu();
@@ -154,14 +153,27 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             return instance;
         }
     }
-    
-    public void ConnectDB(){
+
+    public static synchronized ThucDonMonAn getInvisibleInstance() {
+        if (instance == null) {
+            instance = new ThucDonMonAn();
+//            instance.setVisible(false);
+            instance.reloadMenu();
+            return instance;
+        } else {
+//            instance.setVisible(false);
+            instance.reloadMenu();
+            return instance;
+        }
+    }
+
+    public void ConnectDB() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
             String userDB = "user0";
             String passDB = "123Abc@@";
-            con = DriverManager.getConnection(dbUrl,userDB, passDB);
+            con = DriverManager.getConnection(dbUrl, userDB, passDB);
             reloadMenu();
 //            Statement s = con.createStatement();
 //            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
@@ -179,7 +191,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             System.out.println("Lỗi kết nối dữ liệu");
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -315,6 +327,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         DelBtn.setText("Xóa");
         DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        DelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DelBtnActionPerformed(evt);
+            }
+        });
         jPanel3.add(DelBtn);
 
         ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -388,10 +405,9 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMenuMousePressed
 
     private void jLabelMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseClicked
-        if(drawer.isShow()){
+        if (drawer.isShow()) {
             drawer.hide();
-        }
-        else {
+        } else {
             drawer.show();
         }
     }//GEN-LAST:event_jLabelMenuMouseClicked
@@ -403,6 +419,29 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     private void ReloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReloadButtonActionPerformed
         reloadMenu();
     }//GEN-LAST:event_ReloadButtonActionPerformed
+
+    private void DelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelBtnActionPerformed
+        try {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Statement s = con.createStatement();
+                Object MaSP = jTable1.getModel().getValueAt(r, 1);
+                int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
+                if (x != 0) {
+                    JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
+                    reloadMenu();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
+                    reloadMenu();
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Lỗi xoá món");
+        }
+    }//GEN-LAST:event_DelBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
@@ -428,10 +467,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '0';");
-            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
-            while(rs.next()){
+            while (rs.next()) {
                 Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
                 m.addRow(obj);
                 stt++;
@@ -441,10 +480,12 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     // Lớp tùy chỉnh để định dạng cột số int với dấu cách ngăn cách phần ngàn
     class CustomTableCellRenderer extends DefaultTableCellRenderer {
+
         private DecimalFormat formatter;
+
         public CustomTableCellRenderer() {
             // Sử dụng ký tự ngăn cách phần ngàn là dấu cách
             DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -461,6 +502,5 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
 }

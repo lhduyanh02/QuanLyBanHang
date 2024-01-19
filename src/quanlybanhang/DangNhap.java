@@ -258,13 +258,13 @@ public class DangNhap extends javax.swing.JDialog {
         if (UsernameTF.getText().equals("") || containsSpecialChars(UsernameTF) || containsWhitespace(UsernameTF) || containsVietnamese(UsernameTF) || UsernameTF.getText().length() > 10) {
 //            JOptionPane.showMessageDialog(this, "Tên đăng nhập không hợp lệ, vui lòng kiểm tra lại",
 //                "Lỗi tên đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
-            UsernameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Mã món"));
+            UsernameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Tên đăng nhập"));
             return;
         }
         if (new String(PasswordTF.getPassword()).equals("") || containsSpecialChars(PasswordTF)) {
 //            JOptionPane.showMessageDialog(this, "Mật khẩu không hợp lệ, vui lòng kiểm tra lại",
 //                "Lỗi mật khẩu", JOptionPane.ERROR_MESSAGE, icon);
-            PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Tên món"));
+            PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Mật khẩu"));
             return;
         }
 

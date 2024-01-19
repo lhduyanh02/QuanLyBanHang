@@ -153,6 +153,20 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         }
     }
     
+    public static synchronized ThucDonNuoc getInvisibleInstance(){
+       if (instance == null) {
+            instance = new ThucDonNuoc();
+//            instance.setVisible(false);
+            instance.reloadMenu();
+            return instance;
+        } else {
+//            instance.setVisible(false);
+            instance.reloadMenu();
+            return instance;
+        }
+   }
+
+    
     public void ConnectDB(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -313,6 +327,11 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         DelBtn.setText("Xóa");
         DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        DelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DelBtnActionPerformed(evt);
+            }
+        });
         jPanel3.add(DelBtn);
 
         ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -401,6 +420,29 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     private void ReloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReloadButtonActionPerformed
         reloadMenu();
     }//GEN-LAST:event_ReloadButtonActionPerformed
+
+    private void DelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelBtnActionPerformed
+         try {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Statement s = con.createStatement();
+                Object MaSP = jTable1.getModel().getValueAt(r, 1);
+                int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
+                if (x != 0) {
+                    JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
+                    reloadMenu();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
+                    reloadMenu();
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Lỗi xoá món");
+        }
+    }//GEN-LAST:event_DelBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
