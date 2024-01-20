@@ -59,7 +59,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 }
             }
         });
-        ConnectDB();
+        reloadMenu();
     }
 
 //    private void buildDrawer(){
@@ -164,31 +164,6 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 //            instance.setVisible(false);
             instance.reloadMenu();
             return instance;
-        }
-    }
-
-    public void ConnectDB() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
-            String userDB = "user0";
-            String passDB = "123Abc@@";
-            con = DriverManager.getConnection(dbUrl, userDB, passDB);
-            reloadMenu();
-//            Statement s = con.createStatement();
-//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
-//            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
-//            m.setRowCount(0);
-//            int stt = 1;
-//            while(rs.next()){
-//                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
-//                m.addRow(obj);
-//                stt++;
-//            }
-//            s.close();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            System.out.println("Lỗi kết nối dữ liệu");
         }
     }
 
