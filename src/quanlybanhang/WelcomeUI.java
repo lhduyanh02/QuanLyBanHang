@@ -23,18 +23,24 @@ import javax.swing.table.JTableHeader;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import static quanlybanhang.Program.con;
+
 /**
  *
  * @author Admin
  */
 public class WelcomeUI extends javax.swing.JFrame {
+
     private static WelcomeUI instance;
     private DrawerController drawer;
-    
+
     public WelcomeUI() {
         initComponents();
-        this.buildDrawer();
-        
+        if (DangNhap.getAccess() == 0) {
+            this.buildAdminDrawer();
+        } else {
+            this.buildDrawer();
+        }
+
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -49,11 +55,11 @@ public class WelcomeUI extends javax.swing.JFrame {
         });
 //        ConnectDB();
     }
-    
-    private void buildDrawer(){
+
+    private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
-//                .separator(2, new Color(0, 0, 0))
+                //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
                 .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -67,7 +73,7 @@ public class WelcomeUI extends javax.swing.JFrame {
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if(i == 5) {
+                        if (i == 5) {
                             try {
                                 // Sử dụng Robot để giả lập sự kiện nhấn nút X
                                 Robot robot = new Robot();
@@ -79,7 +85,7 @@ public class WelcomeUI extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                        if(i == 0){
+                        if (i == 0) {
                             closeThisUI();
                             ThucDonMonAn.getInstance();
                         }
@@ -89,9 +95,47 @@ public class WelcomeUI extends javax.swing.JFrame {
                 .enableScroll(true)
                 .build();
     }
-    
-    public static synchronized WelcomeUI getInstance(){
-        if(instance==null){
+
+    private void buildDrawer() {
+        drawer = Drawer.newDrawer(this)
+                .header(new HeaderDrawer())
+                //                .separator(2, new Color(0, 0, 0))
+                .drawerWidth(290)
+                .backgroundTransparent(0.5f)
+                /*0*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*1*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*2*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*3*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int i, DrawerItem di) {
+//                        System.out.println(i + " - "+ di);
+                        //Nút thoát
+                        if (i == 3) {
+                            try {
+                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
+                                Robot robot = new Robot();
+                                robot.keyPress(KeyEvent.VK_ALT);
+                                robot.keyPress(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_ALT);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        if (i == 0) {
+                            closeThisUI();
+                            ThucDonMonAn.getInstance();
+                        }
+                    }
+
+                })
+                .enableScroll(true)
+                .build();
+    }
+
+    public static synchronized WelcomeUI getInstance() {
+        if (instance == null) {
             instance = new WelcomeUI();
             instance.setVisible(true);
             return instance;
@@ -100,11 +144,11 @@ public class WelcomeUI extends javax.swing.JFrame {
             return instance;
         }
     }
-    
-    private static void closeThisUI(){
+
+    private static void closeThisUI() {
         instance.dispose();
     }
-    
+
 //    public void ConnectDB(){
 //        try {
 //            Class.forName("com.mysql.jdbc.Driver");
@@ -130,7 +174,6 @@ public class WelcomeUI extends javax.swing.JFrame {
 //            System.out.println("Lỗi kết nối dữ liệu");
 //        }
 //    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -300,10 +343,9 @@ public class WelcomeUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        if(drawer.isShow()){
+        if (drawer.isShow()) {
             drawer.hide();
-        }
-        else {
+        } else {
             drawer.show();
         }
     }//GEN-LAST:event_jLabel2MouseClicked

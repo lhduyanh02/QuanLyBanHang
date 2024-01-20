@@ -59,7 +59,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 }
             }
         });
-        ConnectDB();
+        reloadMenu();
     }
 
 //    private void buildDrawer(){
@@ -167,31 +167,6 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         }
     }
 
-    public void ConnectDB() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
-            String userDB = "user0";
-            String passDB = "123Abc@@";
-            con = DriverManager.getConnection(dbUrl, userDB, passDB);
-            reloadMenu();
-//            Statement s = con.createStatement();
-//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
-//            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
-//            m.setRowCount(0);
-//            int stt = 1;
-//            while(rs.next()){
-//                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
-//                m.addRow(obj);
-//                stt++;
-//            }
-//            s.close();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            System.out.println("Lỗi kết nối dữ liệu");
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -258,7 +233,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,6 +281,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
+        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 127));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
 
         AddBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -321,6 +297,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         EditBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         EditBtn.setText("Sửa");
         EditBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        EditBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditBtnActionPerformed(evt);
+            }
+        });
         jPanel3.add(EditBtn);
 
         DelBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -370,7 +351,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -436,12 +417,17 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
                     reloadMenu();
                 }
+                s.close();
             }
 
         } catch (Exception e) {
             System.out.println("Lỗi xoá món");
         }
     }//GEN-LAST:event_DelBtnActionPerformed
+
+    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
+        editMenu();
+    }//GEN-LAST:event_EditBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
@@ -461,6 +447,20 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
     private void addMenu() {
         new AddDialog(this, rootPaneCheckingEnabled).setVisible(true);
+    }
+
+    private void editMenu() {
+        int r = jTable1.getSelectedRow();
+        if (r == -1) {
+            JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String MaSP  = (String) jTable1.getModel().getValueAt(r, 1);
+            String TenSP = (String) jTable1.getModel().getValueAt(r, 2);
+            int GiaSP = (int) jTable1.getModel().getValueAt(r, 3);
+            new EditDialog(this, rootPaneCheckingEnabled).getOldValue(MaSP, TenSP, GiaSP).setVisible(true);
+
+        }
+
     }
 
     public void reloadMenu() {

@@ -4,6 +4,8 @@
  */
 package quanlybanhang;
 
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.awt.Component;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -15,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import static quanlybanhang.Program.con;
 
 /**
  *
@@ -22,11 +25,14 @@ import javax.swing.JTextField;
  */
 public class DangNhap extends javax.swing.JDialog {
     private static DangNhap Instance;
+    public static String user;
+    private static int access;
     private static KeyEventDispatcher keyEventDispatcher;
     
-    /**
-     * Creates new form DangNhap
-     */
+    public static int getAccess(){
+        return access;
+    }
+    
     public DangNhap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -285,8 +291,20 @@ public class DangNhap extends javax.swing.JDialog {
 //            s.close();
 //            updateNoti(1, this);
             
-            String user = UsernameTF.getText(), pass = new String(PasswordTF.getPassword());
-            if(user.equals("admin") && pass.equals("admin")){
+            user = UsernameTF.getText();
+            String pass = new String(PasswordTF.getPassword());
+            Statement s = con.createStatement();
+            String passwd = "";
+            ResultSet rs = s.executeQuery("SELECT passwd, access FROM htql_banhang.taikhoan where usname = '"+user+"';");
+            if(rs.next()){
+                passwd = (String) rs.getString(1);
+                access = (int) rs.getInt(2);
+            } else {
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
+                "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
+            }
+            
+            if(pass.equals(passwd)){
                 this.dispose();
                 WelcomeUI.getInstance();
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
@@ -294,7 +312,9 @@ public class DangNhap extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
                 "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
             }
+            s.close();
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.println("Login unsuccessful!");
             JOptionPane.showMessageDialog(this, "Không thể đăng nhập, vui lòng kiểm tra lại",
                 "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
