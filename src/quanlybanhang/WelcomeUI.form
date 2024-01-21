@@ -246,17 +246,19 @@
           <SubComponents>
             <Component class="javax.swing.JTextPane" name="jTextPane1">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="30" style="3"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="// L&#x1ea5;y m&#xfa;i gi&#x1edd; &quot;Asia/Ho_Chi_Minh&quot;&#xa;    ZoneId VNTimeZone = ZoneId.of(&quot;Asia/Ho_Chi_Minh&quot;);&#xa;&#xa;    // L&#x1ea5;y th&#x1edd;i gian hi&#x1ec7;n t&#x1ea1;i theo m&#xfa;i gi&#x1edd; &quot;Asia/Ho_Chi_Minh&quot;&#xa;    ZonedDateTime zonedDateTime = ZonedDateTime.now(VNTimeZone);&#xa;&#xa;    // &#x110;&#x1ecb;nh d&#x1ea1;ng th&#x1edd;i gian s&#x1eed; d&#x1ee5;ng DateTimeFormatter&#xa;    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;dd/MM/yyyy HH:mm:ss&quot;);">
+                  <Font name="Monospaced" size="24" style="3"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n m&#x1ed9;t ch&#x1ee9;c n&#x103;ng trong menu &#x111;&#x1ec3; ti&#x1ebf;p t&#x1ee5;c, hehe."/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;*B&#x1ea1;n &#x111;ang &#x111;&#x103;ng nh&#x1ead;p b&#x1eb1;ng t&#xe0;i kho&#x1ea3;n &quot;+ DangNhap.user+&quot;.\n&quot;&#xa;    + &quot;*&#x110;&#x103;ng nh&#x1ead;p th&#xe0;nh c&#xf4;ng: &quot; +formatter.format(zonedDateTime)&#xa;    + &quot;\n\nCh&#x1ecd;n m&#x1ed9;t ch&#x1ee9;c n&#x103;ng trong menu &#x111;&#x1ec3; ti&#x1ebf;p t&#x1ee5;c, hehe.&quot;" type="code"/>
+                </Property>
                 <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="SimpleAttributeSet center = new SimpleAttributeSet();&#xa;StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);&#xa;jTextPane1.setParagraphAttributes(center, false);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="//SimpleAttributeSet center = new SimpleAttributeSet();&#xa;//StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);&#xa;//jTextPane1.setParagraphAttributes(center, false);"/>
               </AuxValues>
             </Component>
           </SubComponents>
