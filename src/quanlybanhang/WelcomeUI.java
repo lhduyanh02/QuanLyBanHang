@@ -4,13 +4,14 @@
  */
 package quanlybanhang;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
@@ -18,8 +19,6 @@ import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import static quanlybanhang.Program.con;
@@ -49,7 +48,13 @@ public class WelcomeUI extends javax.swing.JFrame {
                         "Are you sure you want to close this window?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    System.exit(0);
+                    try {
+                        con.close();
+                        Program.writeLog(0, DangNhap.user);
+                        System.exit(0);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(WelcomeUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -86,8 +91,14 @@ public class WelcomeUI extends javax.swing.JFrame {
                             }
                         }
                         if (i == 0) {
+                            drawer.hide();
                             closeThisUI();
                             ThucDonMonAn.getInstance();
+                        }
+                        if (i == 1) {
+                            drawer.hide();
+                            closeThisUI();
+                            ThucDonNuoc.getInstance();
                         }
                     }
 
@@ -285,15 +296,16 @@ public class WelcomeUI extends javax.swing.JFrame {
         jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel3.add(jButton6);
 
-        jTextPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 30)); // NOI18N
-        jTextPane1.setText("Chọn một chức năng trong menu để tiếp tục, hehe.");
+        jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
+        jTextPane1.setText("*Bạn đang đăng nhập bằng tài khoản "+ DangNhap.user+".\n"
+            + "*Đăng nhập thành công: " +Program.getTimeNow()
+            + "\n\nChọn một chức năng trong menu để tiếp tục, hehe.");
         jTextPane1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextPane1.setEnabled(false);
         jScrollPane2.setViewportView(jTextPane1);
-        SimpleAttributeSet center = new SimpleAttributeSet();
-        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        jTextPane1.setParagraphAttributes(center, false);
+        //SimpleAttributeSet center = new SimpleAttributeSet();
+        //StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        //jTextPane1.setParagraphAttributes(center, false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

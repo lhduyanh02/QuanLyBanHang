@@ -40,7 +40,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
     public ThucDonMonAn() {
         initComponents();
-        this.buildDrawer();
+        if (DangNhap.getAccess() == 0) {
+            this.buildAdminDrawer();
+        } else {
+            this.buildDrawer();
+        }
 
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -52,6 +56,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     try {
                         con.close();
+                        Program.writeLog(0, DangNhap.user);
                         System.exit(0);
                     } catch (SQLException ex) {
                         Logger.getLogger(ThucDonMonAn.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,41 +67,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         reloadMenu();
     }
 
-//    private void buildDrawer(){
-//        drawer = Drawer.newDrawer(this)
-//                .header(new HeaderDrawer())
-////                .separator(2, new Color(0, 0, 0))
-//                .drawerWidth(290)
-//                .backgroundTransparent(0.5f)
-//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-//                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-//                .event(new EventDrawer() {
-//                    @Override
-//                    public void selected(int i, DrawerItem di) {
-////                        System.out.println(i + " - "+ di);
-//                        if(i == 5) {
-//                            try {
-//                                if (JOptionPane.showConfirmDialog(null,
-//                                        "Are you sure you want to close this window?", "Close Window?",
-//                                        JOptionPane.YES_NO_OPTION,
-//                                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-//                                    System.exit(0);
-//                                }
-//                            } catch (Exception ex) {
-//                                ex.printStackTrace();
-//                            }
-//                        }
-//                    }
-//
-//                })
-//                .enableScroll(true)
-//                .build();
-//    }
-    private void buildDrawer() {
+    private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
                 //                .separator(2, new Color(0, 0, 0))
@@ -126,9 +97,48 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                             }
                         }
                         if (i == 1) {
+                            drawer.hide();
                             closeThisUI();
                             ThucDonNuoc.getInstance();
+                        }
+                    }
 
+                })
+                .enableScroll(true)
+                .build();
+    }
+
+    private void buildDrawer() {
+        drawer = Drawer.newDrawer(this)
+                .header(new HeaderDrawer())
+                //                .separator(2, new Color(0, 0, 0))
+                .drawerWidth(290)
+                .backgroundTransparent(0.5f)
+                /*0*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*1*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*2*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*3*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int i, DrawerItem di) {
+//                        System.out.println(i + " - "+ di);
+                        //Nút thoát
+                        if (i == 3) {
+                            try {
+                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
+                                Robot robot = new Robot();
+                                robot.keyPress(KeyEvent.VK_ALT);
+                                robot.keyPress(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_ALT);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        if (i == 0) {
+                            drawer.hide();
+                            closeThisUI();
+                            ThucDonMonAn.getInstance();
                         }
                     }
 

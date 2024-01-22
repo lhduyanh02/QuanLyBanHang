@@ -275,22 +275,6 @@ public class DangNhap extends javax.swing.JDialog {
         }
 
         try {
-//            Statement s = con.createStatement();
-//            int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
-//            System.out.println("Mã món: " + UsernameTF.getText() + " || "
-//                + "Tên món: " + TenMonTF.getText() + " || "
-//                + "Giá: " + gia);
-//            int loai=0;
-//            if(MonAnRadioBtn.isSelected()){
-//                loai = 0;
-//            } else if(NuocRadioBtn.isSelected()){
-//                loai = 1;
-//            }
-//            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
-//                + "(MaSP, TenSP, GiaSP, LoaiSP) VALUES (N'" + UsernameTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '"+loai+"');");
-//            s.close();
-//            updateNoti(1, this);
-            
             user = UsernameTF.getText();
             String pass = new String(PasswordTF.getPassword());
             Statement s = con.createStatement();
@@ -303,16 +287,17 @@ public class DangNhap extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
                 "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
             }
+            s.close();
             
             if(pass.equals(passwd)){
                 this.dispose();
+                Program.writeLog(1, user);
                 WelcomeUI.getInstance();
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
             } else {
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
                 "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
             }
-            s.close();
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Login unsuccessful!");
