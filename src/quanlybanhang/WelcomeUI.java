@@ -6,9 +6,12 @@ package quanlybanhang;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
@@ -18,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import static quanlybanhang.Program.con;
 
 /**
  *
@@ -44,7 +48,13 @@ public class WelcomeUI extends javax.swing.JFrame {
                         "Are you sure you want to close this window?", "Close Window?",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    System.exit(0);
+                    try {
+                        con.close();
+                        Program.writeLog(0, DangNhap.user);
+                        System.exit(0);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(WelcomeUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         });
@@ -287,16 +297,8 @@ public class WelcomeUI extends javax.swing.JFrame {
         jPanel3.add(jButton6);
 
         jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
-        // Lấy múi giờ "Asia/Ho_Chi_Minh"
-        ZoneId VNTimeZone = ZoneId.of("Asia/Ho_Chi_Minh");
-
-        // Lấy thời gian hiện tại theo múi giờ "Asia/Ho_Chi_Minh"
-        ZonedDateTime zonedDateTime = ZonedDateTime.now(VNTimeZone);
-
-        // Định dạng thời gian sử dụng DateTimeFormatter
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         jTextPane1.setText("*Bạn đang đăng nhập bằng tài khoản "+ DangNhap.user+".\n"
-            + "*Đăng nhập thành công: " +formatter.format(zonedDateTime)
+            + "*Đăng nhập thành công: " +Program.getTimeNow()
             + "\n\nChọn một chức năng trong menu để tiếp tục, hehe.");
         jTextPane1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextPane1.setEnabled(false);

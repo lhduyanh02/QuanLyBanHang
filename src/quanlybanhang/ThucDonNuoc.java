@@ -54,6 +54,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     try {
+                        Program.writeLog(0, DangNhap.user);
                         con.close();
                         System.exit(0);
                     } catch (SQLException ex) {
