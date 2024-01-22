@@ -39,7 +39,11 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     
     public ThucDonNuoc() {
         initComponents();
-        this.buildDrawer();
+        if (DangNhap.getAccess() == 0) {    //KIỂM TRA VÀ BUILD DRAWER THEO TÀI KHOẢN
+            this.buildAdminDrawer();
+        } else {
+            this.buildDrawer();
+        }
         
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -58,7 +62,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                 }
             }
         });
-        ConnectDB();
+        reloadMenu();
     }
     
 //    private void buildDrawer(){
@@ -96,10 +100,10 @@ public class ThucDonNuoc extends javax.swing.JFrame {
 //                .build();
 //    }
     
-     private void buildDrawer(){
+    private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
-//                .separator(2, new Color(0, 0, 0))
+                //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
                 .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -113,7 +117,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if(i == 5) {
+                        if (i == 5) {
                             try {
                                 // Sử dụng Robot để giả lập sự kiện nhấn nút X
                                 Robot robot = new Robot();
@@ -125,7 +129,46 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                        if(i == 0){
+                        if (i == 0) {
+                            drawer.hide();
+                            closeThisUI();
+                            ThucDonMonAn.getInstance();
+                        }
+                    }
+
+                })
+                .enableScroll(true)
+                .build();
+    }
+
+    private void buildDrawer() {
+        drawer = Drawer.newDrawer(this)
+                .header(new HeaderDrawer())
+                //                .separator(2, new Color(0, 0, 0))
+                .drawerWidth(290)
+                .backgroundTransparent(0.5f)
+                /*0*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*1*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*2*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*3*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .event(new EventDrawer() {
+                    @Override
+                    public void selected(int i, DrawerItem di) {
+//                        System.out.println(i + " - "+ di);
+                        //Nút thoát
+                        if (i == 3) {
+                            try {
+                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
+                                Robot robot = new Robot();
+                                robot.keyPress(KeyEvent.VK_ALT);
+                                robot.keyPress(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_F4);
+                                robot.keyRelease(KeyEvent.VK_ALT);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        if (i == 0) {
                             closeThisUI();
                             ThucDonMonAn.getInstance();
                         }

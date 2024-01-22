@@ -81,8 +81,14 @@ public class WelcomeUI extends javax.swing.JFrame {
                             }
                         }
                         if (i == 0) {
+                            drawer.hide();
                             closeThisUI();
                             ThucDonMonAn.getInstance();
+                        }
+                        if (i == 1) {
+                            drawer.hide();
+                            closeThisUI();
+                            ThucDonNuoc.getInstance();
                         }
                     }
 
