@@ -202,10 +202,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ THỰC ĐƠN MÓN ĂN");
         jLabel1.setAlignmentY(0.0F);
@@ -289,13 +289,13 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         TableColumnModel columnModel = jTable1.getColumnModel();
         columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(249, 247, 201));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
         jPanel3.setMaximumSize(new java.awt.Dimension(32767, 127));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
 
         AddBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        AddBtn.setText("Thêm");
+        AddBtn.setText("THÊM MỚI SẢN PHẨM");
         AddBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         AddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,7 +305,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jPanel3.add(AddBtn);
 
         EditBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        EditBtn.setText("Sửa");
+        EditBtn.setText("CẬP NHẬT");
         EditBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         EditBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,7 +315,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jPanel3.add(EditBtn);
 
         DelBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        DelBtn.setText("Xóa");
+        DelBtn.setText("XOÁ SẢN PHẨM");
         DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         DelBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -326,7 +326,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jPanel3.add(DelBtn);
 
         ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ReloadButton.setText("Reload");
+        ReloadButton.setText("TẢI LẠI");
         ReloadButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ReloadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
