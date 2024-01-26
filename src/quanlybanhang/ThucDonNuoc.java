@@ -34,9 +34,10 @@ import static quanlybanhang.Program.con;
  * @author Admin
  */
 public class ThucDonNuoc extends javax.swing.JFrame {
+
     private static ThucDonNuoc instance;
     private DrawerController drawer;
-    
+
     public ThucDonNuoc() {
         initComponents();
         if (DangNhap.getAccess() == 0) {    //KIỂM TRA VÀ BUILD DRAWER THEO TÀI KHOẢN
@@ -44,7 +45,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         } else {
             this.buildDrawer();
         }
-        
+
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -65,7 +66,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         });
         reloadMenu();
     }
-    
+
 //    private void buildDrawer(){
 //        drawer = Drawer.newDrawer(this)
 //                .header(new HeaderDrawer())
@@ -100,7 +101,6 @@ public class ThucDonNuoc extends javax.swing.JFrame {
 //                .enableScroll(true)
 //                .build();
 //    }
-    
     private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
@@ -179,13 +179,13 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                 .enableScroll(true)
                 .build();
     }
-     
-    private static void closeThisUI(){
+
+    private static void closeThisUI() {
         instance.dispose();
     }
-    
-    public static synchronized ThucDonNuoc getInstance(){
-        if(instance==null){
+
+    public static synchronized ThucDonNuoc getInstance() {
+        if (instance == null) {
             instance = new ThucDonNuoc();
             instance.setVisible(true);
             instance.reloadMenu();
@@ -196,9 +196,9 @@ public class ThucDonNuoc extends javax.swing.JFrame {
             return instance;
         }
     }
-    
-    public static synchronized ThucDonNuoc getInvisibleInstance(){
-       if (instance == null) {
+
+    public static synchronized ThucDonNuoc getInvisibleInstance() {
+        if (instance == null) {
             instance = new ThucDonNuoc();
 //            instance.setVisible(false);
             instance.reloadMenu();
@@ -208,16 +208,15 @@ public class ThucDonNuoc extends javax.swing.JFrame {
             instance.reloadMenu();
             return instance;
         }
-   }
+    }
 
-    
-    public void ConnectDB(){
+    public void ConnectDB() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
             String userDB = "user0";
             String passDB = "123Abc@@";
-            con = DriverManager.getConnection(dbUrl,userDB, passDB);
+            con = DriverManager.getConnection(dbUrl, userDB, passDB);
             reloadMenu();
 //            Statement s = con.createStatement();
 //            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
@@ -235,7 +234,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
             System.out.println("Lỗi kết nối dữ liệu");
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -261,10 +260,10 @@ public class ThucDonNuoc extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(249, 247, 201));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        jLabel1.setBackground(new java.awt.Color(249, 247, 201));
+        jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ THỰC ĐƠN NƯỚC");
         jLabel1.setAlignmentY(0.0F);
@@ -313,7 +312,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Courier New", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -348,13 +347,14 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         TableColumnModel columnModel = jTable1.getColumnModel();
         columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(249, 247, 201));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
 
         AddBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        AddBtn.setText("Thêm");
+        AddBtn.setText("THÊM MỚI SẢN PHẨM");
         AddBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        AddBtn.setOpaque(true);
         AddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddBtnActionPerformed(evt);
@@ -363,14 +363,16 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         jPanel3.add(AddBtn);
 
         EditBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        EditBtn.setText("Sửa");
+        EditBtn.setText("CẬP NHẬT");
         EditBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        EditBtn.setOpaque(true);
         jPanel3.add(EditBtn);
 
         DelBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        DelBtn.setText("Xóa");
+        DelBtn.setText("XOÁ SẢN PHẨM");
         DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        DelBtn.setOpaque(true);
         DelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DelBtnActionPerformed(evt);
@@ -379,8 +381,9 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         jPanel3.add(DelBtn);
 
         ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ReloadButton.setText("Reload");
+        ReloadButton.setText("TẢI LẠI");
         ReloadButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ReloadButton.setOpaque(true);
         ReloadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ReloadButtonActionPerformed(evt);
@@ -391,11 +394,13 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton5.setText("jButton1");
         jButton5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.setOpaque(true);
         jPanel3.add(jButton5);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton6.setText("jButton1");
         jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.setOpaque(true);
         jPanel3.add(jButton6);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -414,7 +419,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -449,10 +454,9 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMenuMousePressed
 
     private void jLabelMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMouseClicked
-        if(drawer.isShow()){
+        if (drawer.isShow()) {
             drawer.hide();
-        }
-        else {
+        } else {
             drawer.show();
         }
     }//GEN-LAST:event_jLabelMenuMouseClicked
@@ -466,7 +470,8 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     }//GEN-LAST:event_ReloadButtonActionPerformed
 
     private void DelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelBtnActionPerformed
-         try {
+        
+        try {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
                 JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -512,10 +517,10 @@ public class ThucDonNuoc extends javax.swing.JFrame {
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '1';");
-            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
-            while(rs.next()){
+            while (rs.next()) {
                 Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
                 m.addRow(obj);
                 stt++;
@@ -525,10 +530,12 @@ public class ThucDonNuoc extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     // Lớp tùy chỉnh để định dạng cột số int với dấu cách ngăn cách phần ngàn
     class CustomTableCellRenderer extends DefaultTableCellRenderer {
+
         private DecimalFormat formatter;
+
         public CustomTableCellRenderer() {
             // Sử dụng ký tự ngăn cách phần ngàn là dấu cách
             DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -545,6 +552,5 @@ public class ThucDonNuoc extends javax.swing.JFrame {
             }
         }
     }
-    
-    
+
 }
