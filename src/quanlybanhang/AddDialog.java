@@ -200,7 +200,7 @@ public class AddDialog extends javax.swing.JDialog {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
         ThemLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -257,7 +257,10 @@ public class AddDialog extends javax.swing.JDialog {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 32)); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(249, 247, 201));
+
+        jLabel1.setBackground(new java.awt.Color(127, 199, 217));
+        jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("THÊM MÓN");
 

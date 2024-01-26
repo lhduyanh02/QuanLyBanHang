@@ -172,7 +172,7 @@ public class EditDialog extends javax.swing.JDialog {
                 .addContainerGap(75, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
         CapNhatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -229,7 +229,9 @@ public class EditDialog extends javax.swing.JDialog {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 32)); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(249, 247, 201));
+
+        jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SỬA MÓN");
 
