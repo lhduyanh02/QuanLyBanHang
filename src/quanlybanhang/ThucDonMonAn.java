@@ -205,7 +205,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ THỰC ĐƠN MÓN ĂN");
         jLabel1.setAlignmentY(0.0F);
@@ -417,17 +417,20 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             if (r == -1) {
                 JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             } else {
-                Statement s = con.createStatement();
-                Object MaSP = jTable1.getModel().getValueAt(r, 1);
-                int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
-                if (x != 0) {
-                    JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
-                    reloadMenu();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
-                    reloadMenu();
+                int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xoá món không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    Statement s = con.createStatement();
+                    Object MaSP = jTable1.getModel().getValueAt(r, 1);
+                    int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
+                    if (x != 0) {
+                        JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
+                        reloadMenu();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
+                        reloadMenu();
+                    }
+                    s.close();
                 }
-                s.close();
             }
 
         } catch (Exception e) {
@@ -464,7 +467,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         if (r == -1) {
             JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         } else {
-            String MaSP  = (String) jTable1.getModel().getValueAt(r, 1);
+            String MaSP = (String) jTable1.getModel().getValueAt(r, 1);
             String TenSP = (String) jTable1.getModel().getValueAt(r, 2);
             int GiaSP = (int) jTable1.getModel().getValueAt(r, 3);
             new EditDialog(this, rootPaneCheckingEnabled).getOldValue(MaSP, TenSP, GiaSP).setVisible(true);
@@ -481,7 +484,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             m.setRowCount(0);
             int stt = 1;
             while (rs.next()) {
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)};
                 m.addRow(obj);
                 stt++;
             }
