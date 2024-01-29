@@ -5,6 +5,7 @@
 package quanlybanhang;
 
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.time.ZoneId;
@@ -86,6 +87,12 @@ public class WelcomeUI extends javax.swing.JFrame {
                                 robot.keyPress(KeyEvent.VK_F4);
                                 robot.keyRelease(KeyEvent.VK_F4);
                                 robot.keyRelease(KeyEvent.VK_ALT);
+                                
+                                Program.writeLog(0, DangNhap.user); // DÀNH CHO MacOS
+                                robot.keyPress(KeyEvent.VK_META);
+                                robot.keyPress(KeyEvent.VK_Q);
+                                robot.keyRelease(KeyEvent.VK_Q);
+                                robot.keyRelease(KeyEvent.VK_META);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -121,13 +128,14 @@ public class WelcomeUI extends javax.swing.JFrame {
                 /*0*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 /*1*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 /*2*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*3*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*3*/.addFooter(new DrawerItem("aaa").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                /*4*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
                     @Override
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if (i == 3) {
+                        if (i == 4) {
                             try {
                                 // Sử dụng Robot để giả lập sự kiện nhấn nút X
                                 Robot robot = new Robot();
@@ -135,9 +143,18 @@ public class WelcomeUI extends javax.swing.JFrame {
                                 robot.keyPress(KeyEvent.VK_F4);
                                 robot.keyRelease(KeyEvent.VK_F4);
                                 robot.keyRelease(KeyEvent.VK_ALT);
+                                
+                                Program.writeLog(0, DangNhap.user); // DÀNH CHO MacOS
+                                robot.keyPress(KeyEvent.VK_META);
+                                robot.keyPress(KeyEvent.VK_Q);
+                                robot.keyRelease(KeyEvent.VK_Q);
+                                robot.keyRelease(KeyEvent.VK_META);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
+                        }
+                        if (i==3){
+                            System.out.println("Doi mat khau");
                         }
                         if (i == 0) {
                             closeThisUI();
