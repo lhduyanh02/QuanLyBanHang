@@ -187,10 +187,12 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     public static synchronized ThucDonNuoc getInstance() {
         if (instance == null) {
             instance = new ThucDonNuoc();
+            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setVisible(true);
             instance.reloadMenu();
             return instance;
         } else {
+            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setVisible(true);
             instance.reloadMenu();
             return instance;
