@@ -120,14 +120,9 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                         //Nút thoát
                         if (i == 5) {
                             try {
-                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
-                                Robot robot = new Robot();
-                                robot.keyPress(KeyEvent.VK_ALT);
-                                robot.keyPress(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_ALT);
+                                Program.closeApp();
                             } catch (Exception ex) {
-                                ex.printStackTrace();
+                                System.out.println("Loi thoat chuong trinh");
                             }
                         }
                         if (i == 0) {
@@ -159,14 +154,9 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                         //Nút thoát
                         if (i == 3) {
                             try {
-                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
-                                Robot robot = new Robot();
-                                robot.keyPress(KeyEvent.VK_ALT);
-                                robot.keyPress(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_ALT);
+                                Program.closeApp();
                             } catch (Exception ex) {
-                                ex.printStackTrace();
+                                System.out.println("Loi thoat chuong trinh");
                             }
                         }
                         if (i == 0) {
