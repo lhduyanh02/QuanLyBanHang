@@ -154,10 +154,12 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     public static synchronized ThucDonMonAn getInstance() {
         if (instance == null) {
             instance = new ThucDonMonAn();
+            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setVisible(true);
             instance.reloadMenu();
             return instance;
         } else {
+            instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setVisible(true);
             instance.reloadMenu();
             return instance;
