@@ -108,6 +108,12 @@ public class Program {
     public static void main(String[] args) {
         ConnectDB();
         DangNhap.getInstance();
-
+//        new ThucDonMonAn().setVisible(true);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            
+            Program.writeLog(0, DangNhap.user);
+        }));
+        ConnectDB();
+        DangNhap.getInstance();
     }
 }
