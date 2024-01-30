@@ -62,6 +62,7 @@ public class WelcomeUI extends javax.swing.JFrame {
 //        ConnectDB();
     }
 
+
     private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
@@ -81,20 +82,9 @@ public class WelcomeUI extends javax.swing.JFrame {
                         //Nút thoát
                         if (i == 5) {
                             try {
-                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
-                                Robot robot = new Robot();
-                                robot.keyPress(KeyEvent.VK_ALT);
-                                robot.keyPress(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_ALT);
-                                
-                                Program.writeLog(0, DangNhap.user); // DÀNH CHO MacOS
-                                robot.keyPress(KeyEvent.VK_META);
-                                robot.keyPress(KeyEvent.VK_Q);
-                                robot.keyRelease(KeyEvent.VK_Q);
-                                robot.keyRelease(KeyEvent.VK_META);
+                                Program.closeApp();
                             } catch (Exception ex) {
-                                ex.printStackTrace();
+                                System.out.println("Loi thoat chuong trinh");
                             }
                         }
                         if (i == 0) {
@@ -137,23 +127,12 @@ public class WelcomeUI extends javax.swing.JFrame {
                         //Nút thoát
                         if (i == 4) {
                             try {
-                                // Sử dụng Robot để giả lập sự kiện nhấn nút X
-                                Robot robot = new Robot();
-                                robot.keyPress(KeyEvent.VK_ALT);
-                                robot.keyPress(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_F4);
-                                robot.keyRelease(KeyEvent.VK_ALT);
-                                
-                                Program.writeLog(0, DangNhap.user); // DÀNH CHO MacOS
-                                robot.keyPress(KeyEvent.VK_META);
-                                robot.keyPress(KeyEvent.VK_Q);
-                                robot.keyRelease(KeyEvent.VK_Q);
-                                robot.keyRelease(KeyEvent.VK_META);
+                                Program.closeApp();
                             } catch (Exception ex) {
-                                ex.printStackTrace();
+                                System.out.println("Loi thoat chuong trinh");
                             }
                         }
-                        if (i==3){
+                        if (i == 3) {
                             System.out.println("Doi mat khau");
                         }
                         if (i == 0) {

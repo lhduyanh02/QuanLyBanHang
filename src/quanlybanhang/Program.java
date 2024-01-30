@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +20,21 @@ import java.time.format.DateTimeFormatter;
  */
 public class Program {
 
+    public static void closeApp() {
+        if (JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to close this window?", "Close Window?",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            try {
+                con.close();
+                Program.writeLog(0, DangNhap.user);
+                System.exit(0);
+            } catch (Exception ex) {
+                System.out.println("Lỗi đóng chương trình");
+            }
+        }
+    }
+    
     private static void ConnectDB() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
