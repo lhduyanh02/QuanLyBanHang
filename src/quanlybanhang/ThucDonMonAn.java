@@ -56,7 +56,6 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     try {
                         con.close();
-                        Program.writeLog(0, DangNhap.user);
                         System.exit(0);
                     } catch (SQLException ex) {
                         Logger.getLogger(ThucDonMonAn.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +65,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         });
         reloadMenu();
     }
-    
+
     private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())

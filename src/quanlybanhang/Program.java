@@ -34,7 +34,7 @@ public class Program {
             }
         }
     }
-    
+
     private static void ConnectDB() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -88,7 +88,17 @@ public class Program {
 
     public static void main(String[] args) {
 //        new ThucDonMonAn().setVisible(true);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            
+            Program.writeLog(0, DangNhap.user);
+        }));
         ConnectDB();
         DangNhap.getInstance();
+        
+//        try {
+//            Thread.sleep(5000); // Đợi 5 giây
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 }

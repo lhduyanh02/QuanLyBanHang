@@ -51,7 +51,6 @@ public class WelcomeUI extends javax.swing.JFrame {
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     try {
                         con.close();
-                        Program.writeLog(0, DangNhap.user);
                         System.exit(0);
                     } catch (SQLException ex) {
                         Logger.getLogger(WelcomeUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +60,6 @@ public class WelcomeUI extends javax.swing.JFrame {
         });
 //        ConnectDB();
     }
-
 
     private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
