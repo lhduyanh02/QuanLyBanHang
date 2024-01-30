@@ -9,9 +9,14 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,6 +56,20 @@ public class Program {
     public static Connection con;
 
     public static void writeLog(int x, String us) {
+//        Statement s;
+//        try {
+//            s = con.createStatement();
+//            ResultSet rs = s.executeQuery("SELECT sign_log FROM htql_banhang.app_conf where IDConf = 0;");
+//            rs.next();
+//            String str = rs.getString(1);
+//            System.out.println(str);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+//      UPDATE app_conf
+//SET sign_log = CONCAT_WS('', sign_log, '\nabc')
+//WHERE IDConf = 0;
         try {
             // Lấy đường dẫn của thư mục làm việc hiện tại
             String workingDir = System.getProperty("user.dir");
@@ -87,6 +106,8 @@ public class Program {
     }
 
     public static void main(String[] args) {
+        ConnectDB();
+        DangNhap.getInstance();
 //        new ThucDonMonAn().setVisible(true);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             
@@ -94,11 +115,5 @@ public class Program {
         }));
         ConnectDB();
         DangNhap.getInstance();
-        
-//        try {
-//            Thread.sleep(5000); // Đợi 5 giây
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 }
