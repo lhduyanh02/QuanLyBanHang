@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package quanlybanhang;
+package quanlybanhang.view;
 
+import quanlybanhang.control.Program;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import static quanlybanhang.Program.con;
+import static quanlybanhang.control.Program.con;
 
 /**
  *

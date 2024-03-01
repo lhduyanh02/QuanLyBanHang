@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package quanlybanhang;
+package quanlybanhang.control;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import quanlybanhang.view.DangNhap;
 
 /**
  *
@@ -31,8 +32,8 @@ public class Program {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             try {
-                con.close();
                 Program.writeLog(0, DangNhap.user);
+                con.close();
                 System.exit(0);
             } catch (Exception ex) {
                 System.out.println("Lỗi đóng chương trình");
@@ -42,13 +43,15 @@ public class Program {
 
     private static void ConnectDB() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
-            String userDB = "user0";
-            String passDB = "123Abc@@";
-            con = DriverManager.getConnection(dbUrl, userDB, passDB);
+            if (con == null || con.isClosed()) {
+                Class.forName("com.mysql.jdbc.Driver");
+                String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
+                String userDB = "user0";
+                String passDB = "123Abc@@";
+                con = DriverManager.getConnection(dbUrl, userDB, passDB);
+            }
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("Lỗi kết nối dữ liệu");
         }
     }
@@ -67,17 +70,31 @@ public class Program {
 //            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 
-//      UPDATE app_conf
-//SET sign_log = CONCAT_WS('', sign_log, '\nabc')
+//UPDATE app_conf
+//SET sign_log = CONCAT('First\n', sign_log)
 //WHERE IDConf = 0;
+//        try {
+//            // Lấy đường dẫn của thư mục làm việc hiện tại
+//            String workingDir = System.getProperty("user.dir");
+//
+//            // Xây dựng đường dẫn đầy đủ đến tệp văn bản trong thư mục resources
+//            String filePath = workingDir + "/src/asserts/sign_in_log.txt";
+//            File file = new File(filePath);
+//            PrintWriter pw = new PrintWriter(new FileWriter(file.getAbsolutePath(), true));
+//            String str = "";
+//            if (x == 1) {
+//                str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
+//            }
+//            if (x == 0) {
+//                str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
+//            }
+//            pw.println(str); //Đẩy data vào bộ nhớ đệm trong file
+//            pw.flush(); //Lưu file lại 
+//            pw.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         try {
-            // Lấy đường dẫn của thư mục làm việc hiện tại
-            String workingDir = System.getProperty("user.dir");
-
-            // Xây dựng đường dẫn đầy đủ đến tệp văn bản trong thư mục resources
-            String filePath = workingDir + "/src/asserts/sign_in_log.txt";
-            File file = new File(filePath);
-            PrintWriter pw = new PrintWriter(new FileWriter(file.getAbsolutePath(), true));
             String str = "";
             if (x == 1) {
                 str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
@@ -85,9 +102,12 @@ public class Program {
             if (x == 0) {
                 str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
             }
-            pw.println(str); //Đẩy data vào bộ nhớ đệm trong file
-            pw.flush(); //Lưu file lại 
-            pw.close();
+
+            Statement s = con.createStatement();
+            s.executeUpdate("UPDATE app_conf\n"
+                    + "SET sign_log = CONCAT('"+ str +"\\n', sign_log)\n"
+                    + "WHERE IDConf = 0;");
+            s.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,12 +128,10 @@ public class Program {
     public static void main(String[] args) {
         ConnectDB();
         DangNhap.getInstance();
-//        new ThucDonMonAn().setVisible(true);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            
-            Program.writeLog(0, DangNhap.user);
-        }));
-        ConnectDB();
-        DangNhap.getInstance();
+        
+        //Bắt sự kiện kill process
+//        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//            Program.writeLog(0, DangNhap.user);
+//        }));
     }
 }

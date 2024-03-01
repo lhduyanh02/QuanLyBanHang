@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package quanlybanhang;
+package quanlybanhang.view;
 
+import quanlybanhang.control.Program;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.awt.Component;
@@ -17,7 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import static quanlybanhang.Program.con;
+import static quanlybanhang.control.Program.con;
 
 /**
  *
@@ -83,12 +84,12 @@ public class DangNhap extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(127, 199, 217));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         UsernameTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         UsernameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
-        UsernameTF.setMinimumSize(new java.awt.Dimension(80, 57));
         UsernameTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsernameTFActionPerformed(evt);
@@ -98,7 +99,6 @@ public class DangNhap extends javax.swing.JDialog {
         PasswordTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         PasswordTF.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        PasswordTF.setMinimumSize(new java.awt.Dimension(80, 57));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,8 +107,8 @@ public class DangNhap extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(UsernameTF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PasswordTF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(UsernameTF)
+                    .addComponent(PasswordTF))
                 .addGap(67, 67, 67))
         );
         jPanel1Layout.setVerticalGroup(
@@ -123,9 +123,10 @@ public class DangNhap extends javax.swing.JDialog {
 
         PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18)));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
+        DangNhapLabel.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
         DangNhapLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         DangNhapLabel.setText("Đăng nhập");
         DangNhapLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -136,6 +137,7 @@ public class DangNhap extends javax.swing.JDialog {
             }
         });
 
+        ThoatLabel.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
         ThoatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ThoatLabel.setText("Thoát");
         ThoatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -172,7 +174,10 @@ public class DangNhap extends javax.swing.JDialog {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {DangNhapLabel, ThoatLabel});
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 32)); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(249, 247, 201));
+
+        jLabel1.setBackground(new java.awt.Color(249, 247, 201));
+        jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ĐĂNG NHẬP");
 

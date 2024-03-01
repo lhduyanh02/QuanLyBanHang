@@ -1,4 +1,4 @@
-package quanlybanhang;
+package quanlybanhang.view;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -9,26 +9,28 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import static quanlybanhang.Program.con;
+import javax.swing.border.TitledBorder;
+import static quanlybanhang.control.Program.con;
 
-public class EditDialog extends javax.swing.JDialog {
-    private String MaSanPham = "";
+public class AddDialog extends javax.swing.JDialog {
+
     /**
      * Creates new form AddDialog
      */
-    public EditDialog(java.awt.Frame parent, boolean modal) {
+    public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         //THÊM SỰ KIỆN CHUỘT CHO jlABEL NÚT THÊM
-        CapNhatLabel.addMouseListener(new EditDialog.SharedMouseListener());
-        DatLaiLabel.addMouseListener(new EditDialog.SharedMouseListener());
-        ThoatLabel.addMouseListener(new EditDialog.SharedMouseListener());
+        ThemLabel.addMouseListener(new AddDialog.SharedMouseListener());
+        DatLaiLabel.addMouseListener(new AddDialog.SharedMouseListener());
+        ThoatLabel.addMouseListener(new AddDialog.SharedMouseListener());
 
         // RÀNG BUỘC MÃ MÓN
         MaMonTF.addKeyListener(new KeyListener() { // KIỂM TRA TEXTFIELD MÃ MÓN
@@ -123,16 +125,24 @@ public class EditDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ChonLoai = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         MaMonTF = new javax.swing.JTextField();
         TenMonTF = new javax.swing.JTextField();
         GiaMonTF = new javax.swing.JTextField();
+        MonAnRadioBtn = new javax.swing.JRadioButton();
+        NuocRadioBtn = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        GhiChuTF = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
-        CapNhatLabel = new javax.swing.JLabel();
+        ThemLabel = new javax.swing.JLabel();
         DatLaiLabel = new javax.swing.JLabel();
         ThoatLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+
+        ChonLoai.add(MonAnRadioBtn);
+        ChonLoai.add(NuocRadioBtn);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -148,40 +158,73 @@ public class EditDialog extends javax.swing.JDialog {
         GiaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món"));
 
+        MonAnRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
+        MonAnRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        MonAnRadioBtn.setText("Món ăn");
+        MonAnRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MonAnRadioBtnActionPerformed(evt);
+            }
+        });
+
+        NuocRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
+        NuocRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NuocRadioBtn.setText("Nước");
+        NuocRadioBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ghi chú"));
+
+        GhiChuTF.setColumns(20);
+        GhiChuTF.setRows(5);
+        GhiChuTF.setWrapStyleWord(true);
+        GhiChuTF.setBorder(null);
+        jScrollPane1.setViewportView(GhiChuTF);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(57, 57, 57)
+                        .addComponent(NuocRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(MaMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(TenMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(GiaMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                .addGap(88, 88, 88))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(16, 16, 16)
                 .addComponent(MaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MonAnRadioBtn)
+                    .addComponent(NuocRadioBtn))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
-        CapNhatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CapNhatLabel.setText("Cập Nhật");
-        CapNhatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        CapNhatLabel.setOpaque(true);
-        CapNhatLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        ThemLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ThemLabel.setText("Thêm");
+        ThemLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ThemLabel.setOpaque(true);
+        ThemLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CapNhatLabelMouseClicked(evt);
+                ThemLabelMouseClicked(evt);
             }
         });
 
@@ -211,7 +254,7 @@ public class EditDialog extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(CapNhatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ThemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -223,7 +266,7 @@ public class EditDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CapNhatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ThemLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DatLaiLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ThoatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -231,9 +274,10 @@ public class EditDialog extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
+        jLabel1.setBackground(new java.awt.Color(127, 199, 217));
         jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("SỬA MÓN");
+        jLabel1.setText("THÊM MÓN");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -259,9 +303,9 @@ public class EditDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -282,7 +326,7 @@ public class EditDialog extends javax.swing.JDialog {
 
     }//GEN-LAST:event_DatLaiLabelMouseClicked
 
-    private void CapNhatLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CapNhatLabelMouseClicked
+    private void ThemLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThemLabelMouseClicked
         Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (MaMonTF.getText().equals("") || containsSpecialChars(MaMonTF) || containsWhitespace(MaMonTF) || containsVietnamese(MaMonTF) || MaMonTF.getText().length() > 10) {
             JOptionPane.showMessageDialog(this, "Mã món không hợp lệ, vui lòng kiểm tra lại",
@@ -302,36 +346,60 @@ public class EditDialog extends javax.swing.JDialog {
             GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 0, 0), 1, true), "Giá món"));
             return;
         }
+        if (ChonLoai.getSelection() == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 loại sản phẩm!",
+                    "Chưa chọn loại", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
 
         try {
             Statement s = con.createStatement();
             int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
+            int loai = 0;
+            String type = "";
+            if (MonAnRadioBtn.isSelected()) {
+                loai = 0;
+                type = "Món ăn";
+            } else if (NuocRadioBtn.isSelected()) {
+                loai = 1;
+                type = "Nước";
+            }
             System.out.println("Mã món: " + MaMonTF.getText() + " || "
                     + "Tên món: " + TenMonTF.getText() + " || "
-                    + "Giá: " + gia + "|| Updated");
-
-            s.executeUpdate("UPDATE htql_banhang.sanpham SET"
-                    + " MaSP = N'"+MaMonTF.getText()+"', TenSP = N'"+TenMonTF.getText()+"', GiaSP = '"+gia+"' WHERE (`MaSP` = '"+MaSanPham+"');");
+                    + "Giá: " + gia + " || "
+                    + "Loại: " + type);
+            
+            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
+                    + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '" + loai + "', N'"+GhiChuTF.getText()+"');");
             s.close();
             updateNoti(1, this);
         } catch (SQLException ex) {
             System.out.println("Data is not valid!");
             updateNoti(0, this);
         }
-    }//GEN-LAST:event_CapNhatLabelMouseClicked
+    }//GEN-LAST:event_ThemLabelMouseClicked
+
+    private void MonAnRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonAnRadioBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MonAnRadioBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CapNhatLabel;
+    private javax.swing.ButtonGroup ChonLoai;
     private javax.swing.JLabel DatLaiLabel;
+    private javax.swing.JTextArea GhiChuTF;
     private javax.swing.JTextField GiaMonTF;
     private javax.swing.JTextField MaMonTF;
+    private javax.swing.JRadioButton MonAnRadioBtn;
+    private javax.swing.JRadioButton NuocRadioBtn;
     private javax.swing.JTextField TenMonTF;
+    private javax.swing.JLabel ThemLabel;
     private javax.swing.JLabel ThoatLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     public class SharedMouseListener extends MouseAdapter {
@@ -405,24 +473,18 @@ public class EditDialog extends javax.swing.JDialog {
     private void updateNoti(int state, JDialog dialog) {
         if (state == 1) {
             Icon icon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-            JOptionPane.showMessageDialog(this, "Cập nhật món thành công!", "Đã cập nhật", JOptionPane.INFORMATION_MESSAGE, icon);
+            JOptionPane.showMessageDialog(this, "Thêm món thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, icon);
             dialog.dispose();
-            ThucDonMonAn.getInvisibleInstance().reloadMenu();
-            ThucDonNuoc.getInvisibleInstance().reloadMenu();
-
+            if (MonAnRadioBtn.isSelected()) {
+                ThucDonMonAn.getInvisibleInstance().reloadMenu();
+            } else if (NuocRadioBtn.isSelected()) {
+                ThucDonNuoc.getInvisibleInstance().reloadMenu();
+            }
         }
         if (state == 0) {
             Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(this, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Không thể thêm món", JOptionPane.INFORMATION_MESSAGE, icon);
 //            dialog.dispose();
         }
-    }
-
-    public EditDialog getOldValue(String MM, String TM, int GM) {
-        MaSanPham = MM;
-        MaMonTF.setText(MM);
-        TenMonTF.setText(TM);
-        GiaMonTF.setText(String.valueOf(GM));
-        return this;
     }
 }

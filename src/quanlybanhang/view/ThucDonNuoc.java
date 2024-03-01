@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package quanlybanhang;
+package quanlybanhang.view;
 
+import quanlybanhang.control.Program;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Robot;
@@ -27,20 +28,20 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import static quanlybanhang.Program.con;
+import static quanlybanhang.control.Program.con;
 
 /**
  *
  * @author Admin
  */
-public class ThucDonMonAn extends javax.swing.JFrame {
+public class ThucDonNuoc extends javax.swing.JFrame {
 
-    private static ThucDonMonAn instance;
+    private static ThucDonNuoc instance;
     private DrawerController drawer;
 
-    public ThucDonMonAn() {
+    public ThucDonNuoc() {
         initComponents();
-        if (DangNhap.getAccess() == 0) {
+        if (DangNhap.getAccess() == 0) {    //KIỂM TRA VÀ BUILD DRAWER THEO TÀI KHOẢN
             this.buildAdminDrawer();
         } else {
             this.buildDrawer();
@@ -55,10 +56,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     try {
+                        Program.writeLog(0, DangNhap.user);
                         con.close();
                         System.exit(0);
                     } catch (SQLException ex) {
-                        Logger.getLogger(ThucDonMonAn.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ThucDonNuoc.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -66,6 +68,40 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         reloadMenu();
     }
 
+//    private void buildDrawer(){
+//        drawer = Drawer.newDrawer(this)
+//                .header(new HeaderDrawer())
+////                .separator(2, new Color(0, 0, 0))
+//                .drawerWidth(290)
+//                .backgroundTransparent(0.5f)
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+//                .event(new EventDrawer() {
+//                    @Override
+//                    public void selected(int i, DrawerItem di) {
+////                        System.out.println(i + " - "+ di);
+//                        if(i == 5) {
+//                            try {
+//                                if (JOptionPane.showConfirmDialog(null,
+//                                        "Are you sure you want to close this window?", "Close Window?",
+//                                        JOptionPane.YES_NO_OPTION,
+//                                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+//                                    System.exit(0);
+//                                }
+//                            } catch (Exception ex) {
+//                                ex.printStackTrace();
+//                            }
+//                        }
+//                    }
+//
+//                })
+//                .enableScroll(true)
+//                .build();
+//    }
     private void buildAdminDrawer() {
         drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
@@ -90,10 +126,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                                 System.out.println("Loi thoat chuong trinh");
                             }
                         }
-                        if (i == 1) {
+                        if (i == 0) {
                             drawer.hide();
                             closeThisUI();
-                            ThucDonNuoc.getInstance();
+                            ThucDonMonAn.getInstance();
                         }
                     }
 
@@ -125,7 +161,6 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                             }
                         }
                         if (i == 0) {
-                            drawer.hide();
                             closeThisUI();
                             ThucDonMonAn.getInstance();
                         }
@@ -140,9 +175,9 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         instance.dispose();
     }
 
-    public static synchronized ThucDonMonAn getInstance() {
+    public static synchronized ThucDonNuoc getInstance() {
         if (instance == null) {
-            instance = new ThucDonMonAn();
+            instance = new ThucDonNuoc();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.setVisible(true);
             instance.reloadMenu();
@@ -155,9 +190,9 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         }
     }
 
-    public static synchronized ThucDonMonAn getInvisibleInstance() {
+    public static synchronized ThucDonNuoc getInvisibleInstance() {
         if (instance == null) {
-            instance = new ThucDonMonAn();
+            instance = new ThucDonNuoc();
 //            instance.setVisible(false);
             instance.reloadMenu();
             return instance;
@@ -165,6 +200,31 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 //            instance.setVisible(false);
             instance.reloadMenu();
             return instance;
+        }
+    }
+
+    public void ConnectDB() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
+            String userDB = "user0";
+            String passDB = "123Abc@@";
+            con = DriverManager.getConnection(dbUrl, userDB, passDB);
+            reloadMenu();
+//            Statement s = con.createStatement();
+//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham;");
+//            DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+//            m.setRowCount(0);
+//            int stt = 1;
+//            while(rs.next()){
+//                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+//                m.addRow(obj);
+//                stt++;
+//            }
+//            s.close();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.println("Lỗi kết nối dữ liệu");
         }
     }
 
@@ -195,10 +255,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(249, 247, 201));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setBackground(new java.awt.Color(249, 247, 201));
         jLabel1.setFont(new java.awt.Font("Palatino", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ THỰC ĐƠN MÓN ĂN");
+        jLabel1.setText("QUẢN LÝ THỰC ĐƠN NƯỚC");
         jLabel1.setAlignmentY(0.0F);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -234,7 +294,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +305,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Courier New", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -282,12 +342,12 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
-        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 127));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
 
         AddBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         AddBtn.setText("THÊM MỚI SẢN PHẨM");
         AddBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        AddBtn.setOpaque(true);
         AddBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddBtnActionPerformed(evt);
@@ -298,17 +358,14 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         EditBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         EditBtn.setText("CẬP NHẬT");
         EditBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        EditBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtnActionPerformed(evt);
-            }
-        });
+        EditBtn.setOpaque(true);
         jPanel3.add(EditBtn);
 
         DelBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         DelBtn.setText("XOÁ SẢN PHẨM");
         DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        DelBtn.setOpaque(true);
         DelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DelBtnActionPerformed(evt);
@@ -319,6 +376,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ReloadButton.setText("TẢI LẠI");
         ReloadButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ReloadButton.setOpaque(true);
         ReloadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ReloadButtonActionPerformed(evt);
@@ -329,11 +387,13 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton5.setText("jButton1");
         jButton5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton5.setOpaque(true);
         jPanel3.add(jButton5);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton6.setText("jButton1");
         jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton6.setOpaque(true);
         jPanel3.add(jButton6);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -429,10 +489,6 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DelBtnActionPerformed
 
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        editMenu();
-    }//GEN-LAST:event_EditBtnActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddBtn;
     private javax.swing.JButton DelBtn;
@@ -453,29 +509,15 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         new AddDialog(this, rootPaneCheckingEnabled).setVisible(true);
     }
 
-    private void editMenu() {
-        int r = jTable1.getSelectedRow();
-        if (r == -1) {
-            JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } else {
-            String MaSP = (String) jTable1.getModel().getValueAt(r, 1);
-            String TenSP = (String) jTable1.getModel().getValueAt(r, 2);
-            int GiaSP = (int) jTable1.getModel().getValueAt(r, 3);
-            new EditDialog(this, rootPaneCheckingEnabled).getOldValue(MaSP, TenSP, GiaSP).setVisible(true);
-
-        }
-
-    }
-
     public void reloadMenu() {
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '0';");
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '1';");
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
             while (rs.next()) {
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)};
+                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
                 m.addRow(obj);
                 stt++;
             }

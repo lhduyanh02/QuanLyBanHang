@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package quanlybanhang;
+package quanlybanhang.view;
 
+import quanlybanhang.control.Program;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -22,7 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import static quanlybanhang.Program.con;
+import static quanlybanhang.control.Program.con;
 
 /**
  *
@@ -45,17 +46,7 @@ public class WelcomeUI extends javax.swing.JFrame {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to close this window?", "Close Window?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    try {
-                        con.close();
-                        System.exit(0);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(WelcomeUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                Program.closeApp();
             }
         });
 //        ConnectDB();
