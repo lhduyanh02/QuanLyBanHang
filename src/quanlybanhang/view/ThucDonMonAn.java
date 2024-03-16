@@ -30,6 +30,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.control.ThucDon;
+import table.TableCustom;
 
 /**
  *
@@ -39,10 +40,16 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
     private static ThucDonMonAn instance;
     private DrawerController drawer;
-    
 
     public ThucDonMonAn() {
         initComponents();
+
+//        int columnIndex = 3;
+//        TableColumnModel columnModel = jTable1.getColumnModel();
+//        columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
+
+        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -265,12 +272,12 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(30);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(20);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(150);
         }
         jScrollPane1.getViewport().setBackground(Color.WHITE);
-
-        int columnIndex = 3;
-        TableColumnModel columnModel = jTable1.getColumnModel();
-        columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
 
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
