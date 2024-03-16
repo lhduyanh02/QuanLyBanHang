@@ -5,6 +5,7 @@
 package quanlybanhang.control;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,6 +27,16 @@ import quanlybanhang.view.DangNhap;
  * @author Admin
  */
 public class Program {
+
+    public static Properties ReadFileProperties() {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src\\properties\\Setting.properties"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
 
     public static void closeApp() {
         if (JOptionPane.showConfirmDialog(null,
@@ -45,9 +57,10 @@ public class Program {
         try {
             if (con == null || con.isClosed()) {
                 Class.forName("com.mysql.jdbc.Driver");
-                String dbUrl = "jdbc:mysql://115.74.233.26:33066/htql_banhang";
-                String userDB = "user0";
-                String passDB = "123Abc@@";
+                Properties prop = ReadFileProperties(); 
+                String dbUrl = prop.getProperty("DBURL");
+                String userDB = prop.getProperty("DBusername");
+                String passDB = prop.getProperty("DBpassword");
                 con = DriverManager.getConnection(dbUrl, userDB, passDB);
             }
         } catch (Exception e) {
@@ -105,7 +118,7 @@ public class Program {
 
             Statement s = con.createStatement();
             s.executeUpdate("UPDATE app_conf\n"
-                    + "SET sign_log = CONCAT('"+ str +"\\n', sign_log)\n"
+                    + "SET sign_log = CONCAT('" + str + "\\n', sign_log)\n"
                     + "WHERE IDConf = 0;");
             s.close();
         } catch (Exception e) {
@@ -128,7 +141,7 @@ public class Program {
     public static void main(String[] args) {
         ConnectDB();
         DangNhap.getInstance();
-        
+
         //Bắt sự kiện kill process
 //        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 //            Program.writeLog(0, DangNhap.user);

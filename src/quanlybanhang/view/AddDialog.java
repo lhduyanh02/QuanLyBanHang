@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.control.ThucDon;
 
 public class AddDialog extends javax.swing.JDialog {
-
     /**
      * Creates new form AddDialog
      */
@@ -353,7 +353,7 @@ public class AddDialog extends javax.swing.JDialog {
         }
 
         try {
-            Statement s = con.createStatement();
+//            Statement s = con.createStatement();
             int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
             int loai = 0;
             String type = "";
@@ -364,16 +364,18 @@ public class AddDialog extends javax.swing.JDialog {
                 loai = 1;
                 type = "Nước";
             }
-            System.out.println("Mã món: " + MaMonTF.getText() + " || "
-                    + "Tên món: " + TenMonTF.getText() + " || "
-                    + "Giá: " + gia + " || "
-                    + "Loại: " + type);
             
-            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
-                    + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '" + loai + "', N'"+GhiChuTF.getText()+"');");
-            s.close();
+            ThucDon.getInstance().themMon(MaMonTF.getText(), TenMonTF.getText(), gia, loai, GhiChuTF.getText());
+//            System.out.println("Mã món: " + MaMonTF.getText() + " || "
+//                    + "Tên món: " + TenMonTF.getText() + " || "
+//                    + "Giá: " + gia + " || "
+//                    + "Loại: " + type);
+//            
+//            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
+//                    + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '" + loai + "', N'"+GhiChuTF.getText()+"');");
+//            s.close();
             updateNoti(1, this);
-        } catch (SQLException ex) {
+        } catch (Exception e) {
             System.out.println("Data is not valid!");
             updateNoti(0, this);
         }

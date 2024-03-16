@@ -4,6 +4,7 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Color;
 import quanlybanhang.control.Program;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
@@ -25,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import static quanlybanhang.control.Program.ReadFileProperties;
 import static quanlybanhang.control.Program.con;
 
 /**
@@ -43,27 +46,16 @@ public class giaodientest extends javax.swing.JFrame {
         } else {
             this.buildDrawer();
         }
-
+        Properties prop = ReadFileProperties(); //LẤY MÀU TRONG FILE PROPERTIES
+        jPanel2.setBackground(Color.decode(prop.getProperty("ColorTest")));
+        
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (JOptionPane.showConfirmDialog(null,
-                        "Are you sure you want to close this window?", "Close Window?",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    try {
-                        con.close();
-                        Program.writeLog(0, DangNhap.user);
-                        System.exit(0);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(giaodientest.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                Program.closeApp();
             }
         });
-        jPanel3.setVisible(false);
-//        ConnectDB();
     }
 
     private void buildAdminDrawer() {
@@ -165,14 +157,6 @@ public class giaodientest extends javax.swing.JFrame {
         instance.dispose();
     }
 
-    public void goIn() {
-        jPanel3.setVisible(true);
-    }
-
-    public void goOut() {
-        jPanel3.setVisible(false);
-    }
-
 //    public void ConnectDB(){
 //        try {
 //            Class.forName("com.mysql.jdbc.Driver");
@@ -208,11 +192,7 @@ public class giaodientest extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -231,57 +211,17 @@ public class giaodientest extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 204));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 91, -1, -1));
-
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
-        jTextPane1.setText("*Bạn đang đăng nhập bằng tài khoản "+ DangNhap.user+".\n"
-            + "*Đăng nhập thành công: " +Program.getTimeNow()
-            + "\n\nChọn một chức năng trong menu để tiếp tục, hehe.");
-        jTextPane1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jTextPane1.setEnabled(false);
-        jScrollPane2.setViewportView(jTextPane1);
-        //SimpleAttributeSet center = new SimpleAttributeSet();
-        //StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        //jTextPane1.setParagraphAttributes(center, false);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE))
+            .addGap(0, 1000, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(236, 236, 236))
+            .addGap(0, 510, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 91, 1000, 510));
@@ -362,23 +302,11 @@ public class giaodientest extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jPanel3.isVisible()){
-            goOut();
-        } else {
-            goIn();
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 }

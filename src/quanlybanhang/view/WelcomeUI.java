@@ -49,7 +49,6 @@ public class WelcomeUI extends javax.swing.JFrame {
                 Program.closeApp();
             }
         });
-//        ConnectDB();
     }
 
     private void buildAdminDrawer() {

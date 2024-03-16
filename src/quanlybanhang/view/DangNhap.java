@@ -177,7 +177,7 @@ public class DangNhap extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(249, 247, 201));
-        jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ĐĂNG NHẬP");
 

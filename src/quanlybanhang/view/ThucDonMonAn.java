@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.control.ThucDon;
 
 /**
  *
@@ -38,6 +39,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
     private static ThucDonMonAn instance;
     private DrawerController drawer;
+    
 
     public ThucDonMonAn() {
         initComponents();
@@ -242,11 +244,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 
             },
             new String [] {
-                "STT", "MÃ MÓN", "TÊN MÓN", "GIÁ TIỀN"
+                "STT", "MÃ MÓN", "TÊN MÓN", "GIÁ TIỀN", "GHI CHÚ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -260,11 +262,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jTable1.setRowHeight(30);
         jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
-        jTable1.getColumnModel().getColumn(1).setPreferredWidth(80);
-        jTable1.getColumnModel().getColumn(2).setPreferredWidth(500);
-        jTable1.getColumnModel().getColumn(3).setPreferredWidth(80);
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+        }
         jScrollPane1.getViewport().setBackground(Color.WHITE);
 
         int columnIndex = 3;
@@ -401,18 +402,21 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             } else {
                 int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xoá món không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
-                    Statement s = con.createStatement();
                     Object MaSP = jTable1.getModel().getValueAt(r, 1);
-                    int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
-                    if (x != 0) {
-                        JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
-                        reloadMenu();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
-                        reloadMenu();
-                    }
-                    s.close();
+                    ThucDon.getInstance().xoaMon(MaSP);
+//                    Statement s = con.createStatement();
+//                    
+//                    int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
+//                    if (x != 0) {
+//                        JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
+//                        reloadMenu();
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
+//                        reloadMenu();
+//                    }
+//                    s.close();
                 }
+                reloadMenu();
             }
 
         } catch (Exception e) {
@@ -466,7 +470,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             m.setRowCount(0);
             int stt = 1;
             while (rs.next()) {
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)};
+                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(5)};
                 m.addRow(obj);
                 stt++;
             }
