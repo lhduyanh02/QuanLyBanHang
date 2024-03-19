@@ -31,7 +31,7 @@ public class Program {
     public static Properties ReadFileProperties() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("src\\properties\\Setting.properties"));
+            properties.load(new FileInputStream("src/properties/Setting.properties"));
         } catch (Exception e) {
             e.printStackTrace();
         }

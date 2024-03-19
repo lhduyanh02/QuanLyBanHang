@@ -12,6 +12,11 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -25,27 +30,28 @@ import static quanlybanhang.control.Program.con;
  * @author Admin
  */
 public class DangNhap extends javax.swing.JDialog {
+
     private static DangNhap Instance;
     public static String user;
     private static int access;
     private static KeyEventDispatcher keyEventDispatcher;
-    
-    public static int getAccess(){
+
+    public static int getAccess() {
         return access;
     }
-    
+
     public DangNhap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        keyEventDispatcher = new KeyEventDispatcher(){
+
+        keyEventDispatcher = new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_ENTER) {
                     // Xử lý sự kiện khi nhấn phím Enter
 //                    System.out.println("Enter key pressed in dialog");
                     DangNhap();
-                    
+
                     closeAllOptionPanes(DangNhap.Instance);
                 }
                 return false;
@@ -53,13 +59,12 @@ public class DangNhap extends javax.swing.JDialog {
         };
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
     }
-    
-    public static synchronized DangNhap getInstance(){
-        if(Instance==null){
+
+    public static synchronized DangNhap getInstance() {
+        if (Instance == null) {
             Instance = new DangNhap(null, true);
             Instance.setVisible(true);
-        }
-        else{
+        } else {
             Instance.setVisible(true);
         }
         return Instance;
@@ -99,29 +104,11 @@ public class DangNhap extends javax.swing.JDialog {
         PasswordTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
         PasswordTF.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(UsernameTF)
-                    .addComponent(PasswordTF))
-                .addGap(67, 67, 67))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
-                .addComponent(UsernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
-        );
-
-        PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18)));
+        PasswordTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PasswordTFMouseClicked(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
@@ -174,6 +161,31 @@ public class DangNhap extends javax.swing.JDialog {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {DangNhapLabel, ThoatLabel});
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(UsernameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                    .addComponent(PasswordTF))
+                .addGap(67, 67, 67))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(UsernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18)));
+
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(249, 247, 201));
@@ -198,16 +210,13 @@ public class DangNhap extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -219,14 +228,47 @@ public class DangNhap extends javax.swing.JDialog {
     }//GEN-LAST:event_DangNhapLabelMouseClicked
 
     private void ThoatLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThoatLabelMouseClicked
-        dispose();
+        try {
+            dispose();
+            con.close();
+            System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ThoatLabelMouseClicked
 
     private void UsernameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UsernameTFActionPerformed
 
-    
+    boolean isAlreadyOneClick = false;
+    boolean hidePW = true;
+    private void PasswordTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PasswordTFMouseClicked
+        if (isAlreadyOneClick) {
+//            System.out.println("double click");
+            if (hidePW == true) {
+                PasswordTF.setEchoChar((char) 0);
+                hidePW = false;
+            } else {
+                char ch = 0x25cf; //Default: 0x25cf
+                PasswordTF.setEchoChar(ch);
+                hidePW = true;
+            }
+            isAlreadyOneClick = false;
+        } else {
+            isAlreadyOneClick = true;
+            Timer t = new Timer("doubleclickTimer", false);
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    isAlreadyOneClick = false;
+                }
+            }, 500);
+        }
+    }//GEN-LAST:event_PasswordTFMouseClicked
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DangNhapLabel;
     private javax.swing.JPasswordField PasswordTF;
@@ -237,7 +279,7 @@ public class DangNhap extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
-    
+
     //Kiểm tra có chứa ký tự đặc biệt
     public static boolean containsSpecialChars(JTextField TF) {
         String input = TF.getText();
@@ -263,8 +305,8 @@ public class DangNhap extends javax.swing.JDialog {
         // Sử dụng phương thức matches() để kiểm tra
         return Pattern.matches(regex, input);
     }
-    
-    private void DangNhap(){
+
+    private void DangNhap() {
         Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (UsernameTF.getText().equals("") || containsSpecialChars(UsernameTF) || containsWhitespace(UsernameTF) || containsVietnamese(UsernameTF) || UsernameTF.getText().length() > 10) {
 //            JOptionPane.showMessageDialog(this, "Tên đăng nhập không hợp lệ, vui lòng kiểm tra lại",
@@ -284,46 +326,46 @@ public class DangNhap extends javax.swing.JDialog {
             String pass = new String(PasswordTF.getPassword());
             Statement s = con.createStatement();
             String passwd = "";
-            ResultSet rs = s.executeQuery("SELECT passwd, access FROM htql_banhang.taikhoan where usname = '"+user+"';");
-            if(rs.next()){
+            ResultSet rs = s.executeQuery("SELECT passwd, access FROM htql_banhang.taikhoan where usname = '" + user + "';");
+            if (rs.next()) {
                 passwd = (String) rs.getString(1);
                 access = (int) rs.getInt(2);
             } else {
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
-                "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
+                        "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
             }
             s.close();
-            
-            if(pass.equals(passwd)){
+
+            if (pass.equals(passwd)) {
                 this.dispose();
                 Program.writeLog(1, user);
                 WelcomeUI.getInstance();
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
             } else {
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
-                "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
+                        "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Login unsuccessful!");
             JOptionPane.showMessageDialog(this, "Không thể đăng nhập, vui lòng kiểm tra lại",
-                "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
         }
     }
-    
+
     private static void closeAllOptionPanes(JDialog dia) {
         Window[] windows = dia.getOwnedWindows();
         for (Window ownedWindow : windows) {
             if (ownedWindow instanceof JDialog) {
-            JDialog dialog = (JDialog) ownedWindow;
-            Component[] components = dialog.getContentPane().getComponents();
-            for (Component component : components) {
-                if (component instanceof JOptionPane) {
-                    ownedWindow.dispose();
-                    break;
+                JDialog dialog = (JDialog) ownedWindow;
+                Component[] components = dialog.getContentPane().getComponents();
+                for (Component component : components) {
+                    if (component instanceof JOptionPane) {
+                        ownedWindow.dispose();
+                        break;
+                    }
                 }
             }
-        }
         }
     }
 }
