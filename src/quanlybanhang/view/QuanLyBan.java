@@ -36,6 +36,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         addBtn.addMouseListener(new Program.SharedMouseListener());
         updateBtn.addMouseListener(new Program.SharedMouseListener());
 
+        addBtn.setVisible(false);
         table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
@@ -144,10 +145,12 @@ public class QuanLyBan extends javax.swing.JFrame {
         if (instance == null) {
             instance = new QuanLyBan();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.reload();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.reload();
             instance.setVisible(true);
             return instance;
         }
@@ -379,8 +382,12 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void reloadBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadBtnMouseClicked
+        reload();
+    }//GEN-LAST:event_reloadBtnMouseClicked
+
+    private void reload() {
         try {
-            ResultSet rs = Ban.getInstance().layDSban();
+            ResultSet rs = Ban.layDSban();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
@@ -393,8 +400,7 @@ public class QuanLyBan extends javax.swing.JFrame {
             System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_reloadBtnMouseClicked
-
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel jLabel1;
