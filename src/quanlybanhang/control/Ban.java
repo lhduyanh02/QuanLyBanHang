@@ -17,6 +17,18 @@ import static quanlybanhang.control.Program.con;
  */
 public class Ban {
     private static Ban instance;
+    private String maban;
+    private String tenban;
+    private int trangthai;
+    
+    public Ban(String mb, String tb, int stt){
+        maban = mb;
+        tenban = tb;
+        trangthai = stt;
+    }
+    
+    public Ban(){
+    }
 
     public static synchronized Ban getInstance() {
         if (instance == null) {
@@ -27,7 +39,7 @@ public class Ban {
         }
     }
     
-    public boolean themBan(String MaBan, String TenBan) {
+    public static boolean themBan(String MaBan, String TenBan) {
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("");
@@ -38,13 +50,13 @@ public class Ban {
             return true;
         } catch (Exception e) {
             System.out.println("Loi! [Class: Ban - Method: themBan]");
-            Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+            Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }
     }
     
-     public ResultSet layDSban() {
+     public static ResultSet layDSban() {
         ResultSet rs = null;
         try {
             Statement s = con.createStatement();
