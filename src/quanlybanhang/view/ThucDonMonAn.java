@@ -75,7 +75,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
@@ -103,7 +103,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                         if (i == 3) {
                             drawer.hide();
                             closeThisUI();
-                            giaodientest.getInstance();
+                            QuanLyPhieuChi.getInstance();
                         }
                     }
 

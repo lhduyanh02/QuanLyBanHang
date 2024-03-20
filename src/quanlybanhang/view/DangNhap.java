@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import static quanlybanhang.control.Program.con;
@@ -43,7 +44,12 @@ public class DangNhap extends javax.swing.JDialog {
     public DangNhap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                System.exit(0);
+            }
+        });
         keyEventDispatcher = new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
