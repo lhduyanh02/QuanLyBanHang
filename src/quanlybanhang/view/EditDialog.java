@@ -1,10 +1,7 @@
 package quanlybanhang.view;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Matcher;
@@ -12,9 +9,9 @@ import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import quanlybanhang.control.Program.SharedMouseListener;
 import static quanlybanhang.control.Program.con;
 
 public class EditDialog extends javax.swing.JDialog {
@@ -25,10 +22,10 @@ public class EditDialog extends javax.swing.JDialog {
     public EditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //THÊM SỰ KIỆN CHUỘT CHO jlABEL NÚT THÊM
-        CapNhatLabel.addMouseListener(new EditDialog.SharedMouseListener());
-        DatLaiLabel.addMouseListener(new EditDialog.SharedMouseListener());
-        ThoatLabel.addMouseListener(new EditDialog.SharedMouseListener());
+        //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
+        CapNhatLabel.addMouseListener(new SharedMouseListener());
+        DatLaiLabel.addMouseListener(new SharedMouseListener());
+        ThoatLabel.addMouseListener(new SharedMouseListener());
 
         // RÀNG BUỘC MÃ MÓN
         MaMonTF.addKeyListener(new KeyListener() { // KIỂM TRA TEXTFIELD MÃ MÓN
@@ -231,7 +228,7 @@ public class EditDialog extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SỬA MÓN");
 
@@ -306,9 +303,9 @@ public class EditDialog extends javax.swing.JDialog {
         try {
             Statement s = con.createStatement();
             int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
-            System.out.println("Mã món: " + MaMonTF.getText() + " || "
-                    + "Tên món: " + TenMonTF.getText() + " || "
-                    + "Giá: " + gia + "|| Updated");
+//            System.out.println("Mã món: " + MaMonTF.getText() + " || "
+//                    + "Tên món: " + TenMonTF.getText() + " || "
+//                    + "Giá: " + gia + "|| Updated");
 
             s.executeUpdate("UPDATE htql_banhang.sanpham SET"
                     + " MaSP = N'"+MaMonTF.getText()+"', TenSP = N'"+TenMonTF.getText()+"', GiaSP = '"+gia+"' WHERE (`MaSP` = '"+MaSanPham+"');");
@@ -333,29 +330,6 @@ public class EditDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
-
-    public class SharedMouseListener extends MouseAdapter {
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            ((JLabel) e.getSource()).setBackground(Color.WHITE);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            ((JLabel) e.getSource()).setBackground(new Color(242, 242, 242));
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            ((JLabel) e.getSource()).setBorder((javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED)));
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            ((JLabel) e.getSource()).setBorder((javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)));
-        }
-    }
 
     // Hàm kiểm tra ký tự đặc biệt
     private static boolean isSpecialCharacter(char c) {

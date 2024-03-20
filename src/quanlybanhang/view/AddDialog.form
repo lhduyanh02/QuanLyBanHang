@@ -320,7 +320,7 @@
               <Color blue="d9" green="c7" red="7f" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Georgia" size="32" style="1"/>
+              <Font name="Cambria" size="32" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="TH&#xca;M M&#xd3;N"/>

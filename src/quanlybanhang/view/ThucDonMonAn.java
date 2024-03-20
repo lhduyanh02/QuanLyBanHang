@@ -289,6 +289,8 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         }
         jScrollPane1.getViewport().setBackground(Color.WHITE);
 
+        jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
+
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
         jPanel3.setMaximumSize(new java.awt.Dimension(32767, 127));

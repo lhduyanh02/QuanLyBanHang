@@ -4,6 +4,7 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Font;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -11,6 +12,13 @@ import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import quanlybanhang.control.Ban;
+import table.TableCustom;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +31,12 @@ public class QuanLyBan extends javax.swing.JFrame {
 
     public QuanLyBan() {
         initComponents();
+        //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
+        reloadBtn.addMouseListener(new Program.SharedMouseListener());
+        addBtn.addMouseListener(new Program.SharedMouseListener());
+        updateBtn.addMouseListener(new Program.SharedMouseListener());
+
+        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -153,9 +167,12 @@ public class QuanLyBan extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        addBtn = new javax.swing.JLabel();
+        updateBtn = new javax.swing.JLabel();
+        reloadBtn = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,7 +182,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("HỆ THỐNG QUẢN LÝ QUÁN ĂN");
+        jLabel1.setText("QUẢN LÝ BÀN ĂN");
         jLabel1.setAlignmentY(0.0F);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -211,39 +228,91 @@ public class QuanLyBan extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "MÃ BÀN", "TÊN BÀN", "TRẠNG THÁI"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(90);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(250);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(200);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(600);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(200);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(120);
+        }
+        jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 436, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("jLabel3");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel3.setOpaque(true);
+        addBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addBtn.setText("Thêm");
+        addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        addBtn.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 150;
         gridBagConstraints.ipady = 20;
         gridBagConstraints.weightx = 0.5;
-        jPanel4.add(jLabel3, gridBagConstraints);
+        jPanel4.add(addBtn, gridBagConstraints);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("jLabel4");
-        jLabel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel4.setOpaque(true);
+        updateBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        updateBtn.setText("Cập nhật");
+        updateBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        updateBtn.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 150;
         gridBagConstraints.ipady = 20;
         gridBagConstraints.weightx = 0.5;
-        jPanel4.add(jLabel4, gridBagConstraints);
+        jPanel4.add(updateBtn, gridBagConstraints);
+
+        reloadBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        reloadBtn.setText("Tải lại");
+        reloadBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        reloadBtn.setOpaque(true);
+        reloadBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reloadBtnMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.weightx = 0.5;
+        jPanel4.add(reloadBtn, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -309,15 +378,35 @@ public class QuanLyBan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void reloadBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadBtnMouseClicked
+        try {
+            ResultSet rs = Ban.getInstance().layDSban();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            m.setRowCount(0);
+            int stt = 1;
+            while (rs.next()) {
+                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+                m.addRow(obj);
+                stt++;
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_reloadBtnMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel reloadBtn;
+    private javax.swing.JLabel updateBtn;
     // End of variables declaration//GEN-END:variables
 }

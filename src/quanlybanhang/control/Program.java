@@ -4,21 +4,18 @@
  */
 package quanlybanhang.control;
 
-import java.io.File;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import quanlybanhang.view.DangNhap;
 
@@ -27,6 +24,29 @@ import quanlybanhang.view.DangNhap;
  * @author Admin
  */
 public class Program {
+    
+    public static class SharedMouseListener extends MouseAdapter {
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            ((JLabel) e.getSource()).setBackground(Color.WHITE);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            ((JLabel) e.getSource()).setBackground(new Color(242, 242, 242));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            ((JLabel) e.getSource()).setBorder((javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED)));
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            ((JLabel) e.getSource()).setBorder((javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)));
+        }
+    }
 
     public static Properties ReadFileProperties() {
         Properties properties = new Properties();
@@ -57,7 +77,7 @@ public class Program {
         try {
             if (con == null || con.isClosed()) {
                 Class.forName("com.mysql.jdbc.Driver");
-                Properties prop = ReadFileProperties(); 
+                Properties prop = ReadFileProperties();
                 String dbUrl = prop.getProperty("DBURL");
                 String userDB = prop.getProperty("DBusername");
                 String passDB = prop.getProperty("DBpassword");

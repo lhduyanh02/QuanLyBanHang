@@ -205,7 +205,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jScrollPane1.getViewport().setBackground(Color.WHITE);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jScrollPane1.getViewport().setBackground(Color.WHITE);&#xa;&#xa;jTable1.getTableHeader().setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 18));"/>
               </AuxValues>
             </Component>
           </SubComponents>

@@ -17,20 +17,23 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import quanlybanhang.control.Program;
+import quanlybanhang.control.Program.SharedMouseListener;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.control.ThucDon;
 
 public class AddDialog extends javax.swing.JDialog {
+
     /**
      * Creates new form AddDialog
      */
     public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //THÊM SỰ KIỆN CHUỘT CHO jlABEL NÚT THÊM
-        ThemLabel.addMouseListener(new AddDialog.SharedMouseListener());
-        DatLaiLabel.addMouseListener(new AddDialog.SharedMouseListener());
-        ThoatLabel.addMouseListener(new AddDialog.SharedMouseListener());
+        //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
+        ThemLabel.addMouseListener(new SharedMouseListener());
+        DatLaiLabel.addMouseListener(new SharedMouseListener());
+        ThoatLabel.addMouseListener(new SharedMouseListener());
 
         // RÀNG BUỘC MÃ MÓN
         MaMonTF.addKeyListener(new KeyListener() { // KIỂM TRA TEXTFIELD MÃ MÓN
@@ -275,7 +278,7 @@ public class AddDialog extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(127, 199, 217));
-        jLabel1.setFont(new java.awt.Font("Georgia", 1, 32)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("THÊM MÓN");
 
@@ -320,6 +323,7 @@ public class AddDialog extends javax.swing.JDialog {
         GiaMonTF.setText("");
         MaMonTF.setText("");
         TenMonTF.setText("");
+        GhiChuTF.setText("");
         MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã món"));
         TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên món"));
         GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món"));
@@ -364,8 +368,8 @@ public class AddDialog extends javax.swing.JDialog {
                 loai = 1;
                 type = "Nước";
             }
-            
-            ThucDon.getInstance().themMon(MaMonTF.getText(), TenMonTF.getText(), gia, loai, GhiChuTF.getText());
+
+            boolean re = ThucDon.getInstance().themMon(MaMonTF.getText(), TenMonTF.getText(), gia, loai, GhiChuTF.getText());
 //            System.out.println("Mã món: " + MaMonTF.getText() + " || "
 //                    + "Tên món: " + TenMonTF.getText() + " || "
 //                    + "Giá: " + gia + " || "
@@ -374,7 +378,9 @@ public class AddDialog extends javax.swing.JDialog {
 //            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
 //                    + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '" + loai + "', N'"+GhiChuTF.getText()+"');");
 //            s.close();
-            updateNoti(1, this);
+            if (re == true) {
+                updateNoti(1, this);
+            }
         } catch (Exception e) {
             System.out.println("Data is not valid!");
             updateNoti(0, this);
@@ -404,28 +410,7 @@ public class AddDialog extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    public class SharedMouseListener extends MouseAdapter {
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            ((JLabel) e.getSource()).setBackground(Color.WHITE);
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            ((JLabel) e.getSource()).setBackground(new Color(242, 242, 242));
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            ((JLabel) e.getSource()).setBorder((javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED)));
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            ((JLabel) e.getSource()).setBorder((javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)));
-        }
-    }
+    
 
     // Hàm kiểm tra ký tự đặc biệt
     private static boolean isSpecialCharacter(char c) {
@@ -472,7 +457,7 @@ public class AddDialog extends javax.swing.JDialog {
         return matcher.matches();
     }
 
-    private void updateNoti(int state, JDialog dialog) {
+    public void updateNoti(int state, JDialog dialog) {
         if (state == 1) {
             Icon icon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
             JOptionPane.showMessageDialog(this, "Thêm món thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, icon);
