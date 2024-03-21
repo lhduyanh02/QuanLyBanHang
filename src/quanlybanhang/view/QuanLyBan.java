@@ -63,7 +63,7 @@ public class QuanLyBan extends javax.swing.JFrame {
                 .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
                     @Override
@@ -96,6 +96,11 @@ public class QuanLyBan extends javax.swing.JFrame {
                             drawer.hide();
                             closeThisUI();
                             QuanLyPhieuChi.getInstance();
+                        }
+                        if (i == 4) {
+                            drawer.hide();
+                            closeThisUI();
+                            ThongKe.getInstance();
                         }
                     }
 
@@ -270,13 +275,15 @@ public class QuanLyBan extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
+        addBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         addBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
         addBtn.setText("Thêm");
         addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addBtn.setOpaque(true);
@@ -288,7 +295,9 @@ public class QuanLyBan extends javax.swing.JFrame {
         gridBagConstraints.weightx = 0.5;
         jPanel4.add(addBtn, gridBagConstraints);
 
+        updateBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         updateBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        updateBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-edit.png"))); // NOI18N
         updateBtn.setText("Cập nhật");
         updateBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         updateBtn.setOpaque(true);
@@ -300,7 +309,9 @@ public class QuanLyBan extends javax.swing.JFrame {
         gridBagConstraints.weightx = 0.5;
         jPanel4.add(updateBtn, gridBagConstraints);
 
+        reloadBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         reloadBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        reloadBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
         reloadBtn.setText("Tải lại");
         reloadBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reloadBtn.setOpaque(true);
