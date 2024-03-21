@@ -1,4 +1,4 @@
-package quanlybanhang.control;
+package quanlybanhang.model;
 
 import java.sql.SQLException;
 import java.sql.Statement;

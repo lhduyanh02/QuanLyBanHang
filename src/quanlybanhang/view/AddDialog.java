@@ -20,7 +20,7 @@ import javax.swing.border.TitledBorder;
 import quanlybanhang.control.Program;
 import quanlybanhang.control.Program.SharedMouseListener;
 import static quanlybanhang.control.Program.con;
-import quanlybanhang.control.ThucDon;
+import quanlybanhang.model.ThucDon;
 
 public class AddDialog extends javax.swing.JDialog {
 
