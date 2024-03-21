@@ -12,13 +12,7 @@ import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
-import quanlybanhang.model.Ban;
 import table.TableCustom;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -397,20 +391,20 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void reloadBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadBtnMouseClicked
-        try {
-            ResultSet rs = Ban.getInstance().layDSban();
-            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-            m.setRowCount(0);
-            int stt = 1;
-            while (rs.next()) {
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
-                m.addRow(obj);
-                stt++;
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
-            ex.printStackTrace();
-        }
+//        try {
+//            ResultSet rs ;
+//            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+//            m.setRowCount(0);
+//            int stt = 1;
+//            while (rs.next()) {
+//                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+//                m.addRow(obj);
+//                stt++;
+//            }
+//        } catch (Exception ex) {
+//            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
+//            ex.printStackTrace();
+//        }
     }//GEN-LAST:event_reloadBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
