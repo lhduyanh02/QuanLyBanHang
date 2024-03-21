@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import static quanlybanhang.control.Program.con;
-import quanlybanhang.control.ThucDon;
+import quanlybanhang.model.ThucDon;
 import table.TableCustom;
 
 /**
