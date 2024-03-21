@@ -73,7 +73,7 @@ public class Program {
         }
     }
 
-    private static void ConnectDB() {
+    public static void ConnectDB() {
         try {
             if (con == null || con.isClosed()) {
                 Class.forName("com.mysql.jdbc.Driver");
