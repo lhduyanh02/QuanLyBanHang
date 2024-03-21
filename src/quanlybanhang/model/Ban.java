@@ -6,6 +6,7 @@ package quanlybanhang.model;
 
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -30,6 +31,20 @@ public class Ban {
     public Ban(){
     }
 
+    public String getMaban() {
+        return maban;
+    }
+
+    public String getTenban() {
+        return tenban;
+    }
+
+    public int getTrangthai() {
+        return trangthai;
+    }
+    
+    
+    
     public static synchronized Ban getInstance() {
         if (instance == null) {
             instance = new Ban();
@@ -56,16 +71,32 @@ public class Ban {
         }
     }
     
-     public static ResultSet layDSban() {
-        ResultSet rs = null;
+//    public static ResultSet layDSban() {
+//        ResultSet rs = null;
+//        try {
+//            Statement s = con.createStatement();
+//            rs = s.executeQuery("SELECT * FROM htql_banhang.ban;");
+//            return rs;
+//        } catch (Exception e) {
+//            System.out.println("Loi! [Class: Ban - Method: layDSban]");
+//            e.printStackTrace();
+//        }
+//        return rs;
+//    }
+    
+    public static ArrayList<Ban> layDSban() {
+        ArrayList<Ban> ReturnList= new ArrayList<Ban>();
         try {
             Statement s = con.createStatement();
-            rs = s.executeQuery("SELECT * FROM htql_banhang.ban;");
-            return rs;
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban order by trangthai DESC;");
+            while(rs.next()){
+                ReturnList.add(new Ban(rs.getString(1), rs.getString(2), rs.getInt(3)));
+            }
+            s.close();
         } catch (Exception e) {
             System.out.println("Loi! [Class: Ban - Method: layDSban]");
             e.printStackTrace();
         }
-        return rs;
+        return ReturnList;
     }
 }

@@ -17,8 +17,14 @@ import quanlybanhang.model.Ban;
 import table.TableCustom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -387,12 +393,13 @@ public class QuanLyBan extends javax.swing.JFrame {
 
     private void reload() {
         try {
-            ResultSet rs = Ban.layDSban();
+            ArrayList<Ban> list = Ban.layDSban();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
+
             int stt = 1;
-            while (rs.next()) {
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3)};
+            for (Ban ban : list) {
+                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), convert(ban.getTrangthai())};
                 m.addRow(obj);
                 stt++;
             }
@@ -401,6 +408,23 @@ public class QuanLyBan extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
+
+    private String convert(int x) {
+        try {
+            if (x == 1) {
+                return "Đang sử dụng";
+            }
+            if (x == 0) {
+                return "Ngừng sử dụng";
+            } else {
+                return "Không xác định";
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
+        }
+        return "Không xác định"; 
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel jLabel1;
