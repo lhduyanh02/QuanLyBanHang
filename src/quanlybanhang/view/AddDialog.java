@@ -221,7 +221,9 @@ public class AddDialog extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
+        ThemLabel.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
         ThemLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ThemLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
         ThemLabel.setText("Thêm");
         ThemLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ThemLabel.setOpaque(true);
@@ -231,7 +233,9 @@ public class AddDialog extends javax.swing.JDialog {
             }
         });
 
+        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DatLaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
         DatLaiLabel.setText("Đặt Lại");
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
@@ -241,7 +245,9 @@ public class AddDialog extends javax.swing.JDialog {
             }
         });
 
+        ThoatLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         ThoatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ThoatLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-undo.png"))); // NOI18N
         ThoatLabel.setText("Thoát");
         ThoatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ThoatLabel.setOpaque(true);
