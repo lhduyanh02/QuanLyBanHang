@@ -69,6 +69,7 @@ public class QuanLyBan extends javax.swing.JFrame {
                 .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
@@ -76,7 +77,7 @@ public class QuanLyBan extends javax.swing.JFrame {
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if (i == 5) {
+                        if (i == 6) {
                             try {
                                 Program.closeApp();
                             } catch (Exception ex) {
@@ -104,6 +105,11 @@ public class QuanLyBan extends javax.swing.JFrame {
                             QuanLyPhieuChi.getInstance();
                         }
                         if (i == 4) {
+                            drawer.hide();
+                            closeThisUI();
+                            QuanLyTaiKhoan.getInstance();
+                        }
+                        if (i == 5) {
                             drawer.hide();
                             closeThisUI();
                             ThongKe.getInstance();
@@ -433,7 +439,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
         }
-        return "Không xác định"; 
+        return "Không xác định";
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

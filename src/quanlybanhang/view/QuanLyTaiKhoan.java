@@ -4,38 +4,47 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Font;
 import quanlybanhang.control.Program;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import static quanlybanhang.control.Program.con;
+import javax.swing.table.DefaultTableModel;
+import quanlybanhang.model.Ban;
+import table.TableCustom;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author Admin
  */
-public class WelcomeUI extends javax.swing.JFrame {
+public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
-    private static WelcomeUI instance;
+    private static QuanLyTaiKhoan instance;
     private DrawerController drawer;
 
-    public WelcomeUI() {
+    public QuanLyTaiKhoan() {
         initComponents();
+        //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
+        logBtn.addMouseListener(new Program.SharedMouseListener());
+        addBtn.addMouseListener(new Program.SharedMouseListener());
+        updateBtn.addMouseListener(new Program.SharedMouseListener());
+        disableBtn.addMouseListener(new Program.SharedMouseListener());
+
+//        addBtn.setVisible(false);
+        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -150,14 +159,16 @@ public class WelcomeUI extends javax.swing.JFrame {
                 .build();
     }
 
-    public static synchronized WelcomeUI getInstance() {
+    public static synchronized QuanLyTaiKhoan getInstance() {
         if (instance == null) {
-            instance = new WelcomeUI();
+            instance = new QuanLyTaiKhoan();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.reload();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            instance.reload();
             instance.setVisible(true);
             return instance;
         }
@@ -170,13 +181,21 @@ public class WelcomeUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        addBtn = new javax.swing.JLabel();
+        updateBtn = new javax.swing.JLabel();
+        disableBtn = new javax.swing.JLabel();
+        logBtn = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -185,7 +204,7 @@ public class WelcomeUI extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("HỆ THỐNG QUẢN LÝ QUÁN ĂN");
+        jLabel1.setText("QUẢN LÝ TÀI KHOẢN");
         jLabel1.setAlignmentY(0.0F);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -231,26 +250,146 @@ public class WelcomeUI extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
-        jTextPane1.setText("*Bạn đang đăng nhập bằng tài khoản "+ DangNhap.user+".\n"
-            + "*Đăng nhập thành công: " +Program.getTimeNow()
-            + "\n\nChọn một chức năng trong menu để tiếp tục, hehe.");
-        jTextPane1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jTextPane1.setEnabled(false);
-        jScrollPane2.setViewportView(jTextPane1);
-        //SimpleAttributeSet center = new SimpleAttributeSet();
-        //StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
-        //jTextPane1.setParagraphAttributes(center, false);
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "TÊN ĐĂNG NHẬP", "QUYỀN ADMIN", "TRẠNG THÁI"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(110);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(400);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(500);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(300);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(300);
+        }
+        jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        java.awt.GridBagLayout jPanel4Layout = new java.awt.GridBagLayout();
+        jPanel4Layout.columnWidths = new int[] {0, 10, 0, 10, 0, 10, 0};
+        jPanel4Layout.rowHeights = new int[] {0};
+        jPanel4.setLayout(jPanel4Layout);
+
+        addBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        addBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
+        addBtn.setText("Thêm");
+        addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        addBtn.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 130;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.weightx = 0.5;
+        jPanel4.add(addBtn, gridBagConstraints);
+
+        updateBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        updateBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        updateBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-edit.png"))); // NOI18N
+        updateBtn.setText("Cập nhật");
+        updateBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        updateBtn.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 118;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.weightx = 0.5;
+        jPanel4.add(updateBtn, gridBagConstraints);
+
+        disableBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        disableBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        disableBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-denied.png"))); // NOI18N
+        disableBtn.setText("Vô hiệu hoá ");
+        disableBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        disableBtn.setOpaque(true);
+        disableBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                disableBtnMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 110;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.weightx = 0.5;
+        jPanel4.add(disableBtn, gridBagConstraints);
+
+        logBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        logBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-log.png"))); // NOI18N
+        logBtn.setText("Xem nhật ký");
+        logBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        logBtn.setOpaque(true);
+        logBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logBtnMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.ipadx = 110;
+        gridBagConstraints.ipady = 20;
+        gridBagConstraints.weightx = 0.5;
+        jPanel4.add(logBtn, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -293,12 +432,61 @@ public class WelcomeUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void logBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logBtnMouseClicked
+        reload();
+    }//GEN-LAST:event_logBtnMouseClicked
+
+    private void disableBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableBtnMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_disableBtnMouseClicked
+
+    private void reload() {
+        try {
+            ArrayList<Ban> list = Ban.layDSban();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            m.setRowCount(0);
+
+            int stt = 1;
+            for (Ban ban : list) {
+                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), convert(ban.getTrangthai())};
+                m.addRow(obj);
+                stt++;
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
+            ex.printStackTrace();
+        }
+    }
+
+    private String convert(int x) {
+        try {
+            if (x == 1) {
+                return "Đang sử dụng";
+            }
+            if (x == 0) {
+                return "Ngừng sử dụng";
+            } else {
+                return "Không xác định";
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
+        }
+        return "Không xác định";
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addBtn;
+    private javax.swing.JLabel disableBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel logBtn;
+    private javax.swing.JLabel updateBtn;
     // End of variables declaration//GEN-END:variables
 }
