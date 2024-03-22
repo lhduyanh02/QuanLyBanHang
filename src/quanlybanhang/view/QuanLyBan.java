@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -19,16 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import quanlybanhang.model.Ban;
 import table.TableCustom;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -47,9 +42,8 @@ public class QuanLyBan extends javax.swing.JFrame {
     public QuanLyBan() {
         initComponents();
         EditPanel.setSize(0, height);
+        BGPanel.setSize(screenSize);
         add(EditPanel, 0);
-//        EditPanel.setSize(0, height);
-
 
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         reloadBtn.addMouseListener(new Program.SharedMouseListener());
@@ -57,7 +51,14 @@ public class QuanLyBan extends javax.swing.JFrame {
         updateBtn.addMouseListener(new Program.SharedMouseListener());
 
 //        addBtn.setVisible(false);
-        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+        MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+
+        MouseMotionListener[] mouseMotionListeners = jTable1.getMouseMotionListeners();
+        for (MouseMotionListener listener : mouseMotionListeners) {
+            jTable1.removeMouseMotionListener(listener);
+        }
+        jTable1.removeMouseListener(m);
+
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -197,6 +198,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         EditPanel = new javax.swing.JPanel();
+        BGPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -209,6 +211,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         updateBtn = new javax.swing.JLabel();
         reloadBtn = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
 
         EditPanel.setBackground(new java.awt.Color(255, 51, 0));
         EditPanel.setPreferredSize(new Dimension(420, this.getHeight()));
@@ -229,7 +232,18 @@ public class QuanLyBan extends javax.swing.JFrame {
             .addGap(0, 596, Short.MAX_VALUE)
         );
 
-        EditPanel.getAccessibleContext().setAccessibleParent(null);
+        BGPanel.setBackground(new java.awt.Color(240, 240, 240));
+
+        javax.swing.GroupLayout BGPanelLayout = new javax.swing.GroupLayout(BGPanel);
+        BGPanel.setLayout(BGPanelLayout);
+        BGPanelLayout.setHorizontalGroup(
+            BGPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        BGPanelLayout.setVerticalGroup(
+            BGPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 596, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -301,6 +315,8 @@ public class QuanLyBan extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setOpaque(false);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(50);
@@ -416,6 +432,8 @@ public class QuanLyBan extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,6 +441,8 @@ public class QuanLyBan extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE))
         );
 
         pack();
@@ -504,25 +524,27 @@ public class QuanLyBan extends javax.swing.JFrame {
         if (!isOpen) {
             isOpen = true;
             EditPanel.setVisible(true);
-            
-            
-        MouseAdapter a = new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                closeEditPanel();
-            }
-        };
-        jScrollPane1.addMouseListener(a);
-        jTable1.addMouseListener(a);
-        jLabel1.addMouseListener(a);
-        jPanel4.addMouseListener(a);
+            add(EditPanel, 0);
+            BGPanel.setVisible(true);
+
+            MouseAdapter a = new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    closeEditPanel();
+                }
+            };
+            jScrollPane1.addMouseListener(a);
+            jTable1.addMouseListener(a);
+            jLabel1.addMouseListener(a);
+            jPanel4.addMouseListener(a);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     reloadBtn.setEnabled(false);
                     addBtn.setEnabled(false);
                     updateBtn.setEnabled(false);
-                    for (int i = 0; i <= width; i += 3) {
+                    jTable1.setEnabled(false);
+                    for (int i = 0; i <= width; i += 5) {
                         EditPanel.setSize(i, height);
                         try {
                             Thread.sleep(1);
@@ -542,11 +564,12 @@ public class QuanLyBan extends javax.swing.JFrame {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 420; i >= 0; i -= 3) {
+                    for (int i = 420; i >= 0; i -= 5) {
                         EditPanel.setSize(i, height);
                         reloadBtn.setEnabled(true);
                         addBtn.setEnabled(true);
                         updateBtn.setEnabled(true);
+                        jTable1.setEnabled(true);
                         try {
                             Thread.sleep(1);
                         } catch (InterruptedException ex) {
@@ -554,12 +577,15 @@ public class QuanLyBan extends javax.swing.JFrame {
                         }
                     }
                     EditPanel.setVisible(false);
+                    getContentPane().remove(EditPanel);
+                    getContentPane().remove(BGPanel);
                 }
             }).start();
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BGPanel;
     private javax.swing.JPanel EditPanel;
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel jLabel1;
@@ -570,6 +596,7 @@ public class QuanLyBan extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel reloadBtn;
     private javax.swing.JLabel updateBtn;

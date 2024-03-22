@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +53,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
 //        int columnIndex = 3;
 //        TableColumnModel columnModel = jTable1.getColumnModel();
 //        columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
-        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+        MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
 
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
