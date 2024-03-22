@@ -47,7 +47,6 @@ public class ThucDonMonAn extends javax.swing.JFrame {
 //        int columnIndex = 3;
 //        TableColumnModel columnModel = jTable1.getColumnModel();
 //        columnModel.getColumn(columnIndex).setCellRenderer(new CustomTableCellRenderer());
-
         table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
 
         if (DangNhap.getAccess() == 0) {
@@ -76,6 +75,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
@@ -83,12 +83,17 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if (i == 5) {
+                        if (i == 6) {
                             try {
                                 Program.closeApp();
                             } catch (Exception ex) {
                                 System.out.println("Loi thoat chuong trinh");
                             }
+                        }
+                        if (i == 0) {
+                            drawer.hide();
+                            closeThisUI();
+                            ThucDonMonAn.getInstance();
                         }
                         if (i == 1) {
                             drawer.hide();
@@ -106,6 +111,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                             QuanLyPhieuChi.getInstance();
                         }
                         if (i == 4) {
+                            drawer.hide();
+                            closeThisUI();
+                            QuanLyTaiKhoan.getInstance();
+                        }
+                        if (i == 5) {
                             drawer.hide();
                             closeThisUI();
                             ThongKe.getInstance();
@@ -191,6 +201,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -199,12 +210,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        AddBtn = new javax.swing.JButton();
-        EditBtn = new javax.swing.JButton();
-        DelBtn = new javax.swing.JButton();
-        ReloadButton = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JLabel();
+        updateBtn = new javax.swing.JLabel();
+        addBtn = new javax.swing.JLabel();
+        reloadBtn = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -297,66 +306,90 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
 
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 5, 8, 5));
         jPanel3.setMaximumSize(new java.awt.Dimension(32767, 127));
-        jPanel3.setLayout(new java.awt.GridLayout(2, 4, 10, 5));
+        java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
+        jPanel3Layout.columnWidths = new int[] {0, 30, 0, 30, 0, 30, 0, 30, 0, 30, 0};
+        jPanel3Layout.rowHeights = new int[] {0};
+        jPanel3.setLayout(jPanel3Layout);
 
-        AddBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        AddBtn.setText("THÊM MỚI SẢN PHẨM");
-        AddBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        AddBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddBtnActionPerformed(evt);
+        deleteBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        deleteBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-delete.png"))); // NOI18N
+        deleteBtn.setText("Xoá sản phẩm");
+        deleteBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        deleteBtn.setOpaque(true);
+        deleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteBtnMouseClicked(evt);
             }
         });
-        jPanel3.add(AddBtn);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 69;
+        gridBagConstraints.ipady = 26;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        jPanel3.add(deleteBtn, gridBagConstraints);
 
-        EditBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        EditBtn.setText("CẬP NHẬT");
-        EditBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        EditBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditBtnActionPerformed(evt);
+        updateBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        updateBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        updateBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-edit.png"))); // NOI18N
+        updateBtn.setText("Cập nhật");
+        updateBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        updateBtn.setOpaque(true);
+        updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateBtnMouseClicked(evt);
             }
         });
-        jPanel3.add(EditBtn);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 106;
+        gridBagConstraints.ipady = 28;
+        jPanel3.add(updateBtn, gridBagConstraints);
 
-        DelBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        DelBtn.setText("XOÁ SẢN PHẨM");
-        DelBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        DelBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        DelBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DelBtnActionPerformed(evt);
+        addBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        addBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
+        addBtn.setText("Thêm mới sản phẩm");
+        addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        addBtn.setOpaque(true);
+        addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addBtnMouseClicked(evt);
             }
         });
-        jPanel3.add(DelBtn);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 28;
+        gridBagConstraints.ipady = 28;
+        jPanel3.add(addBtn, gridBagConstraints);
 
-        ReloadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        ReloadButton.setText("TẢI LẠI");
-        ReloadButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        ReloadButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReloadButtonActionPerformed(evt);
+        reloadBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        reloadBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        reloadBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
+        reloadBtn.setText("Tải lại");
+        reloadBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        reloadBtn.setOpaque(true);
+        reloadBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reloadBtnMouseClicked(evt);
             }
         });
-        jPanel3.add(ReloadButton);
-
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton5.setText("jButton1");
-        jButton5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel3.add(jButton5);
-
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton6.setText("jButton1");
-        jButton6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel3.add(jButton6);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 125;
+        gridBagConstraints.ipady = 26;
+        jPanel3.add(reloadBtn, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -366,9 +399,9 @@ public class ThucDonMonAn extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -410,15 +443,19 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabelMenuMouseClicked
 
-    private void AddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBtnActionPerformed
-        addMenu();
-    }//GEN-LAST:event_AddBtnActionPerformed
-
-    private void ReloadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReloadButtonActionPerformed
+    private void reloadBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadBtnMouseClicked
         reloadMenu();
-    }//GEN-LAST:event_ReloadButtonActionPerformed
+    }//GEN-LAST:event_reloadBtnMouseClicked
 
-    private void DelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelBtnActionPerformed
+    private void addBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseClicked
+        addMenu();
+    }//GEN-LAST:event_addBtnMouseClicked
+
+    private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+        editMenu();
+    }//GEN-LAST:event_updateBtnMouseClicked
+
+    private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
         try {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
@@ -428,17 +465,17 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 if (option == JOptionPane.YES_OPTION) {
                     Object MaSP = jTable1.getModel().getValueAt(r, 1);
                     ThucDon.getInstance().xoaMon(MaSP);
-//                    Statement s = con.createStatement();
-//                    
-//                    int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
-//                    if (x != 0) {
-//                        JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
-//                        reloadMenu();
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
-//                        reloadMenu();
-//                    }
-//                    s.close();
+                    //                    Statement s = con.createStatement();
+                    //
+                    //                    int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
+                    //                    if (x != 0) {
+                    //                        JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
+                    //                        reloadMenu();
+                    //                    } else {
+                    //                        JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
+                    //                        reloadMenu();
+                    //                    }
+                    //                    s.close();
                 }
                 reloadMenu();
             }
@@ -446,19 +483,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Lỗi xoá món");
         }
-    }//GEN-LAST:event_DelBtnActionPerformed
-
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        editMenu();
-    }//GEN-LAST:event_EditBtnActionPerformed
+    }//GEN-LAST:event_deleteBtnMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddBtn;
-    private javax.swing.JButton DelBtn;
-    private javax.swing.JButton EditBtn;
-    private javax.swing.JButton ReloadButton;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel addBtn;
+    private javax.swing.JLabel deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelMenu;
     private javax.swing.JPanel jPanel1;
@@ -466,6 +495,8 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel reloadBtn;
+    private javax.swing.JLabel updateBtn;
     // End of variables declaration//GEN-END:variables
 
     private void addMenu() {
