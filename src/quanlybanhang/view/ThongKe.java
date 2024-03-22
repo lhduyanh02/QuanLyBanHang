@@ -5,6 +5,7 @@
 package quanlybanhang.view;
 
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -31,7 +32,7 @@ public class ThongKe extends javax.swing.JFrame {
 //        addBtn.addMouseListener(new Program.SharedMouseListener());
 //        deleteBtn.addMouseListener(new Program.SharedMouseListener());
 
-        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+        MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
 //            deleteBtn.setVisible(true);

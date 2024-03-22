@@ -5,6 +5,7 @@
 package quanlybanhang.view;
 
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -44,7 +45,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         disableBtn.addMouseListener(new Program.SharedMouseListener());
 
 //        addBtn.setVisible(false);
-        table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+        MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
