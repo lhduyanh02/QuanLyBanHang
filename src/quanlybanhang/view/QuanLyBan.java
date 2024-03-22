@@ -4,7 +4,11 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -35,14 +39,24 @@ public class QuanLyBan extends javax.swing.JFrame {
     private static QuanLyBan instance;
     private DrawerController drawer;
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = 420;
+    int height = screenSize.height;
+    boolean isOpen = false;
+
     public QuanLyBan() {
         initComponents();
+        EditPanel.setSize(0, height);
+        add(EditPanel, 0);
+//        EditPanel.setSize(0, height);
+
+
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         reloadBtn.addMouseListener(new Program.SharedMouseListener());
         addBtn.addMouseListener(new Program.SharedMouseListener());
         updateBtn.addMouseListener(new Program.SharedMouseListener());
 
-        addBtn.setVisible(false);
+//        addBtn.setVisible(false);
         table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
@@ -176,6 +190,7 @@ public class QuanLyBan extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        EditPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -188,6 +203,27 @@ public class QuanLyBan extends javax.swing.JFrame {
         updateBtn = new javax.swing.JLabel();
         reloadBtn = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+
+        EditPanel.setBackground(new java.awt.Color(255, 51, 0));
+        EditPanel.setPreferredSize(new Dimension(420, this.getHeight()));
+        EditPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                EditPanelMouseEntered(evt);
+            }
+        });
+
+        javax.swing.GroupLayout EditPanelLayout = new javax.swing.GroupLayout(EditPanel);
+        EditPanel.setLayout(EditPanelLayout);
+        EditPanelLayout.setHorizontalGroup(
+            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 367, Short.MAX_VALUE)
+        );
+        EditPanelLayout.setVerticalGroup(
+            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 596, Short.MAX_VALUE)
+        );
+
+        EditPanel.getAccessibleContext().setAccessibleParent(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -281,7 +317,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -293,6 +329,11 @@ public class QuanLyBan extends javax.swing.JFrame {
         addBtn.setText("Thêm");
         addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addBtn.setOpaque(true);
+        addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -307,6 +348,11 @@ public class QuanLyBan extends javax.swing.JFrame {
         updateBtn.setText("Cập nhật");
         updateBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         updateBtn.setOpaque(true);
+        updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -402,6 +448,18 @@ public class QuanLyBan extends javax.swing.JFrame {
         reload();
     }//GEN-LAST:event_reloadBtnMouseClicked
 
+    private void addBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseClicked
+        openEditPanel();
+    }//GEN-LAST:event_addBtnMouseClicked
+
+    private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+
+    }//GEN-LAST:event_updateBtnMouseClicked
+
+    private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditPanelMouseEntered
+
     private void reload() {
         try {
             ArrayList<Ban> list = Ban.layDSban();
@@ -415,7 +473,7 @@ public class QuanLyBan extends javax.swing.JFrame {
                 stt++;
             }
         } catch (Exception ex) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
+            System.out.println("Loi! [Class: QuanLyBan - Method: reload]");
             ex.printStackTrace();
         }
     }
@@ -433,10 +491,70 @@ public class QuanLyBan extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
         }
-        return "Không xác định"; 
+        return "Không xác định";
+    } //Convert trạng thái bàn -> đang sử dụng hoặc không
+
+    private void openEditPanel() {
+        if (!isOpen) {
+            isOpen = true;
+            EditPanel.setVisible(true);
+            
+            
+        MouseAdapter a = new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                closeEditPanel();
+            }
+        };
+        jScrollPane1.addMouseListener(a);
+        jTable1.addMouseListener(a);
+        jLabel1.addMouseListener(a);
+        jPanel4.addMouseListener(a);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    reloadBtn.setEnabled(false);
+                    addBtn.setEnabled(false);
+                    updateBtn.setEnabled(false);
+                    for (int i = 0; i <= width; i += 3) {
+                        EditPanel.setSize(i, height);
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(QuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private void closeEditPanel() {
+        if (isOpen) {
+            isOpen = false;
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 420; i >= 0; i -= 3) {
+                        EditPanel.setSize(i, height);
+                        reloadBtn.setEnabled(true);
+                        addBtn.setEnabled(true);
+                        updateBtn.setEnabled(true);
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(QuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    EditPanel.setVisible(false);
+                }
+            }).start();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel EditPanel;
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
