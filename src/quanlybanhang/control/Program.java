@@ -8,12 +8,15 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Properties;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -156,6 +159,15 @@ public class Program {
         // Định dạng thời gian sử dụng DateTimeFormatter
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         return formatter.format(zonedDateTime);
+    }
+    
+    public static String formatTimestamp(Timestamp timestamp) {
+        // Tạo đối tượng Date từ timestamp
+        Date date = new Date(timestamp.getTime());
+        
+        // Định dạng lại timestamp theo định dạng mới
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return sdf.format(date);
     }
 
     public static void main(String[] args) {
