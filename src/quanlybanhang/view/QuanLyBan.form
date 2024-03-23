@@ -53,9 +53,6 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="jTabbedPane1" alignment="1" pref="1000" max="32767" attributes="0"/>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -64,9 +61,6 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" max="32767" attributes="0"/>
-          </Group>
-          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="jTabbedPane1" alignment="1" pref="596" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -346,10 +340,6 @@
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
       </SubComponents>
-    </Container>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
     </Container>
   </SubComponents>
 </Form>
