@@ -4,6 +4,7 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -42,7 +43,6 @@ public class QuanLyBan extends javax.swing.JFrame {
     public QuanLyBan() {
         initComponents();
         EditPanel.setSize(0, height);
-        BGPanel.setSize(screenSize);
         add(EditPanel, 0);
 
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
@@ -198,7 +198,6 @@ public class QuanLyBan extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         EditPanel = new javax.swing.JPanel();
-        BGPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -225,24 +224,11 @@ public class QuanLyBan extends javax.swing.JFrame {
         EditPanel.setLayout(EditPanelLayout);
         EditPanelLayout.setHorizontalGroup(
             EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
         EditPanelLayout.setVerticalGroup(
             EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
-        );
-
-        BGPanel.setBackground(new java.awt.Color(240, 240, 240));
-
-        javax.swing.GroupLayout BGPanelLayout = new javax.swing.GroupLayout(BGPanel);
-        BGPanel.setLayout(BGPanelLayout);
-        BGPanelLayout.setHorizontalGroup(
-            BGPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
-        );
-        BGPanelLayout.setVerticalGroup(
-            BGPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -479,7 +465,7 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnMouseClicked
 
     private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
-
+        openEditPanel();
     }//GEN-LAST:event_updateBtnMouseClicked
 
     private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
@@ -525,7 +511,6 @@ public class QuanLyBan extends javax.swing.JFrame {
             isOpen = true;
             EditPanel.setVisible(true);
             add(EditPanel, 0);
-            BGPanel.setVisible(true);
 
             MouseAdapter a = new MouseAdapter() {
                 @Override
@@ -560,16 +545,15 @@ public class QuanLyBan extends javax.swing.JFrame {
     private void closeEditPanel() {
         if (isOpen) {
             isOpen = false;
-
+            reloadBtn.setEnabled(true);
+            addBtn.setEnabled(true);
+            updateBtn.setEnabled(true);
+            jTable1.setEnabled(true);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     for (int i = 420; i >= 0; i -= 5) {
                         EditPanel.setSize(i, height);
-                        reloadBtn.setEnabled(true);
-                        addBtn.setEnabled(true);
-                        updateBtn.setEnabled(true);
-                        jTable1.setEnabled(true);
                         try {
                             Thread.sleep(1);
                         } catch (InterruptedException ex) {
@@ -578,14 +562,12 @@ public class QuanLyBan extends javax.swing.JFrame {
                     }
                     EditPanel.setVisible(false);
                     getContentPane().remove(EditPanel);
-                    getContentPane().remove(BGPanel);
                 }
             }).start();
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel BGPanel;
     private javax.swing.JPanel EditPanel;
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel jLabel1;
