@@ -57,14 +57,27 @@ public class Ban {
     public static boolean themBan(String MaBan, String TenBan) {
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("");
-            while(rs.next())
             s.executeUpdate("INSERT INTO htql_banhang.ban "
                     + "(maban, tenban) VALUES (N'" + MaBan + "', N'" + TenBan + "');");
             s.close();
             return true;
         } catch (Exception e) {
-            System.out.println("Loi! [Class: Ban - Method: themBan]");
+            System.out.println("Loi! [Class: Ban - Method: themBan(String MaBan, String TenBan)]");
+            Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
+    }
+    
+    public static boolean themBan(String TenBan) {
+        try {
+            Statement s = con.createStatement();
+            s.executeUpdate("INSERT INTO htql_banhang.ban "
+                    + "(tenban) VALUES (N'" + TenBan + "');");
+            s.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: Ban - Method: themBan(String TenBan)]");
             Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return false;
