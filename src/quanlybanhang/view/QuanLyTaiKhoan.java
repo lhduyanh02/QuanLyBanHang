@@ -448,21 +448,21 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_disableBtnMouseClicked
 
     private void reload() {
-        try {
-            ArrayList<Ban> list = Ban.layDSban();
-            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-            m.setRowCount(0);
-
-            int stt = 1;
-            for (Ban ban : list) {
-                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), convert(ban.getTrangthai())};
-                m.addRow(obj);
-                stt++;
-            }
-        } catch (Exception ex) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
-            ex.printStackTrace();
-        }
+//        try {
+//            ArrayList<Ban> list = Ban.layDSban();
+//            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+//            m.setRowCount(0);
+//
+//            int stt = 1;
+//            for (Ban ban : list) {
+//                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), convert(ban.getTrangthai())};
+//                m.addRow(obj);
+//                stt++;
+//            }
+//        } catch (Exception ex) {
+//            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
+//            ex.printStackTrace();
+//        }
     }
 
     private String convert(int x) {

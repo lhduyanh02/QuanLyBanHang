@@ -494,7 +494,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Helvetica" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ng&#x1b0;ng s&#x1eed; d&#x1ee5;ng "/>
+                <Property name="text" type="java.lang.String" value="&#x110;ang tr&#x1ed1;ng"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>
