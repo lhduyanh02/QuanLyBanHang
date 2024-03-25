@@ -60,13 +60,13 @@ public class Ban {
 
     public static boolean themBan(String MaBan, String TenBan) {
         Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
-        if (CheckInputMethod.containsWhitespace(MaBan) || CheckInputMethod.containsVietnamese(MaBan) || TenBan.length() > 10) {
-            JOptionPane.showMessageDialog(null, "Mã bàn phải ít hơn 10 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
+        if (CheckInputMethod.containsWhitespace(MaBan) || CheckInputMethod.containsVietnamese(MaBan) || MaBan.length() > 15) {
+            JOptionPane.showMessageDialog(null, "Mã bàn phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
                     "Lỗi Mã Bàn", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }
         if (TenBan.equals("") || TenBan.length() > 45) {
-            JOptionPane.showMessageDialog(null, "Tên bàn phải ít hơn 45 ký tự.",
+            JOptionPane.showMessageDialog(null, "Tên bàn không được rỗng và phải ít hơn 45 ký tự.",
                     "Lỗi Tên Bàn", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }
@@ -91,13 +91,58 @@ public class Ban {
         }
     }
 
-    public static int suaBan(String MBCu, String MBMoi, String TBMoi, int TTMoi) {
-        try {
-            
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static boolean suaBan(String MBCu, Ban BanMoi) {
+        Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
+        if (BanMoi.maban.equals("") || CheckInputMethod.containsWhitespace(BanMoi.maban) || CheckInputMethod.containsVietnamese(BanMoi.maban) || BanMoi.maban.length() > 15) {
+            JOptionPane.showMessageDialog(null, "Mã bàn không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
+                    "Lỗi Mã Bàn", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
         }
-        return 0;
+        if (BanMoi.tenban.equals("") || BanMoi.tenban.length() > 45) {
+            JOptionPane.showMessageDialog(null, "Tên bàn phải ít hơn 45 ký tự.",
+                    "Lỗi Tên Bàn", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
+        try {
+            Statement s = con.createStatement();
+            int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
+
+            if (rs == 1) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: Ban - Method: suaBan]");
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+        }
+        return false;
+    }
+
+    public static boolean xoaBan(String MaBan) {
+        try {
+            Statement s = con.createStatement();
+            int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`ban` WHERE (`maban` = '"+MaBan+"');");
+
+            if (rs == 1) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: Ban - Method: XoaBan]");
+            Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+        }
+        return false;
+    }
+
+    public void setMaban(String maban) {
+        this.maban = maban;
+    }
+
+    public void setTenban(String tenban) {
+        this.tenban = tenban;
+    }
+
+    public void setTrangthai(int trangthai) {
+        this.trangthai = trangthai;
     }
 
 //    public static ResultSet layDSban() {

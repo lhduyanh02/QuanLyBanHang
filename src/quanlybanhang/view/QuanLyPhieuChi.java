@@ -222,11 +222,9 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        EditPanel.setBounds(new java.awt.Rectangle(0, 0, 420, getContentPane().getHeight()));
         EditPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         EditPanel.setMinimumSize(new java.awt.Dimension(420, 800));
         EditPanel.setPreferredSize(new Dimension(420, getContentPane().getHeight()));
-        EditPanel.setSize(new java.awt.Dimension(480, 800));
         EditPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 EditPanelMouseEntered(evt);
@@ -257,6 +255,8 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 65;
         gridBagConstraints.ipady = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 40);
         jPanel7.add(LuuLabel, gridBagConstraints);
 
         DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
@@ -266,10 +266,12 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 54;
         gridBagConstraints.ipady = 16;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(0, 40, 0, 0);
         jPanel7.add(DatLaiLabel, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
