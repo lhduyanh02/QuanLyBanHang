@@ -4,9 +4,15 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -15,7 +21,6 @@ import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import quanlybanhang.model.Ban;
 import quanlybanhang.model.PhieuChi;
 import table.TableCustom;
 
@@ -28,14 +33,28 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private static QuanLyPhieuChi instance;
     private DrawerController drawer;
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = 420;
+    int height = screenSize.height;
+    boolean isOpen = false;
+    
     public QuanLyPhieuChi() {
         initComponents();
+        add(EditPanel, 0);
+        EditPanel.setSize(0, getContentPane().getHeight());
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         reloadBtn.addMouseListener(new Program.SharedMouseListener());
         addBtn.addMouseListener(new Program.SharedMouseListener());
         deleteBtn.addMouseListener(new Program.SharedMouseListener());
 
         MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+
+        MouseMotionListener[] mouseMotionListeners = jTable1.getMouseMotionListeners();
+        for (MouseMotionListener listener : mouseMotionListeners) {
+            jTable1.removeMouseMotionListener(listener);
+        }
+        jTable1.removeMouseListener(m);
+        
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
             deleteBtn.setVisible(true);
@@ -177,6 +196,17 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        EditPanel = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        MaPCTF = new javax.swing.JTextField();
+        NoiDungTF = new javax.swing.JTextField();
+        SoTienTF = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        LuuLabel = new javax.swing.JLabel();
+        DatLaiLabel = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -191,6 +221,120 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        EditPanel.setBounds(new java.awt.Rectangle(0, 0, 420, getContentPane().getHeight()));
+        EditPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        EditPanel.setMinimumSize(new java.awt.Dimension(420, 800));
+        EditPanel.setPreferredSize(new Dimension(420, getContentPane().getHeight()));
+        EditPanel.setSize(new java.awt.Dimension(480, 800));
+        EditPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                EditPanelMouseEntered(evt);
+            }
+        });
+
+        MaPCTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        MaPCTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã phiếu chi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+
+        NoiDungTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NoiDungTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nội dung chi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+
+        SoTienTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        SoTienTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Số tiền ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+
+        jPanel7.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel7.setMinimumSize(new java.awt.Dimension(420, 81));
+        jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
+        LuuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LuuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
+        LuuLabel.setText("Lưu");
+        LuuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LuuLabel.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.ipady = 18;
+        jPanel7.add(LuuLabel, gridBagConstraints);
+
+        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DatLaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
+        DatLaiLabel.setText("Đặt Lại");
+        DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        DatLaiLabel.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 54;
+        gridBagConstraints.ipady = 16;
+        jPanel7.add(DatLaiLabel, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(NoiDungTF)
+                            .addComponent(MaPCTF)
+                            .addComponent(SoTienTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(MaPCTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addComponent(NoiDungTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(SoTienTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 204));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 85, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout EditPanelLayout = new javax.swing.GroupLayout(EditPanel);
+        EditPanel.setLayout(EditPanelLayout);
+        EditPanelLayout.setHorizontalGroup(
+            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        EditPanelLayout.setVerticalGroup(
+            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EditPanelLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(208, Short.MAX_VALUE))
+        );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -286,7 +430,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -317,6 +461,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         addBtn.setText("Thêm phiếu chi");
         addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addBtn.setOpaque(true);
+        addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -369,6 +518,10 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(EditPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 580, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,7 +529,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(EditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE))
         );
+
+        EditPanel.getAccessibleContext().setAccessibleParent(this);
 
         pack();
         setLocationRelativeTo(null);
@@ -407,6 +564,14 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         reload();
     }//GEN-LAST:event_reloadBtnMouseClicked
 
+    private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditPanelMouseEntered
+
+    private void addBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseClicked
+        openEditPanel();
+    }//GEN-LAST:event_addBtnMouseClicked
+
     private void reload() {
         try {
             ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi();
@@ -425,7 +590,72 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         }
     }
     
+    private void openEditPanel() {
+        if (!isOpen) {
+            isOpen = true;
+            EditPanel.setVisible(true);
+            add(EditPanel, 0);
+
+            MouseAdapter a = new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    closeEditPanel();
+                }
+            };
+            jScrollPane1.addMouseListener(a);
+            jTable1.addMouseListener(a);
+            jLabel1.addMouseListener(a);
+            jPanel4.addMouseListener(a);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    reloadBtn.setEnabled(false);
+                    addBtn.setEnabled(false);
+                    jTable1.setEnabled(false);
+                    for (int i = 0; i <= width; i += 5) {
+                        EditPanel.setSize(i, getContentPane().getHeight());
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(QuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private void closeEditPanel() {
+        if (isOpen) {
+            isOpen = false;
+            reloadBtn.setEnabled(true);
+            addBtn.setEnabled(true);
+            jTable1.setEnabled(true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 420; i >= 0; i -= 5) {
+                        EditPanel.setSize(i, height);
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(QuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    EditPanel.setVisible(false);
+                    getContentPane().remove(EditPanel);
+                }
+            }).start();
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DatLaiLabel;
+    private javax.swing.JPanel EditPanel;
+    private javax.swing.JLabel LuuLabel;
+    private javax.swing.JTextField MaPCTF;
+    private javax.swing.JTextField NoiDungTF;
+    private javax.swing.JTextField SoTienTF;
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel deleteBtn;
     private javax.swing.JLabel jLabel1;
@@ -434,8 +664,13 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel reloadBtn;
     // End of variables declaration//GEN-END:variables
