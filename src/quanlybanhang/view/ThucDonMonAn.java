@@ -72,6 +72,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
+                .addChild(new DrawerItem("Giao diện thu ngân").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
@@ -84,7 +85,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if (i == 6) {
+                        if (i == 7) {
                             try {
                                 Program.closeApp();
                             } catch (Exception ex) {
@@ -94,29 +95,34 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                         if (i == 0) {
                             drawer.hide();
                             closeThisUI();
-                            ThucDonMonAn.getInstance();
+                            GiaoDienThuNgan.getInstance();
                         }
                         if (i == 1) {
                             drawer.hide();
                             closeThisUI();
-                            ThucDonNuoc.getInstance();
+                            ThucDonMonAn.getInstance();
                         }
                         if (i == 2) {
                             drawer.hide();
                             closeThisUI();
-                            QuanLyBan.getInstance();
+                            ThucDonNuoc.getInstance();
                         }
                         if (i == 3) {
                             drawer.hide();
                             closeThisUI();
-                            QuanLyPhieuChi.getInstance();
+                            QuanLyBan.getInstance();
                         }
                         if (i == 4) {
                             drawer.hide();
                             closeThisUI();
-                            QuanLyTaiKhoan.getInstance();
+                            QuanLyPhieuChi.getInstance();
                         }
                         if (i == 5) {
+                            drawer.hide();
+                            closeThisUI();
+                            QuanLyTaiKhoan.getInstance();
+                        }
+                        if (i == 6) {
                             drawer.hide();
                             closeThisUI();
                             ThongKe.getInstance();
