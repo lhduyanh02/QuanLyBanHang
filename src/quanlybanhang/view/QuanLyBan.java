@@ -4,7 +4,6 @@
  */
 package quanlybanhang.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -26,8 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
-import javax.swing.table.JTableHeader;
-import quanlybanhang.control.CheckInputMethod;
 
 /**
  *
@@ -55,6 +52,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         reloadBtn.addMouseListener(new Program.SharedMouseListener());
         addBtn.addMouseListener(new Program.SharedMouseListener());
         updateBtn.addMouseListener(new Program.SharedMouseListener());
+        deleteBtn.addMouseListener(new Program.SharedMouseListener());
 
 //        addBtn.setVisible(false);
         MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
@@ -458,7 +456,7 @@ public class QuanLyBan extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jRadioButton2.setText("Ngưng sử dụng ");
+        jRadioButton2.setText("Đang trống");
         jRadioButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel7.setBackground(new java.awt.Color(240, 240, 240));
@@ -643,10 +641,10 @@ public class QuanLyBan extends javax.swing.JFrame {
                 MaBanCu = (String) jTable1.getModel().getValueAt(r, 1);
                 MaBanTF.setText(MaBanCu);
                 TenBanTF.setText((String) jTable1.getModel().getValueAt(r, 2));
-                if (convert((String) jTable1.getModel().getValueAt(r, 3)) == 1) {
-                    jRadioButton1.setSelected(true);
-                } else {
+                if (jTable1.getModel().getValueAt(r, 3).toString().equals("free")) {
                     jRadioButton2.setSelected(true);
+                } else {
+                    jRadioButton1.setSelected(true);
                 }
             }
         }
@@ -674,11 +672,11 @@ public class QuanLyBan extends javax.swing.JFrame {
             }
         }
         if (act.equals("edit")) {
-            int stt = 1;
+            String stt = "";
             if (jRadioButton1.isSelected()) {
-                stt = 1;
+//                stt = 1;
             } else if (jRadioButton2.isSelected()) {
-                stt = 0;
+                stt = "free";
             }
             ban = new Ban(MaBanTF.getText(), TenBanTF.getText(), stt);
             rslt = Ban.suaBan(MaBanCu, ban);
@@ -716,7 +714,7 @@ public class QuanLyBan extends javax.swing.JFrame {
 
             int stt = 1;
             for (Ban ban : list) {
-                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), convert(ban.getTrangthai())};
+                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), ban.getTrangthai()};
                 m.addRow(obj);
                 stt++;
             }
@@ -726,35 +724,21 @@ public class QuanLyBan extends javax.swing.JFrame {
         }
     }
 
-    private String convert(int x) {
-        try {
-            if (x == 1) {
-                return "Đang sử dụng";
-            }
-            if (x == 0) {
-                return "Ngừng sử dụng";
-            } else {
-                return "Không xác định";
-            }
-        } catch (Exception e) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
-        }
-        return "Không xác định";
-    } //Convert trạng thái bàn -> đang sử dụng hoặc không
-
-    private int convert(String str) {
-        try {
-            if (str.equals("Đang sử dụng")) {
-                return 1;
-            }
-            if (str.equals("Ngừng sử dụng")) {
-                return 0;
-            }
-        } catch (Exception e) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
-        }
-        return 1;
-    } //Convert trạng thái bàn -> 1 hoặc 0
+//    private String convert(int x) {
+//        try {
+//            if (x == 1) {
+//                return "Đang sử dụng";
+//            }
+//            if (x == 0) {
+//                return "Ngừng sử dụng";
+//            } else {
+//                return "Không xác định";
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
+//        }
+//        return "Không xác định";
+//    } //Convert trạng thái bàn -> đang sử dụng hoặc không
 
     private void openEditPanel() {
         if (!isOpen) {

@@ -12,10 +12,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
 import static quanlybanhang.control.Program.con;
-import quanlybanhang.view.AddDialog;
-import static quanlybanhang.view.AddDialog.containsSpecialChars;
-import static quanlybanhang.view.AddDialog.containsVietnamese;
-import static quanlybanhang.view.AddDialog.containsWhitespace;
 
 /**
  *
@@ -26,9 +22,9 @@ public class Ban {
     private static Ban instance;
     private String maban;
     private String tenban;
-    private int trangthai;
+    private String trangthai;
 
-    public Ban(String mb, String tb, int stt) {
+    public Ban(String mb, String tb, String stt) {
         maban = mb;
         tenban = tb;
         trangthai = stt;
@@ -45,7 +41,7 @@ public class Ban {
         return tenban;
     }
 
-    public int getTrangthai() {
+    public String getTrangthai() {
         return trangthai;
     }
 
@@ -141,7 +137,7 @@ public class Ban {
         this.tenban = tenban;
     }
 
-    public void setTrangthai(int trangthai) {
+    public void setTrangthai(String trangthai) {
         this.trangthai = trangthai;
     }
 
@@ -163,7 +159,7 @@ public class Ban {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban order by trangthai DESC;");
             while (rs.next()) {
-                ReturnList.add(new Ban(rs.getString(1), rs.getString(2), rs.getInt(3)));
+                ReturnList.add(new Ban(rs.getString(1), rs.getString(2), rs.getString(3)));
             }
             s.close();
         } catch (Exception e) {
