@@ -157,7 +157,7 @@ public class Ban {
         ArrayList<Ban> ReturnList = new ArrayList<Ban>();
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban order by trangthai DESC;");
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban order by tenban ASC;");
             while (rs.next()) {
                 ReturnList.add(new Ban(rs.getString(1), rs.getString(2), rs.getString(3)));
             }

@@ -628,11 +628,13 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnMouseClicked
 
     private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
-        int r = jTable1.getSelectedRow();
-        if (r == -1) {
-            JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (isOpen == true) {
+            return;
         } else {
-            if (isOpen == false) {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
                 act = "edit";
                 openEditPanel();
                 jRadioButton1.setVisible(true);
@@ -647,7 +649,9 @@ public class QuanLyBan extends javax.swing.JFrame {
                     jRadioButton1.setSelected(true);
                 }
             }
+
         }
+
     }//GEN-LAST:event_updateBtnMouseClicked
 
     private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
@@ -690,20 +694,22 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_LuuLabelMouseClicked
 
     private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
-        int r = jTable1.getSelectedRow();
-        if (r == -1) {
-            JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        if (isOpen == true) {
+            return;
         } else {
-            if (isOpen == false) {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
                 boolean rslt = Ban.xoaBan((String) jTable1.getModel().getValueAt(r, 1));
                 if (rslt) {
-                Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-                JOptionPane.showMessageDialog(this, "Xóa bàn thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
-                closeEditPanel();
+                    Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                    JOptionPane.showMessageDialog(this, "Xóa bàn thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
+                    closeEditPanel();
+                }
             }
-            }
+            reload();
         }
-        reload();
     }//GEN-LAST:event_deleteBtnMouseClicked
 
     private void reload() {
@@ -739,7 +745,6 @@ public class QuanLyBan extends javax.swing.JFrame {
 //        }
 //        return "Không xác định";
 //    } //Convert trạng thái bàn -> đang sử dụng hoặc không
-
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;
@@ -770,8 +775,10 @@ public class QuanLyBan extends javax.swing.JFrame {
                         EditPanel.setSize(i, getContentPane().getHeight());
                         try {
                             Thread.sleep(1);
+
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(QuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(QuanLyBan.class
+                                    .getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
@@ -793,8 +800,10 @@ public class QuanLyBan extends javax.swing.JFrame {
                         EditPanel.setSize(i, height);
                         try {
                             Thread.sleep(1);
+
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(QuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(QuanLyBan.class
+                                    .getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     EditPanel.setVisible(false);
