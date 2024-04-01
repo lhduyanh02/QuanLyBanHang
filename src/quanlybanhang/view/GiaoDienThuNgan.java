@@ -6,11 +6,14 @@ package quanlybanhang.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -24,7 +27,9 @@ import table.TableCustom;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.table.JTableHeader;
+import static quanlybanhang.control.Program.con;
 
 /**
  *
@@ -42,9 +47,15 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public GiaoDienThuNgan() {
         initComponents();
+
+        //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
+        ChuyenBanBtn.addMouseListener(new Program.SharedMouseListener());
+        InTTBtn.addMouseListener(new Program.SharedMouseListener());
+        ThanhToanBtn.addMouseListener(new Program.SharedMouseListener());
+
         add(EditPanel, 0);
         EditPanel.setSize(0, getContentPane().getHeight());
-
+        
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -169,12 +180,12 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         if (instance == null) {
             instance = new GiaoDienThuNgan();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//            instance.reload();
+            instance.reloadTableList();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//            instance.reload();
+            instance.reloadTableList();
             instance.setVisible(true);
             return instance;
         }
@@ -182,6 +193,39 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     private static void closeThisUI() {
         instance.dispose();
+    }
+
+    // Khởi tạo bàn 
+    private void reloadTableList() {
+        rightPanel.removeAll();
+        rightPanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 15));
+        jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
+
+        try {
+            ArrayList<Ban> list = Ban.layDSban();
+            for (Ban ban : list) {
+                JLabel label = new JLabel( "<html>" + ban.getMaban() + "<br>" + ban.getTenban() + "</html>");
+                label.setHorizontalAlignment(JLabel.CENTER);
+                label.setVerticalAlignment(JLabel.CENTER);
+                label.setPreferredSize(new Dimension(80, 80));
+                label.setOpaque(true);
+
+                // Thiết lập màu nền 
+                if (ban.getTrangthai().equals("free")) {
+                    label.setBackground(new Color(204, 255, 204));
+                } else {
+                    label.setBackground(new Color(255, 153, 153));
+                }
+
+                rightPanel.add(label);
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadTableList]");
+            e.printStackTrace();
+        }
+
+        rightPanel.revalidate();
+        rightPanel.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -209,6 +253,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TimKiemTF = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         rightPanel = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
         leftPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -420,14 +465,12 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane3)
         );
-
-        leftPanel.setBackground(new java.awt.Color(255, 255, 204));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -577,7 +620,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1))
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,7 +668,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     private void MenuLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLabelMouseExited
         MenuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
     }//GEN-LAST:event_MenuLabelMouseExited
 
     private void MenuLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuLabelMouseReleased
@@ -645,22 +689,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_EditPanelMouseEntered
-
-    private String convert(int x) {
-        try {
-            if (x == 1) {
-                return "Đang sử dụng";
-            }
-            if (x == 0) {
-                return "Ngừng sử dụng";
-            } else {
-                return "Không xác định";
-            }
-        } catch (Exception e) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
-        }
-        return "Không xác định";
-    } //Convert trạng thái bàn -> đang sử dụng hoặc không
 
     private void openEditPanel() {
         if (!isOpen) {
@@ -753,6 +781,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
