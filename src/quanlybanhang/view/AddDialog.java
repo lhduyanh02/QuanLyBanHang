@@ -116,7 +116,7 @@ public class AddDialog extends javax.swing.JDialog {
     }
 
     // Thêm dấu phẩy vào sau mỗi 3 chữ số
-    private static void addSeparator(JTextField TF) {
+    public static void addSeparator(JTextField TF) {
         String content = TF.getText();
         content = content.replaceAll("[.,]", "");
         int l = Integer.parseInt(content);

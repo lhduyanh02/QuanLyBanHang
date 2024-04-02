@@ -67,7 +67,7 @@ public class Program {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             try {
-                Program.writeLog(0, DangNhap.user);
+                Program.writeLog(0, DangNhap.getUser());
                 con.close();
                 System.exit(0);
             } catch (Exception ex) {
