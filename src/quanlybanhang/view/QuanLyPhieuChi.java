@@ -7,6 +7,8 @@ package quanlybanhang.view;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -18,9 +20,13 @@ import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import quanlybanhang.control.CheckInputMethod;
+import quanlybanhang.model.Ban;
 import quanlybanhang.model.PhieuChi;
 import table.TableCustom;
 
@@ -37,7 +43,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     int width = 420;
     int height = screenSize.height;
     boolean isOpen = false;
-    
+
     public QuanLyPhieuChi() {
         initComponents();
         add(EditPanel, 0);
@@ -54,7 +60,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             jTable1.removeMouseMotionListener(listener);
         }
         jTable1.removeMouseListener(m);
-        
+
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
             deleteBtn.setVisible(true);
@@ -70,6 +76,31 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 Program.closeApp();
             }
+        });
+
+        // RÀNG BUỘC GIÁ MÓN
+        SoTienTF.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char typedChar = e.getKeyChar();
+                if (!Character.isDigit(typedChar) || SoTienTF.getText().length() > 10) {
+                    e.consume(); // Loại bỏ ký tự không phải số
+                    return;
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+//                addSeparator(GiaMonTF);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (!SoTienTF.getText().equals("")) {
+                    AddDialog.addSeparator(SoTienTF);
+                }
+            }
+
         });
     }
 
@@ -256,6 +287,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         LuuLabel.setText("Lưu");
         LuuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         LuuLabel.setOpaque(true);
+        LuuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LuuLabelMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -488,6 +524,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         deleteBtn.setText("Xoá phiếu chi");
         deleteBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         deleteBtn.setOpaque(true);
+        deleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -549,7 +590,6 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
 
     private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
         jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
     }//GEN-LAST:event_jLabel2MouseExited
 
     private void jLabel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseReleased
@@ -573,12 +613,54 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }//GEN-LAST:event_reloadBtnMouseClicked
 
     private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_EditPanelMouseEntered
 
     private void addBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseClicked
-        openEditPanel();
+        if (isOpen == false) {
+            openEditPanel();
+        }
     }//GEN-LAST:event_addBtnMouseClicked
+
+    private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
+        if (isOpen) {
+            return;
+        } else {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có phiếu chi nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                boolean rslt = PhieuChi.xoaPhieuChi((String) jTable1.getModel().getValueAt(r, 1));
+                if (rslt) {
+                    Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                    JOptionPane.showMessageDialog(this, "Xóa phiếu chi thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
+                    closeEditPanel();
+                }
+            }
+            reload();
+        }
+    }//GEN-LAST:event_deleteBtnMouseClicked
+
+    private void LuuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LuuLabelMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+        int sotien;
+        if (SoTienTF.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập số tiền cho phiếu chi.",
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        } else {
+            sotien = Integer.parseInt(SoTienTF.getText().replaceAll("[.,]", ""));
+        }
+
+        boolean rslt;
+        rslt = PhieuChi.themPhieuChi(MaPCTF.getText(), NoiDungTF.getText(), sotien, DangNhap.getUser());
+        if (rslt) {
+            Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+            JOptionPane.showMessageDialog(this, "Thêm phiếu chi thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, scicon);
+            closeEditPanel();
+        }
+        reload();
+    }//GEN-LAST:event_LuuLabelMouseClicked
 
     private void reload() {
         try {
@@ -587,8 +669,8 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             m.setRowCount(0);
             int stt = 1;
             for (PhieuChi pc : list) {
-                Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(), 
-                    Program.formatTimestamp(pc.getTime()), (int)pc.getSoTien(), pc.getNhanVien()};
+                Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
+                    Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
                 m.addRow(obj);
                 stt++;
             }
@@ -597,7 +679,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;
@@ -656,7 +738,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             }).start();
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DatLaiLabel;
     private javax.swing.JPanel EditPanel;

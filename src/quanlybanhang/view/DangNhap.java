@@ -32,7 +32,7 @@ import static quanlybanhang.control.Program.con;
 public class DangNhap extends javax.swing.JDialog {
 
     private static DangNhap Instance;
-    public static String user;
+    private static String user;
     private static int access;
     private static KeyEventDispatcher keyEventDispatcher;
 
@@ -40,6 +40,10 @@ public class DangNhap extends javax.swing.JDialog {
         return access;
     }
 
+    public static String getUser(){
+        return user;
+    }
+    
     public DangNhap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();

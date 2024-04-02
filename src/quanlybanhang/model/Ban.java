@@ -122,7 +122,7 @@ public class Ban {
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("Loi! [Class: Ban - Method: XoaBan]");
+            System.out.println("Loi! [Class: Ban - Method: xoaBan]");
             Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
         }

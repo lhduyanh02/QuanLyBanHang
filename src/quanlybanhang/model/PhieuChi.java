@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.ConnectDB;
 import static quanlybanhang.control.Program.con;
@@ -90,8 +94,57 @@ public class PhieuChi {
         return RL;
     }
     
-    public static void main(String[] args) {
-        layDSphieuchi();
+    public static boolean xoaPhieuChi(String MaPC){
+        try {
+            Statement s = con.createStatement();
+            int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`phieuchi` WHERE (`mapc` = '"+MaPC+"');");
+
+            if (rs == 1) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: PhieuChi - Method: xoaPhieuChi]");
+            Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+        }
+        return false;
+    }
+    
+    public static boolean themPhieuChi(String MaPC, String NoiDung, int SoTien, String user) {
+        Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
+        if (CheckInputMethod.containsWhitespace(MaPC) || CheckInputMethod.containsVietnamese(MaPC) || MaPC.length() > 10) {
+            JOptionPane.showMessageDialog(null, "Mã phiếu chi phải ít hơn 10 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
+                    "Lỗi mã phiếu chi", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
+        if (NoiDung.equals("")) {
+            JOptionPane.showMessageDialog(null, "Nội dung không được rỗng.",
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
+        try {
+            Statement s = con.createStatement();
+            if (MaPC.equals("")) {
+                s.executeUpdate("INSERT INTO htql_banhang.phieuchi "
+                        + "(NoiDungPC, SoTien, User) VALUES (N'" + NoiDung + "','"+SoTien+"','"+user+"');");
+                s.close();
+                return true;
+            } else {
+                s.executeUpdate("INSERT INTO htql_banhang.phieuchi "
+                        + "(MaPC, NoiDungPC, SoTien, User) VALUES ('"+MaPC+"',N'" + NoiDung + "','"+SoTien+"','"+user+"');");
+                s.close();
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: Ban - Method: themBan]");
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
+    }
+
+//    public static void main(String[] args) {
+//        layDSphieuchi();
         
 //        PhieuChi a = new PhieuChi("AAA", 500000, "a");
 //        System.out.println("ND: "+ a.NoiDung +"\nSo tien: "+ a.Time + "\nNhanVien: "+a.NhanVien);
@@ -111,5 +164,5 @@ public class PhieuChi {
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
-    }
+//    }
 }
