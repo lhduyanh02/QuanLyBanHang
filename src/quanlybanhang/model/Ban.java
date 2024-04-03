@@ -102,7 +102,7 @@ public class Ban {
         try {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
-
+            s.close();
             if (rs == 1) {
                 return true;
             }
@@ -117,7 +117,7 @@ public class Ban {
         try {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`ban` WHERE (`maban` = '"+MaBan+"');");
-
+            s.close();
             if (rs == 1) {
                 return true;
             }
