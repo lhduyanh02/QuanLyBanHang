@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import quanlybanhang.control.Program.SharedMouseListener;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.model.ThucDon;
 
 public class EditDialog extends javax.swing.JDialog {
     private String MaSanPham = "";
@@ -124,6 +125,8 @@ public class EditDialog extends javax.swing.JDialog {
         MaMonTF = new javax.swing.JTextField();
         TenMonTF = new javax.swing.JTextField();
         GiaMonTF = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        GhiChuTF = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         CapNhatLabel = new javax.swing.JLabel();
         DatLaiLabel = new javax.swing.JLabel();
@@ -145,16 +148,25 @@ public class EditDialog extends javax.swing.JDialog {
         GiaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món"));
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ghi chú"));
+
+        GhiChuTF.setColumns(20);
+        GhiChuTF.setRows(5);
+        GhiChuTF.setWrapStyleWord(true);
+        GhiChuTF.setBorder(null);
+        jScrollPane1.setViewportView(GhiChuTF);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(MaMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(TenMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                    .addComponent(GiaMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,11 +174,13 @@ public class EditDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(MaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(TenMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(249, 247, 201));
@@ -309,14 +323,10 @@ public class EditDialog extends javax.swing.JDialog {
         try {
             Statement s = con.createStatement();
             int gia = Integer.parseInt(GiaMonTF.getText().replaceAll("[.,]", ""));
-//            System.out.println("Mã món: " + MaMonTF.getText() + " || "
-//                    + "Tên món: " + TenMonTF.getText() + " || "
-//                    + "Giá: " + gia + "|| Updated");
-
-            s.executeUpdate("UPDATE htql_banhang.sanpham SET"
-                    + " MaSP = N'"+MaMonTF.getText()+"', TenSP = N'"+TenMonTF.getText()+"', GiaSP = '"+gia+"' WHERE (`MaSP` = '"+MaSanPham+"');");
-            s.close();
-            updateNoti(1, this);
+            boolean re = ThucDon.suaMon(MaSanPham, MaMonTF.getText(), TenMonTF.getText(), gia, GhiChuTF.getText());
+            if (re == true) {
+                updateNoti(1, this);
+            }
         } catch (SQLException ex) {
             System.out.println("Data is not valid!");
             updateNoti(0, this);
@@ -327,6 +337,7 @@ public class EditDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CapNhatLabel;
     private javax.swing.JLabel DatLaiLabel;
+    private javax.swing.JTextArea GhiChuTF;
     private javax.swing.JTextField GiaMonTF;
     private javax.swing.JTextField MaMonTF;
     private javax.swing.JTextField TenMonTF;
@@ -335,6 +346,7 @@ public class EditDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     // Hàm kiểm tra ký tự đặc biệt

@@ -114,16 +114,26 @@ public class Ban {
     }
 
     public static boolean xoaBan(String MaBan) {
+        Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
         try {
             Statement s = con.createStatement();
+
+            ResultSet r = s.executeQuery("select trangthai from htql_banhang.ban where maban = '" + MaBan + "';");
+            if (r.next()) {
+                if (!r.getString(1).equals("free") || MaBan.equals("0")) {
+                    JOptionPane.showMessageDialog(null, "Bàn đang được sử dụng, không thể xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                    return false;
+                }
+            }
+
             int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`ban` WHERE (`maban` = '"+MaBan+"');");
             s.close();
+
             if (rs == 1) {
                 return true;
             }
         } catch (Exception e) {
             System.out.println("Loi! [Class: Ban - Method: xoaBan]");
-            Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
         }
         return false;

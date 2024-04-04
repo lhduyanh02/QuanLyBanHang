@@ -490,6 +490,11 @@ public class QuanLyBan extends javax.swing.JFrame {
         DatLaiLabel.setText("Đặt Lại");
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
+        DatLaiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DatLaiLabelMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -686,7 +691,7 @@ public class QuanLyBan extends javax.swing.JFrame {
             rslt = Ban.suaBan(MaBanCu, ban);
             if (rslt) {
                 Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-                JOptionPane.showMessageDialog(this, "Thêm bàn thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, scicon);
+                JOptionPane.showMessageDialog(this, "Sửa bàn thành công!", "Đã xong", JOptionPane.INFORMATION_MESSAGE, scicon);
                 closeEditPanel();
             }
         }
@@ -711,6 +716,12 @@ public class QuanLyBan extends javax.swing.JFrame {
             reload();
         }
     }//GEN-LAST:event_deleteBtnMouseClicked
+
+    private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
+        TenBanTF.setText("");
+        MaBanTF.setText("");
+        buttonGroup1.clearSelection();
+    }//GEN-LAST:event_DatLaiLabelMouseClicked
 
     private void reload() {
         try {
@@ -767,9 +778,6 @@ public class QuanLyBan extends javax.swing.JFrame {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    reloadBtn.setEnabled(false);
-                    addBtn.setEnabled(false);
-                    updateBtn.setEnabled(false);
                     jTable1.setEnabled(false);
                     for (int i = 0; i <= width; i += 5) {
                         EditPanel.setSize(i, getContentPane().getHeight());
@@ -789,9 +797,6 @@ public class QuanLyBan extends javax.swing.JFrame {
     private void closeEditPanel() {
         if (isOpen) {
             isOpen = false;
-            reloadBtn.setEnabled(true);
-            addBtn.setEnabled(true);
-            updateBtn.setEnabled(true);
             jTable1.setEnabled(true);
             new Thread(new Runnable() {
                 @Override

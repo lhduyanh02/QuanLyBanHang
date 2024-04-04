@@ -1,15 +1,10 @@
 package quanlybanhang.model;
 
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static quanlybanhang.control.Program.con;
-import quanlybanhang.view.ThucDonMonAn;
 
 /**
  *
@@ -28,25 +23,25 @@ public class ThucDon {
         }
     }
 
-    public void xoaMon(Object MaSP) {
+    public static boolean xoaMon(Object MaSP) {
         try {
             Statement s = con.createStatement();
-            int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
-            if (x != 0) {
-                JOptionPane.showMessageDialog(null, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
-
+            int rs = s.executeUpdate("UPDATE `htql_banhang`.`sanpham` SET loaiSP='-1' WHERE (`MaSP` = N'" + MaSP + "');");
+            if (rs == 1) {
+                return true;
             } else {
                 JOptionPane.showMessageDialog(null, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
-
             }
             s.close();
+            return false;
         } catch (Exception e) {
             System.out.println("Loi! [Class: ThucDon - Method: xoaMon]");
             e.printStackTrace();
+            return false;
         }
     }
 
-    public boolean themMon(String MaSP, String TenSP, int GiaSP, int LoaiSP, String GhiChu) {
+    public static boolean themMon(String MaSP, String TenSP, int GiaSP, int LoaiSP, String GhiChu) {
         try {
             Statement s = con.createStatement();
             s.executeUpdate("INSERT INTO htql_banhang.sanpham "
@@ -55,7 +50,23 @@ public class ThucDon {
             return true;
         } catch (Exception e) {
             System.out.println("Loi! [Class: ThucDon - Method: themMon]");
-            Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+            Icon icon = new ImageIcon(ThucDon.class.getResource("/asserts/X-icon.png"));
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
+    }
+
+    public static boolean suaMon(String MaCu, String MaSP, String TenSP, int GiaSP, String GhiChu) {
+        try {
+            Statement s = con.createStatement();
+            //UPDATE htql_banhang.sanpham SET MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = N'" + GhiChu + "' WHERE (MaSP = '" + MaCu + "');
+            s.executeUpdate("UPDATE htql_banhang.sanpham SET "
+                    + "MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = N'" + GhiChu + "' WHERE (MaSP = '" + MaCu + "');");
+            s.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: ThucDon - Method: themMon]");
+            Icon icon = new ImageIcon(ThucDon.class.getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }
