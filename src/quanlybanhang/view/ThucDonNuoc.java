@@ -7,28 +7,22 @@ package quanlybanhang.view;
 import quanlybanhang.control.Program;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.model.ThucDon;
 import table.TableCustom;
@@ -476,18 +470,11 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                 int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xoá món không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
                     Object MaSP = jTable1.getModel().getValueAt(r, 1);
-                    ThucDon.getInstance().xoaMon(MaSP);
-                    //                    Statement s = con.createStatement();
-                    //
-                    //                    int x = s.executeUpdate("DELETE FROM `htql_banhang`.`sanpham` WHERE (`MaSP` = N'" + MaSP + "');");
-                    //                    if (x != 0) {
-                    //                        JOptionPane.showMessageDialog(this, "Đã xoá " + x + " món", "Xoá thành công", JOptionPane.INFORMATION_MESSAGE);
-                    //                        reloadMenu();
-                    //                    } else {
-                    //                        JOptionPane.showMessageDialog(this, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
-                    //                        reloadMenu();
-                    //                    }
-                    //                    s.close();
+                    boolean rslt = ThucDon.xoaMon(MaSP);
+                    if (rslt) {
+                        Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                        JOptionPane.showMessageDialog(this, "Xóa món thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
+                    }
                 }
                 reloadMenu();
             }

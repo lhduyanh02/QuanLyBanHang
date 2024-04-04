@@ -375,7 +375,7 @@ public class AddDialog extends javax.swing.JDialog {
                 type = "Nước";
             }
 
-            boolean re = ThucDon.getInstance().themMon(MaMonTF.getText(), TenMonTF.getText(), gia, loai, GhiChuTF.getText());
+            boolean re = ThucDon.themMon(MaMonTF.getText(), TenMonTF.getText(), gia, loai, GhiChuTF.getText());
 //            System.out.println("Mã món: " + MaMonTF.getText() + " || "
 //                    + "Tên món: " + TenMonTF.getText() + " || "
 //                    + "Giá: " + gia + " || "

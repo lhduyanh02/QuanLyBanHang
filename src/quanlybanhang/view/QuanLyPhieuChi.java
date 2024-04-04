@@ -307,6 +307,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         DatLaiLabel.setText("Đặt Lại");
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
+        DatLaiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DatLaiLabelMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -661,6 +666,12 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         }
         reload();
     }//GEN-LAST:event_LuuLabelMouseClicked
+
+    private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
+        MaPCTF.setText("");
+        NoiDungTF.setText("");
+        SoTienTF.setText("");
+    }//GEN-LAST:event_DatLaiLabelMouseClicked
 
     private void reload() {
         try {
