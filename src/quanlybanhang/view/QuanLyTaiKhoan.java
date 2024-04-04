@@ -4,8 +4,12 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -22,10 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import quanlybanhang.model.TaiKhoan;
 
 /**
  *
@@ -35,9 +42,19 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
     private static QuanLyTaiKhoan instance;
     private DrawerController drawer;
+    private String act;
+    private String OldUsname;
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = 420;
+    int height = screenSize.height;
+    boolean isOpen = false;
 
     public QuanLyTaiKhoan() {
         initComponents();
+        add(EditPanel, 0);
+        EditPanel.setSize(0, getContentPane().getHeight());
+
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         logBtn.addMouseListener(new Program.SharedMouseListener());
         addBtn.addMouseListener(new Program.SharedMouseListener());
@@ -46,6 +63,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
 //        addBtn.setVisible(false);
         MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
+        
+        MouseMotionListener[] mouseMotionListeners = jTable1.getMouseMotionListeners();
+        for (MouseMotionListener listener : mouseMotionListeners) {
+            jTable1.removeMouseMotionListener(listener);
+        }
+        jTable1.removeMouseListener(m);
+
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -190,6 +214,20 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        EditPanel = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        TenDNhapTF = new javax.swing.JTextField();
+        MatKhauTF = new javax.swing.JTextField();
+        NhapLaiMKTF = new javax.swing.JTextField();
+        QTVRadioButton = new javax.swing.JRadioButton();
+        NVRadioButton = new javax.swing.JRadioButton();
+        jPanel7 = new javax.swing.JPanel();
+        LuuLabel = new javax.swing.JLabel();
+        DatLaiLabel = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jPanel6 = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -203,6 +241,144 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         disableBtn = new javax.swing.JLabel();
         logBtn = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+
+        EditPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        EditPanel.setMinimumSize(new java.awt.Dimension(420, 800));
+        EditPanel.setPreferredSize(new Dimension(420, getContentPane().getHeight()));
+        EditPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                EditPanelMouseEntered(evt);
+            }
+        });
+
+        TenDNhapTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        TenDNhapTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+
+        MatKhauTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        MatKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+
+        NhapLaiMKTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NhapLaiMKTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nhập lại mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+
+        buttonGroup1.add(QTVRadioButton);
+        QTVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        QTVRadioButton.setText("Quản trị viên");
+        QTVRadioButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+        buttonGroup1.add(NVRadioButton);
+        NVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        NVRadioButton.setText("Nhân viên");
+        NVRadioButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        NVRadioButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        jPanel7.setBackground(new java.awt.Color(240, 240, 240));
+        jPanel7.setMinimumSize(new java.awt.Dimension(420, 81));
+        jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
+        LuuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LuuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
+        LuuLabel.setText("Lưu");
+        LuuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LuuLabel.setOpaque(true);
+        LuuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LuuLabelMouseClicked(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 65;
+        gridBagConstraints.ipady = 18;
+        jPanel7.add(LuuLabel, gridBagConstraints);
+
+        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DatLaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
+        DatLaiLabel.setText("Đặt Lại");
+        DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        DatLaiLabel.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 54;
+        gridBagConstraints.ipady = 16;
+        jPanel7.add(DatLaiLabel, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TenDNhapTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MatKhauTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NhapLaiMKTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(TenDNhapTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(MatKhauTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(NhapLaiMKTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(NVRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 204));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 432, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 85, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout EditPanelLayout = new javax.swing.GroupLayout(EditPanel);
+        EditPanel.setLayout(EditPanelLayout);
+        EditPanelLayout.setHorizontalGroup(
+            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        EditPanelLayout.setVerticalGroup(
+            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EditPanelLayout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -263,11 +439,11 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
             },
             new String [] {
-                "STT", "TÊN ĐĂNG NHẬP", "QUYỀN ADMIN", "TRẠNG THÁI"
+                "STT", "TÊN ĐĂNG NHẬP", "PHÂN QUYỀN"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -281,10 +457,8 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(110);
             jTable1.getColumnModel().getColumn(1).setMinWidth(400);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(500);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
             jTable1.getColumnModel().getColumn(2).setMaxWidth(300);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(300);
         }
         jTable1.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 18));
 
@@ -296,7 +470,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -308,9 +482,14 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         addBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         addBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
-        addBtn.setText("Thêm");
+        addBtn.setText("Thêm mới");
         addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addBtn.setOpaque(true);
+        addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -326,6 +505,11 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         updateBtn.setText("Cập nhật");
         updateBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         updateBtn.setOpaque(true);
+        updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -440,49 +624,224 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void logBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logBtnMouseClicked
-        reload();
+
     }//GEN-LAST:event_logBtnMouseClicked
 
     private void disableBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableBtnMouseClicked
-        // TODO add your handling code here:
+        if (isOpen == true) {
+            return;
+        } else {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                boolean rslt = TaiKhoan.vohieuhoa((String) jTable1.getModel().getValueAt(r, 1));
+                if (rslt) {
+                    Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                    JOptionPane.showMessageDialog(this, "Vô hiệu hoá tài khoản thành công!", "Đã vô hiệu hoá", JOptionPane.INFORMATION_MESSAGE, scicon);
+                    closeEditPanel();
+                }
+            }
+            reload();
+        }
     }//GEN-LAST:event_disableBtnMouseClicked
 
+    private void LuuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LuuLabelMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+        if (buttonGroup1.getSelection() == null) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn loại tài khoản.",
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
+
+        int acc = 1;
+        if (QTVRadioButton.isSelected()) {
+            acc = 0;
+        } else if (NVRadioButton.isSelected()) {
+            acc = 1;
+        }
+
+        boolean rslt;
+
+        if (act.equals("add")) {
+            if (!MatKhauTF.getText().equals(NhapLaiMKTF.getText())) {
+                JOptionPane.showMessageDialog(null, "Mật khẩu không trùng khớp.",
+                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                return;
+            }
+
+            rslt = TaiKhoan.themTK(new TaiKhoan(TenDNhapTF.getText(), MatKhauTF.getText(), acc));
+            if (rslt) {
+                Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, scicon);
+                closeEditPanel();
+            }
+        }
+
+        if (act.equals("edit")) {
+            if (!MatKhauTF.getText().equals(NhapLaiMKTF.getText())) {
+                JOptionPane.showMessageDialog(null, "Mật khẩu không trùng khớp.",
+                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                return;
+            }
+            TaiKhoan TK = new TaiKhoan(TenDNhapTF.getText(), MatKhauTF.getText(), acc);
+            rslt = TaiKhoan.suaTaiKhoan(OldUsname, TK);
+            if (rslt) {
+                Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                JOptionPane.showMessageDialog(this, "Cập nhật tài khoản thành công!", "Đã cập nhật", JOptionPane.INFORMATION_MESSAGE, scicon);
+                closeEditPanel();
+            }
+        }
+        reload();
+    }//GEN-LAST:event_LuuLabelMouseClicked
+
+    private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditPanelMouseEntered
+
+    private void addBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseClicked
+        if (isOpen == false) {
+            act = "add";
+            openEditPanel();
+            QTVRadioButton.setVisible(true);
+            NVRadioButton.setVisible(true);
+        }
+    }//GEN-LAST:event_addBtnMouseClicked
+
+    private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+        if (isOpen == true) {
+            return;
+        } else {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                act = "edit";
+                openEditPanel();
+                QTVRadioButton.setVisible(true);
+                NVRadioButton.setVisible(true);
+
+                OldUsname = (String) jTable1.getModel().getValueAt(r, 1);
+                TenDNhapTF.setText(OldUsname);
+                if (jTable1.getModel().getValueAt(r, 2).toString().equals("Nhân viên")) {
+                    NVRadioButton.setSelected(true);
+                } else if (jTable1.getModel().getValueAt(r, 2).toString().equals("Quản trị viên")){
+                    QTVRadioButton.setSelected(true);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_updateBtnMouseClicked
+
     private void reload() {
-//        try {
-//            ArrayList<Ban> list = Ban.layDSban();
-//            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-//            m.setRowCount(0);
-//
-//            int stt = 1;
-//            for (Ban ban : list) {
-//                Object[] obj = {stt, ban.getMaban(), ban.getTenban(), convert(ban.getTrangthai())};
-//                m.addRow(obj);
-//                stt++;
-//            }
-//        } catch (Exception ex) {
-//            System.out.println("Loi! [Class: QuanLyBan - Method: reloadBtnMouseClicked]");
-//            ex.printStackTrace();
-//        }
+        try {
+            ArrayList<TaiKhoan> list = TaiKhoan.layDSTaiKhoan();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            m.setRowCount(0);
+
+            int stt = 1;
+            for (TaiKhoan tk : list) {
+                Object[] obj = {stt, tk.getUsername(), convert(tk.getLoai())};
+                m.addRow(obj);
+                stt++;
+            }
+        } catch (Exception ex) {
+            System.out.println("Loi! [Class: QuanLyTaiKhoan - Method: reload]");
+            ex.printStackTrace();
+        }
     }
 
     private String convert(int x) {
         try {
             if (x == 1) {
-                return "Đang sử dụng";
+                return "Nhân viên";
             }
             if (x == 0) {
-                return "Ngừng sử dụng";
-            } else {
-                return "Không xác định";
+                return "Quản trị viên";
+            } 
+            if (x == -1) {
+                return "Tài khoản bị vô hiệu hoá";
             }
         } catch (Exception e) {
-            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
+            System.out.println("Loi! [Class: QuanLyTaiKhoan - Method: convert]");
         }
         return "Không xác định";
+    } //Convert trạng thái bàn -> đang sử dụng hoặc không
+    private void openEditPanel() {
+        if (!isOpen) {
+            isOpen = true;
+            EditPanel.setVisible(true);
+            add(EditPanel, 0);
+            TenDNhapTF.setText("");
+            MatKhauTF.setText("");
+            NhapLaiMKTF.setText("");
+            buttonGroup1.clearSelection();
+
+            MouseAdapter a = new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    closeEditPanel();
+                }
+            };
+            jScrollPane1.addMouseListener(a);
+            jTable1.addMouseListener(a);
+            jLabel1.addMouseListener(a);
+            jPanel4.addMouseListener(a);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    jTable1.setEnabled(false);
+                    for (int i = 0; i <= width; i += 5) {
+                        EditPanel.setSize(i, getContentPane().getHeight());
+                        try {
+                            Thread.sleep(1);
+
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(QuanLyBan.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }).start();
+        }
     }
 
+    private void closeEditPanel() {
+        if (isOpen) {
+            isOpen = false;
+            jTable1.setEnabled(true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 420; i >= 0; i -= 5) {
+                        EditPanel.setSize(i, height);
+                        try {
+                            Thread.sleep(1);
+
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(QuanLyBan.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    EditPanel.setVisible(false);
+                    getContentPane().remove(EditPanel);
+                }
+            }).start();
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DatLaiLabel;
+    private javax.swing.JPanel EditPanel;
+    private javax.swing.JLabel LuuLabel;
+    private javax.swing.JTextField MatKhauTF;
+    private javax.swing.JRadioButton NVRadioButton;
+    private javax.swing.JTextField NhapLaiMKTF;
+    private javax.swing.JRadioButton QTVRadioButton;
+    private javax.swing.JTextField TenDNhapTF;
     private javax.swing.JLabel addBtn;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel disableBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -490,8 +849,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel logBtn;
     private javax.swing.JLabel updateBtn;

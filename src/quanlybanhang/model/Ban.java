@@ -102,7 +102,7 @@ public class Ban {
         try {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
-
+            s.close();
             if (rs == 1) {
                 return true;
             }
@@ -117,6 +117,7 @@ public class Ban {
         Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
         try {
             Statement s = con.createStatement();
+
             ResultSet r = s.executeQuery("select trangthai from htql_banhang.ban where maban = '" + MaBan + "';");
             if (r.next()) {
                 if (!r.getString(1).equals("free") || MaBan.equals("0")) {
@@ -125,7 +126,8 @@ public class Ban {
                 }
             }
 
-            int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`ban` WHERE (`maban` = '" + MaBan + "');");
+            int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`ban` WHERE (`maban` = '"+MaBan+"');");
+            s.close();
 
             if (rs == 1) {
                 return true;
