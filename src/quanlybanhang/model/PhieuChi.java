@@ -100,6 +100,7 @@ public class PhieuChi {
             int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`phieuchi` WHERE (`mapc` = '"+MaPC+"');");
 
             if (rs == 1) {
+                NhatKy.writeLog("Xóa phiếu chi", "Xóa phiếu chi: " + MaPC);
                 return true;
             }
         } catch (Exception e) {
@@ -142,27 +143,4 @@ public class PhieuChi {
             return false;
         }
     }
-
-//    public static void main(String[] args) {
-//        layDSphieuchi();
-        
-//        PhieuChi a = new PhieuChi("AAA", 500000, "a");
-//        System.out.println("ND: "+ a.NoiDung +"\nSo tien: "+ a.Time + "\nNhanVien: "+a.NhanVien);
-        
-//        try {
-//            ConnectDB();
-//            Statement s = con.createStatement();
-//
-//            Timestamp t;
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//            t = new Timestamp(sdf.parse(Program.getTimeNow()).getTime());
-//            System.out.println(t);
-//            int x = s.executeUpdate("INSERT INTO htql_banhang.phieuchi (NoiDungPC, TGChi, SoTien, User) VALUES ('aazx', '" + t.toString() + "', '5000', 'a');");
-//            if (x != 0) {
-//                System.out.println("updated 1 row");
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
 }

@@ -1,25 +1,15 @@
 package quanlybanhang.view;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-import quanlybanhang.control.Program;
 import quanlybanhang.control.Program.SharedMouseListener;
-import static quanlybanhang.control.Program.con;
 import quanlybanhang.model.ThucDon;
 
 public class AddDialog extends javax.swing.JDialog {
@@ -164,11 +154,6 @@ public class AddDialog extends javax.swing.JDialog {
         MonAnRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
         MonAnRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         MonAnRadioBtn.setText("Món ăn");
-        MonAnRadioBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MonAnRadioBtnActionPerformed(evt);
-            }
-        });
 
         NuocRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
         NuocRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -376,14 +361,6 @@ public class AddDialog extends javax.swing.JDialog {
             }
 
             boolean re = ThucDon.themMon(MaMonTF.getText(), TenMonTF.getText(), gia, loai, GhiChuTF.getText());
-//            System.out.println("Mã món: " + MaMonTF.getText() + " || "
-//                    + "Tên món: " + TenMonTF.getText() + " || "
-//                    + "Giá: " + gia + " || "
-//                    + "Loại: " + type);
-//            
-//            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
-//                    + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaMonTF.getText() + "', N'" + TenMonTF.getText() + "', '" + gia + "', '" + loai + "', N'"+GhiChuTF.getText()+"');");
-//            s.close();
             if (re == true) {
                 updateNoti(1, this);
             }
@@ -392,10 +369,6 @@ public class AddDialog extends javax.swing.JDialog {
             updateNoti(0, this);
         }
     }//GEN-LAST:event_ThemLabelMouseClicked
-
-    private void MonAnRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonAnRadioBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MonAnRadioBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,25 +5,12 @@
 package quanlybanhang.view;
 
 import quanlybanhang.control.Program;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import static quanlybanhang.control.Program.con;
 
 /**
  *
@@ -64,13 +51,14 @@ public class WelcomeUI extends javax.swing.JFrame {
                 .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addFooter(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
                     @Override
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if (i == 7) {
+                        if (i == 8) {
                             try {
                                 Program.closeApp();
                             } catch (Exception ex) {
@@ -111,6 +99,10 @@ public class WelcomeUI extends javax.swing.JFrame {
                             drawer.hide();
                             closeThisUI();
                             ThongKe.getInstance();
+                        }
+                        if (i == 7) { //ĐỔI MẬT KHẨU
+                            drawer.hide();
+                            DoiMatKhau.getInstance();
                         }
                     }
 

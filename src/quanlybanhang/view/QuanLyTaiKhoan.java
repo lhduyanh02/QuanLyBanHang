@@ -18,20 +18,13 @@ import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import quanlybanhang.model.Ban;
 import table.TableCustom;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import quanlybanhang.model.NhatKy;
 import quanlybanhang.model.TaiKhoan;
 
 /**
@@ -241,6 +234,12 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         disableBtn = new javax.swing.JLabel();
         logBtn = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        LogPanel = new javax.swing.JPanel();
+        LogScrollPane = new javax.swing.JScrollPane();
+        LogTextArea = new javax.swing.JTextArea();
+        CloseLog = new javax.swing.JLabel();
+        LogComboBox = new javax.swing.JComboBox<>();
+        LogReload = new javax.swing.JLabel();
 
         EditPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         EditPanel.setMinimumSize(new java.awt.Dimension(420, 800));
@@ -422,7 +421,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 952, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,7 +469,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -559,6 +558,73 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         gridBagConstraints.weightx = 0.5;
         jPanel4.add(logBtn, gridBagConstraints);
 
+        LogScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        LogScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        LogTextArea.setEditable(false);
+        LogTextArea.setBackground(new java.awt.Color(255, 255, 255));
+        LogTextArea.setColumns(20);
+        LogTextArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        LogTextArea.setRows(5);
+        LogScrollPane.setViewportView(LogTextArea);
+
+        CloseLog.setBackground(new java.awt.Color(240, 240, 240));
+        CloseLog.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CloseLog.setText("Đóng nhật ký");
+        CloseLog.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        CloseLog.setOpaque(true);
+        CloseLog.addMouseListener(new Program.SharedMouseListener());
+        CloseLog.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CloseLogMouseClicked(evt);
+            }
+        });
+
+        LogComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
+        LogComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                LogComboBoxItemStateChanged(evt);
+            }
+        });
+
+        LogReload.setBackground(new java.awt.Color(240, 240, 240));
+        LogReload.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LogReload.setText("Tải lại");
+        LogReload.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LogReload.setOpaque(true);
+        LogReload.addMouseListener(new Program.SharedMouseListener());
+        LogReload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogReloadMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LogPanelLayout = new javax.swing.GroupLayout(LogPanel);
+        LogPanel.setLayout(LogPanelLayout);
+        LogPanelLayout.setHorizontalGroup(
+            LogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(LogScrollPane)
+            .addGroup(LogPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LogComboBox, 0, 508, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LogReload, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CloseLog, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        LogPanelLayout.setVerticalGroup(
+            LogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LogPanelLayout.createSequentialGroup()
+                .addComponent(LogScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(LogPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(LogComboBox)
+                    .addComponent(LogReload, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CloseLog, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -567,9 +633,14 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
                     .addComponent(jSeparator1))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(LogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,7 +652,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(LogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
+
+        LogPanel.setVisible(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -624,7 +701,11 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void logBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logBtnMouseClicked
-
+        LogPanel.setVisible(true);
+        jPanel4.setVisible(false);
+        jPanel2.setComponentZOrder(LogPanel, 0);
+        reloadLogCombobox();
+        reloadLog();
     }//GEN-LAST:event_logBtnMouseClicked
 
     private void disableBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableBtnMouseClicked
@@ -733,6 +814,22 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateBtnMouseClicked
 
+    private void CloseLogMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CloseLogMouseClicked
+        LogPanel.setVisible(false);
+        jPanel4.setVisible(true);
+    }//GEN-LAST:event_CloseLogMouseClicked
+
+    private void LogReloadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogReloadMouseClicked
+        reloadLogCombobox();
+        reloadLog();
+    }//GEN-LAST:event_LogReloadMouseClicked
+
+    private void LogComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_LogComboBoxItemStateChanged
+        if(LogComboBox.getSelectedItem()!=null){
+            reloadLog();
+        }
+    }//GEN-LAST:event_LogComboBoxItemStateChanged
+
     private void reload() {
         try {
             ArrayList<TaiKhoan> list = TaiKhoan.layDSTaiKhoan();
@@ -749,6 +846,37 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             System.out.println("Loi! [Class: QuanLyTaiKhoan - Method: reload]");
             ex.printStackTrace();
         }
+    }
+    
+    private void reloadLog(){
+        String act = LogComboBox.getSelectedItem().toString();
+        ArrayList<String> list;
+        if(act.equals("Tất cả")){
+            list = NhatKy.getLog();
+            String log = "";
+            for(String str : list){
+                log+=str;
+            }
+            LogTextArea.setText(log);
+        } else
+        {
+            list = NhatKy.getLogOf(act);
+            String log = "";
+            for(String str : list){
+                log+=str;
+            }
+            LogTextArea.setText(log);
+        }
+    }
+    
+    private void reloadLogCombobox(){
+        LogComboBox.removeAllItems();
+        LogComboBox.addItem("Tất cả");
+        ArrayList<String> actions = NhatKy.getAction();
+        for(String act : actions){
+            LogComboBox.addItem(act);
+        }
+        LogComboBox.setSelectedItem("Tất cả");
     }
 
     private String convert(int x) {
@@ -832,8 +960,14 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CloseLog;
     private javax.swing.JLabel DatLaiLabel;
     private javax.swing.JPanel EditPanel;
+    private javax.swing.JComboBox<String> LogComboBox;
+    private javax.swing.JPanel LogPanel;
+    private javax.swing.JLabel LogReload;
+    private javax.swing.JScrollPane LogScrollPane;
+    private javax.swing.JTextArea LogTextArea;
     private javax.swing.JLabel LuuLabel;
     private javax.swing.JTextField MatKhauTF;
     private javax.swing.JRadioButton NVRadioButton;

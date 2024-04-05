@@ -24,6 +24,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.model.NhatKy;
 
 /**
  *
@@ -254,12 +255,11 @@ public class DangNhap extends javax.swing.JDialog {
     boolean hidePW = true;
     private void PasswordTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PasswordTFMouseClicked
         if (isAlreadyOneClick) {
-//            System.out.println("double click");
             if (hidePW == true) {
                 PasswordTF.setEchoChar((char) 0);
                 hidePW = false;
             } else {
-                char ch = 0x25cf; //Default: 0x25cf
+                char ch = 0x25cf;
                 PasswordTF.setEchoChar(ch);
                 hidePW = true;
             }
@@ -345,18 +345,25 @@ public class DangNhap extends javax.swing.JDialog {
             }
             s.close();
 
+            if(access==-1){
+                JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị vô hiệu hóa, vui lòng liên hệ nhân viên quản lý.",
+                        "Tài khoản vô hiệu", JOptionPane.ERROR_MESSAGE, icon);
+                return;
+            }
             if (pass.equals(passwd)) {
                 this.dispose();
-                Program.writeLog(1, user);
+                NhatKy.writeLog("Đăng nhập", "Đăng nhập thành công");
                 WelcomeUI.getInstance();
                 KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
             } else {
+                NhatKy.writeLog("Đăng nhập", "Đăng nhập không thành công");
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
                         "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("Login unsuccessful!");
+            NhatKy.writeLog("Đăng nhập", "Lỗi đăng nhập");
             JOptionPane.showMessageDialog(this, "Không thể đăng nhập, vui lòng kiểm tra lại",
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
         }
