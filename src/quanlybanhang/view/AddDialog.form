@@ -156,9 +156,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="M&#xf3;n &#x103;n"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MonAnRadioBtnActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="NuocRadioBtn">
           <Properties>

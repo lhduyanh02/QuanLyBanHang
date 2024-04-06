@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Properties;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import quanlybanhang.model.NhatKy;
 import quanlybanhang.view.DangNhap;
 
 /**
@@ -67,7 +68,7 @@ public class Program {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             try {
-                Program.writeLog(0, DangNhap.getUser());
+                NhatKy.writeLog("Đăng xuất", "Đăng xuất thành công");
                 con.close();
                 System.exit(0);
             } catch (Exception ex) {
@@ -94,29 +95,43 @@ public class Program {
 
     public static Connection con;
 
-    public static void writeLog(int x, String us) {
-//        Statement s;
-//        try {
-//            s = con.createStatement();
-//            ResultSet rs = s.executeQuery("SELECT sign_log FROM htql_banhang.app_conf where IDConf = 0;");
-//            rs.next();
-//            String str = rs.getString(1);
-//            System.out.println(str);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
-//UPDATE app_conf
-//SET sign_log = CONCAT('First\n', sign_log)
-//WHERE IDConf = 0;
-//        try {
-//            // Lấy đường dẫn của thư mục làm việc hiện tại
-//            String workingDir = System.getProperty("user.dir");
+//    public static void writeLog(int x, String us) {
+////        Statement s;
+////        try {
+////            s = con.createStatement();
+////            ResultSet rs = s.executeQuery("SELECT sign_log FROM htql_banhang.app_conf where IDConf = 0;");
+////            rs.next();
+////            String str = rs.getString(1);
+////            System.out.println(str);
+////        } catch (SQLException ex) {
+////            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+////        }
 //
-//            // Xây dựng đường dẫn đầy đủ đến tệp văn bản trong thư mục resources
-//            String filePath = workingDir + "/src/asserts/sign_in_log.txt";
-//            File file = new File(filePath);
-//            PrintWriter pw = new PrintWriter(new FileWriter(file.getAbsolutePath(), true));
+////UPDATE app_conf
+////SET sign_log = CONCAT('First\n', sign_log)
+////WHERE IDConf = 0;
+////        try {
+////            // Lấy đường dẫn của thư mục làm việc hiện tại
+////            String workingDir = System.getProperty("user.dir");
+////
+////            // Xây dựng đường dẫn đầy đủ đến tệp văn bản trong thư mục resources
+////            String filePath = workingDir + "/src/asserts/sign_in_log.txt";
+////            File file = new File(filePath);
+////            PrintWriter pw = new PrintWriter(new FileWriter(file.getAbsolutePath(), true));
+////            String str = "";
+////            if (x == 1) {
+////                str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
+////            }
+////            if (x == 0) {
+////                str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
+////            }
+////            pw.println(str); //Đẩy data vào bộ nhớ đệm trong file
+////            pw.flush(); //Lưu file lại 
+////            pw.close();
+////        } catch (Exception e) {
+////            e.printStackTrace();
+////        }
+//        try {
 //            String str = "";
 //            if (x == 1) {
 //                str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
@@ -124,30 +139,16 @@ public class Program {
 //            if (x == 0) {
 //                str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
 //            }
-//            pw.println(str); //Đẩy data vào bộ nhớ đệm trong file
-//            pw.flush(); //Lưu file lại 
-//            pw.close();
+//
+//            Statement s = con.createStatement();
+//            s.executeUpdate("UPDATE app_conf\n"
+//                    + "SET sign_log = CONCAT('" + str + "\\n', sign_log)\n"
+//                    + "WHERE IDConf = 0;");
+//            s.close();
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        try {
-            String str = "";
-            if (x == 1) {
-                str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
-            }
-            if (x == 0) {
-                str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
-            }
-
-            Statement s = con.createStatement();
-            s.executeUpdate("UPDATE app_conf\n"
-                    + "SET sign_log = CONCAT('" + str + "\\n', sign_log)\n"
-                    + "WHERE IDConf = 0;");
-            s.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    }
 
     public static String getTimeNow() {
         // Lấy múi giờ "Asia/Ho_Chi_Minh"

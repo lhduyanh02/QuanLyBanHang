@@ -72,11 +72,13 @@ public class Ban {
                 s.executeUpdate("INSERT INTO htql_banhang.ban "
                         + "(tenban) VALUES (N'" + TenBan + "');");
                 s.close();
+                NhatKy.writeLog("Bàn", "Thêm bàn mới với tên: " + TenBan);
                 return true;
             } else {
                 s.executeUpdate("INSERT INTO htql_banhang.ban "
                         + "(maban, tenban) VALUES (N'" + MaBan + "', N'" + TenBan + "');");
                 s.close();
+                NhatKy.writeLog("Bàn", "Thêm bàn mới với mã: " + MaBan + ", tên: " + TenBan);
                 return true;
             }
 
@@ -104,6 +106,7 @@ public class Ban {
             int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
             s.close();
             if (rs == 1) {
+                NhatKy.writeLog("Bàn", "Sửa bàn " + MBCu + " -> " + BanMoi.maban +" - " + BanMoi.tenban);
                 return true;
             }
         } catch (Exception e) {
@@ -130,6 +133,7 @@ public class Ban {
             s.close();
 
             if (rs == 1) {
+                NhatKy.writeLog("Bàn", "Xóa bàn: " + MaBan);
                 return true;
             }
         } catch (Exception e) {
