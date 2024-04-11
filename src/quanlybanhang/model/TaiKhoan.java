@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
+import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
 
 /**
@@ -54,6 +55,7 @@ public class TaiKhoan {
     }
 
     public static boolean themTK(TaiKhoan TK) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
         if (TK.username.equals("") || CheckInputMethod.containsWhitespace(TK.username) || CheckInputMethod.containsVietnamese(TK.username) || TK.username.length() > 15) {
             JOptionPane.showMessageDialog(null, "Tên đăng nhập không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
@@ -81,6 +83,7 @@ public class TaiKhoan {
     }
 
     public static boolean suaTaiKhoan(String usname, TaiKhoan TK) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
         if (TK.username.equals("") || CheckInputMethod.containsWhitespace(TK.username) || CheckInputMethod.containsVietnamese(TK.username) || TK.username.length() > 15) {
             JOptionPane.showMessageDialog(null, "Tên đăng nhập không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
@@ -121,6 +124,7 @@ public class TaiKhoan {
     }
 
     public static boolean vohieuhoa(String usname) {
+        Program.ConnectDB();
         try {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("UPDATE `htql_banhang`.`taikhoan` SET `access` = '-1' WHERE (`usname` = '" + usname + "');");
@@ -138,6 +142,7 @@ public class TaiKhoan {
     }
 
     public static ArrayList<TaiKhoan> layDSTaiKhoan() {
+        Program.ConnectDB();
         ArrayList<TaiKhoan> ReturnList = new ArrayList<TaiKhoan>();
         try {
             Statement s = con.createStatement();
@@ -154,6 +159,7 @@ public class TaiKhoan {
     }
 
     public static boolean doiMatKhau(String usname, String oldpass, String newpass) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
         try {
             Statement s = con.createStatement();

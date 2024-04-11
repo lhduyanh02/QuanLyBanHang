@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="dist/lib/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="dist/lib/java-swing-drawer.jar"/>
+	<classpathentry kind="lib" path="dist/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="dist/lib/miglayout-4.0.jar"/>
+	<classpathentry kind="lib" path="dist/lib/mysql-connector-j-8.2.0.jar"/>
+	<classpathentry kind="lib" path="dist/lib/RaVenTable.jar"/>
+	<classpathentry kind="lib" path="dist/lib/TimingFramework-0.55.jar"/>
+	<classpathentry kind="lib" path="dist/lib/WrapLayout.jar"/>
+	<classpathentry kind="lib" path="dist/QL_BanHang.jar"/>
+	<classpathentry kind="lib" path="lib/absolutelayout/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar"/>
+	<classpathentry kind="lib" path="lib/java-swing-drawer.jar"/>
+	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/miglayout-4.0.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-j-8.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/RaVenTable.jar"/>
+	<classpathentry kind="lib" path="lib/TimingFramework-0.55.jar"/>
+	<classpathentry kind="lib" path="lib/WrapLayout.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

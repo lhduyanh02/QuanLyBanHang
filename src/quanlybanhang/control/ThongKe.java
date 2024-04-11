@@ -54,13 +54,14 @@ public class ThongKe {
     }
 
     public static ArrayList<ThongKe> layThongKe(String start, String end) {
+        Program.ConnectDB();
         ArrayList<ThongKe> list = new ArrayList<ThongKe>();
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT mahd AS id, '- HÓA ĐƠN -' AS noidung, ngaylaphd AS thoi_gian, tongthanhtoan AS sotien, usname "
-                    + "FROM hoadon WHERE CAST(ngaylaphd AS DATE) BETWEEN '" + start + "' AND '" + end + "' "
+                    + "FROM hoadon WHERE CAST(ngaylaphd AS DATE) BETWEEN '" + start + "' AND '" + end + "' AND TrangThai='1' "
                     + "UNION ALL\n"
-                    + "SELECT mapc AS id, noidungpc AS noidung, tgchi AS thoi_gian, sotien, usname "
+                    + "SELECT mapc AS id, noidungpc AS noidung, tgchi AS thoi_gian, CONCAT('-', sotien) AS sotien, usname "
                     + "FROM phieuchi WHERE CAST(tgchi AS DATE) BETWEEN '" + start + "' AND '" + end + "' "
                     + "ORDER BY thoi_gian DESC;");
             while(rs.next()){
@@ -77,6 +78,7 @@ public class ThongKe {
     }
 
     public static ArrayList<ThongKe> layPhieuThu(String start, String end) {
+        Program.ConnectDB();
         ArrayList<ThongKe> list = new ArrayList<ThongKe>();
         try {
             Statement s = con.createStatement();
@@ -97,6 +99,7 @@ public class ThongKe {
     }
 
     public static ArrayList<ThongKe> layPhieuChi(String start, String end) {
+        Program.ConnectDB();
         ArrayList<ThongKe> list = new ArrayList<ThongKe>();
         try {
             Statement s = con.createStatement();

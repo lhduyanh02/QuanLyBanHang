@@ -698,7 +698,9 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             isOpen = true;
             EditPanel.setVisible(true);
             add(EditPanel, 0);
-
+            MaPCTF.setText("");
+            NoiDungTF.setText("");
+            SoTienTF.setText("");
             MouseAdapter a = new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {

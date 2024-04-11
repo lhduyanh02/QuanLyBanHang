@@ -424,6 +424,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         TongThuTF.setBackground(new java.awt.Color(255, 255, 255));
         TongThuTF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TongThuTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TongThuTF.setFocusable(false);
         TongThuPanel.add(TongThuTF);
 
         RightPanel.add(TongThuPanel);
@@ -444,6 +445,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         TongChiTF.setBackground(new java.awt.Color(255, 255, 255));
         TongChiTF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TongChiTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TongChiTF.setFocusable(false);
         TongChiPanel.add(TongChiTF);
 
         RightPanel.add(TongChiPanel);
@@ -464,6 +466,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         LoiNhuanTF.setBackground(new java.awt.Color(255, 255, 255));
         LoiNhuanTF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LoiNhuanTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        LoiNhuanTF.setFocusable(false);
         LoiNhuanPanel.add(LoiNhuanTF);
 
         RightPanel.add(LoiNhuanPanel);
@@ -644,11 +647,24 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
+            int thu = 0;
+            int chi = 0;
             for (ThongKe tk : list) {
                 Object[] obj = {stt, tk.getID(), tk.getNoiDung(), tk.getThoiGian(), tk.getSoTien(), tk.getNguoiTao()};
                 m.addRow(obj);
+                if(tk.getSoTien()>=0){
+                    thu+=tk.getSoTien();
+                } else{
+                    chi+=tk.getSoTien();
+                }
                 stt++;
             }
+            TongThuTF.setText(String.valueOf(thu));
+            TongChiTF.setText(String.valueOf(chi));
+            LoiNhuanTF.setText(String.valueOf(thu+chi));
+            AddDialog.addSeparator(TongThuTF);
+            AddDialog.addSeparator(TongChiTF);
+            AddDialog.addSeparator(LoiNhuanTF);
         } catch (Exception e) {
             System.out.println("Loi! [Class: GiaoDienThongKe - Method: reload]");
             e.printStackTrace();

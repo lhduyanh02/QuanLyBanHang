@@ -18,6 +18,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Properties;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import quanlybanhang.model.NhatKy;
@@ -28,7 +30,9 @@ import quanlybanhang.view.DangNhap;
  * @author Admin
  */
 public class Program {
-    
+
+    public static Connection con;
+
     public static class SharedMouseListener extends MouseAdapter {
 
         @Override
@@ -55,7 +59,8 @@ public class Program {
     public static Properties ReadFileProperties() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("src/properties/Setting.properties"));
+//            properties.load(new FileInputStream("src/properties/Setting.properties"));
+            properties.load(Program.class.getResourceAsStream("/properties/Setting.properties"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,65 +95,11 @@ public class Program {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Lỗi kết nối dữ liệu");
+            Icon icon = new ImageIcon(Program.class.getResource("/asserts/X-icon.png"));
+            System.out.println("Loi! [Class: Program - Method: ConnectDB]");
+            JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra lại kết nối Internet và cơ sở dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
         }
     }
-
-    public static Connection con;
-
-//    public static void writeLog(int x, String us) {
-////        Statement s;
-////        try {
-////            s = con.createStatement();
-////            ResultSet rs = s.executeQuery("SELECT sign_log FROM htql_banhang.app_conf where IDConf = 0;");
-////            rs.next();
-////            String str = rs.getString(1);
-////            System.out.println(str);
-////        } catch (SQLException ex) {
-////            Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
-////        }
-//
-////UPDATE app_conf
-////SET sign_log = CONCAT('First\n', sign_log)
-////WHERE IDConf = 0;
-////        try {
-////            // Lấy đường dẫn của thư mục làm việc hiện tại
-////            String workingDir = System.getProperty("user.dir");
-////
-////            // Xây dựng đường dẫn đầy đủ đến tệp văn bản trong thư mục resources
-////            String filePath = workingDir + "/src/asserts/sign_in_log.txt";
-////            File file = new File(filePath);
-////            PrintWriter pw = new PrintWriter(new FileWriter(file.getAbsolutePath(), true));
-////            String str = "";
-////            if (x == 1) {
-////                str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
-////            }
-////            if (x == 0) {
-////                str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
-////            }
-////            pw.println(str); //Đẩy data vào bộ nhớ đệm trong file
-////            pw.flush(); //Lưu file lại 
-////            pw.close();
-////        } catch (Exception e) {
-////            e.printStackTrace();
-////        }
-//        try {
-//            String str = "";
-//            if (x == 1) {
-//                str = "Đăng nhập tài khoản " + us + " thành công lúc " + getTimeNow();
-//            }
-//            if (x == 0) {
-//                str = "Đăng xuất tài khoản " + us + " lúc " + getTimeNow();
-//            }
-//
-//            Statement s = con.createStatement();
-//            s.executeUpdate("UPDATE app_conf\n"
-//                    + "SET sign_log = CONCAT('" + str + "\\n', sign_log)\n"
-//                    + "WHERE IDConf = 0;");
-//            s.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public static String getTimeNow() {
         // Lấy múi giờ "Asia/Ho_Chi_Minh"
@@ -161,26 +112,27 @@ public class Program {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         return formatter.format(zonedDateTime);
     }
-    
+
     public static String formatTimestamp(Timestamp timestamp) {
         // Tạo đối tượng Date từ timestamp
         Date date = new Date(timestamp.getTime());
-        
+
         // Định dạng lại timestamp theo định dạng mới
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return sdf.format(date);
     }
-    
+
     public static String formatDate(Date date) { //Dùng để truyền vào so sánh trong Mysql 
-       // Định dạng lại timestamp theo định dạng mới
+        // Định dạng lại timestamp theo định dạng mới
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
     }
 
     public static void main(String[] args) {
         ConnectDB();
-        DangNhap.getInstance();
-
+        if (con != null) {
+            DangNhap.getInstance();
+        }
         //Bắt sự kiện kill process
 //        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 //            Program.writeLog(0, DangNhap.user);
