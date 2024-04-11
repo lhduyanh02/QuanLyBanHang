@@ -33,8 +33,10 @@ public class DoiMatKhau extends javax.swing.JDialog {
         if (instance == null) {
             instance = new DoiMatKhau(null, true);
             instance.setVisible(true);
+            Program.ConnectDB();
         } else {
             instance.setVisible(true);
+            Program.ConnectDB();
         }
         return instance;
     }

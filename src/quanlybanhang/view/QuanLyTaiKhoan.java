@@ -137,7 +137,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -184,6 +184,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }
 
     public static synchronized QuanLyTaiKhoan getInstance() {
+        Program.ConnectDB();
         if (instance == null) {
             instance = new QuanLyTaiKhoan();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -831,6 +832,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_LogComboBoxItemStateChanged
 
     private void reload() {
+        Program.ConnectDB();
         try {
             ArrayList<TaiKhoan> list = TaiKhoan.layDSTaiKhoan();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();

@@ -130,7 +130,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -179,12 +179,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     public static synchronized GiaoDienThuNgan getInstance() {
         if (instance == null) {
             instance = new GiaoDienThuNgan();
+            Program.ConnectDB();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.reloadTableList();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            Program.ConnectDB();
             instance.reloadTableList();
             instance.setVisible(true);
             return instance;
@@ -226,6 +228,10 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         rightPanel.revalidate();
         rightPanel.repaint();
+    }
+    
+    private void reloadOrder(){
+        Program.ConnectDB();
     }
 
     @SuppressWarnings("unchecked")

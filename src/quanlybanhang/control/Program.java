@@ -170,6 +170,12 @@ public class Program {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return sdf.format(date);
     }
+    
+    public static String formatDate(Date date) { //Dùng để truyền vào so sánh trong Mysql 
+       // Định dạng lại timestamp theo định dạng mới
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
 
     public static void main(String[] args) {
         ConnectDB();

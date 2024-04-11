@@ -163,7 +163,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -210,6 +210,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }
 
     public static synchronized QuanLyPhieuChi getInstance() {
+        Program.ConnectDB();
         if (instance == null) {
             instance = new QuanLyPhieuChi();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -674,6 +675,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }//GEN-LAST:event_DatLaiLabelMouseClicked
 
     private void reload() {
+        Program.ConnectDB();
         try {
             ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();

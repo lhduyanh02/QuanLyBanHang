@@ -120,7 +120,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -168,6 +168,7 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     }
 
     public static synchronized ThucDonMonAn getInstance() {
+        Program.ConnectDB();
         if (instance == null) {
             instance = new ThucDonMonAn();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);

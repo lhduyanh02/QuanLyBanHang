@@ -98,7 +98,7 @@ public class WelcomeUI extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                         if (i == 7) { //ĐỔI MẬT KHẨU
                             drawer.hide();
@@ -149,6 +149,7 @@ public class WelcomeUI extends javax.swing.JFrame {
     }
 
     public static synchronized WelcomeUI getInstance() {
+        Program.ConnectDB();
         if (instance == null) {
             instance = new WelcomeUI();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);

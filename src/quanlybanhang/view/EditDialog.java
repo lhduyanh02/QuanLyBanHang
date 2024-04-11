@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import quanlybanhang.control.Program;
 import quanlybanhang.control.Program.SharedMouseListener;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.model.ThucDon;
@@ -23,6 +24,7 @@ public class EditDialog extends javax.swing.JDialog {
     public EditDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Program.ConnectDB();
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         CapNhatLabel.addMouseListener(new SharedMouseListener());
         DatLaiLabel.addMouseListener(new SharedMouseListener());
