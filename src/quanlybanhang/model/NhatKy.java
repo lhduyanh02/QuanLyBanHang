@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.view.DangNhap;
 
@@ -35,6 +36,7 @@ public class NhatKy {
     }
 
     public static ArrayList<String> getLogOf(String act) {
+        Program.ConnectDB();
         ArrayList<String> list = new ArrayList<String>();
         try {
             Statement s = con.createStatement();
@@ -55,6 +57,7 @@ public class NhatKy {
         return list;
     }
     public static ArrayList<String> getLog() {
+        Program.ConnectDB();
         ArrayList<String> list = new ArrayList<String>();
         try {
             Statement s = con.createStatement();
@@ -76,6 +79,7 @@ public class NhatKy {
     }
     
     public static void writeLog(String act, String des){
+        Program.ConnectDB();
         try {
             String us = DangNhap.getUser();
             Statement s = con.createStatement();
@@ -90,6 +94,7 @@ public class NhatKy {
     }
     
     public static ArrayList<String> getAction() {
+        Program.ConnectDB();
         ArrayList<String> actions = new ArrayList<>();
 
         try {
