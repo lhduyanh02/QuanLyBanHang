@@ -1,4 +1,4 @@
-package quanlybanhang.view.search_suggestion;
+package quanlybanhang.view.item;
 
 public class MenuDataSearch {
     private String ID;

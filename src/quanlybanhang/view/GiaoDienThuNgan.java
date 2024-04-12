@@ -8,8 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import quanlybanhang.control.Program;
@@ -22,14 +20,14 @@ import javax.swing.JFrame;
 import quanlybanhang.model.Ban;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import static quanlybanhang.control.Program.con;
-import quanlybanhang.view.search_suggestion.MenuDataSearch;
-import quanlybanhang.view.search_suggestion.SearchPanel;
+import quanlybanhang.model.ThucDon;
+import quanlybanhang.view.item.MenuDataSearch;
+import quanlybanhang.view.item.SearchPanel;
+import quanlybanhang.view.item.TableItem;
 
 /**
  *
@@ -42,7 +40,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private int limitData = 8;
     private static GiaoDienThuNgan instance;
     private DrawerController drawer;
-    
+    private String SelectedBan;
+    private static ArrayList<ThucDon> thucdon;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = 420;
@@ -51,7 +50,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public GiaoDienThuNgan() {
         initComponents();
-        
+
         //SET THUỘC TÍNH CHO SEARCH BAR
         menu = new JPopupMenu();
         searchPanel = new SearchPanel();
@@ -63,7 +62,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ChuyenBanBtn.addMouseListener(new Program.SharedMouseListener());
         InTTBtn.addMouseListener(new Program.SharedMouseListener());
         ThanhToanBtn.addMouseListener(new Program.SharedMouseListener());
-        
+
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {
@@ -190,12 +189,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             Program.ConnectDB();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.reloadTableList();
+            instance.reloadThucDon();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             Program.ConnectDB();
             instance.reloadTableList();
+            instance.reloadThucDon();
             instance.setVisible(true);
             return instance;
         }
@@ -207,38 +208,26 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     // Khởi tạo bàn 
     private void reloadTableList() {
-        rightPanel.removeAll();
-        rightPanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 15));
+        TablePanel.removeAll();
+        TablePanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
         jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
 
         try {
             ArrayList<Ban> list = Ban.layDSban();
             for (Ban ban : list) {
-                JLabel label = new JLabel( "<html>" + ban.getMaban() + "<br>" + ban.getTenban() + "</html>");
-                label.setHorizontalAlignment(JLabel.CENTER);
-                label.setVerticalAlignment(JLabel.CENTER);
-                label.setPreferredSize(new Dimension(80, 80));
-                label.setOpaque(true);
-
-                // Thiết lập màu nền 
-                if (ban.getTrangthai().equals("free")) {
-                    label.setBackground(new Color(204, 255, 204));
-                } else {
-                    label.setBackground(new Color(255, 153, 153));
-                }
-
-                rightPanel.add(label);
+                TableItem tb = new TableItem(ban.getMaban(), ban.getTenban(), ban.getTrangthai());
+                TablePanel.add(tb);
             }
         } catch (Exception e) {
             System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadTableList]");
             e.printStackTrace();
         }
 
-        rightPanel.revalidate();
-        rightPanel.repaint();
+        TablePanel.revalidate();
+        TablePanel.repaint();
     }
-    
-    private void reloadOrder(){
+
+    private void reloadOrder() {
         Program.ConnectDB();
     }
 
@@ -252,9 +241,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         MenuLabel = new javax.swing.JLabel();
         UserTF = new javax.swing.JTextField();
         TenBanLabel = new javax.swing.JLabel();
-        searchTextField = new quanlybanhang.view.search_suggestion.SearchTextField();
+        searchTextField = new quanlybanhang.view.item.SearchTextField();
         jPanel2 = new javax.swing.JPanel();
-        rightPanel = new javax.swing.JPanel();
+        TablePanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         leftPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -353,17 +342,17 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        rightPanel.setBackground(new java.awt.Color(255, 255, 255));
-        rightPanel.setMaximumSize(new java.awt.Dimension(450, 32767));
+        TablePanel.setBackground(new java.awt.Color(255, 255, 255));
+        TablePanel.setMaximumSize(new java.awt.Dimension(450, 32767));
 
-        javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
-        rightPanel.setLayout(rightPanelLayout);
-        rightPanelLayout.setHorizontalGroup(
-            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout TablePanelLayout = new javax.swing.GroupLayout(TablePanel);
+        TablePanel.setLayout(TablePanelLayout);
+        TablePanelLayout.setHorizontalGroup(
+            TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
-        rightPanelLayout.setVerticalGroup(
-            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        TablePanelLayout.setVerticalGroup(
+            TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3)
         );
 
@@ -537,11 +526,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(TablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rightPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(TablePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(leftPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -604,29 +593,37 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private List<MenuDataSearch> searchMenu(String search) {
         List<MenuDataSearch> list = new ArrayList<>();
         try {
-            Program.ConnectDB();
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT MaSP, TenSP, GiaSP, LoaiSP FROM htql_banhang.sanpham WHERE LOWER(TenSP) LIKE LOWER('%" + search.trim() + "%');");
-            while (rs.next()) {
-                list.add(new MenuDataSearch(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
-                if (list.size() == limitData) {
-                    break;
+            for (ThucDon td : thucdon) {
+                if (td.getTen().toLowerCase().contains(search.trim().toLowerCase())) {
+                    list.add(new MenuDataSearch(td.getMaSP(), td.getTen(), td.getGia(), td.getLoai()));
+                    if (list.size() == limitData) {
+                        break;
+                    }
                 }
             }
-            s.close();
         } catch (Exception e) {
             System.out.println("Loi khoi tao du lieu search menu");
             e.printStackTrace();
         }
         return list;
     }
-    
+
+    private void reloadThucDon() {
+        try {
+            thucdon = ThucDon.layDSThucDon();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadThucDon]");
+            e.printStackTrace();
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ChietKhauTF;
     private javax.swing.JLabel ChuyenBanBtn;
     private javax.swing.JTextArea GhiChuTF;
     private javax.swing.JLabel InTTBtn;
     private javax.swing.JLabel MenuLabel;
+    private javax.swing.JPanel TablePanel;
     private javax.swing.JLabel TenBanLabel;
     private javax.swing.JTextField TgianTF;
     private javax.swing.JLabel ThanhToanBtn;
@@ -643,7 +640,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel leftPanel;
-    private javax.swing.JPanel rightPanel;
-    private quanlybanhang.view.search_suggestion.SearchTextField searchTextField;
+    private quanlybanhang.view.item.SearchTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

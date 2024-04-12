@@ -1,4 +1,4 @@
-package quanlybanhang.view.search_suggestion;
+package quanlybanhang.view.item;
 
 import java.util.List;
 import net.miginfocom.swing.MigLayout;

@@ -7,8 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
-import quanlybanhang.view.search_suggestion.MenuDataSearch;
-import quanlybanhang.view.search_suggestion.SearchPanel;
+import quanlybanhang.view.item.MenuDataSearch;
+import quanlybanhang.view.item.SearchPanel;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
@@ -32,7 +32,7 @@ public class DemoSearching extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        searchTextField = new quanlybanhang.view.search_suggestion.SearchTextField();
+        searchTextField = new quanlybanhang.view.item.SearchTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -124,6 +124,6 @@ public class DemoSearching extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private quanlybanhang.view.search_suggestion.SearchTextField searchTextField;
+    private quanlybanhang.view.item.SearchTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,12 +25,13 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="IconLbl" min="-2" pref="26" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="NameLabel" min="-2" pref="290" max="-2" attributes="0"/>
+              <Component id="NameLabel" pref="290" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="PriceLabel" pref="101" max="32767" attributes="0"/>
+              <Component id="PriceLabel" min="-2" pref="95" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

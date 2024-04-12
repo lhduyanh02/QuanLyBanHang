@@ -131,8 +131,8 @@ public class ThucDon {
         return list;
     }
     
-    public static List<ThucDon> layDSThucDon(){
-        List<ThucDon> list = new ArrayList<ThucDon>();
+    public static ArrayList<ThucDon> layDSThucDon(){
+        ArrayList<ThucDon> list = new ArrayList<ThucDon>();
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham WHERE loaisp <> -1");
