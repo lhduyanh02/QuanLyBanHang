@@ -137,7 +137,7 @@ public class QuanLyBan extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -189,11 +189,13 @@ public class QuanLyBan extends javax.swing.JFrame {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.reload();
             instance.setVisible(true);
+            Program.ConnectDB();
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.reload();
             instance.setVisible(true);
+            Program.ConnectDB();
             return instance;
         }
     }
@@ -280,10 +282,9 @@ public class QuanLyBan extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));

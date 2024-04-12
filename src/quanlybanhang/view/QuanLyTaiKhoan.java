@@ -56,7 +56,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
 //        addBtn.setVisible(false);
         MouseAdapter m = table.TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
-        
+
         MouseMotionListener[] mouseMotionListeners = jTable1.getMouseMotionListeners();
         for (MouseMotionListener listener : mouseMotionListeners) {
             jTable1.removeMouseMotionListener(listener);
@@ -137,7 +137,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -184,6 +184,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }
 
     public static synchronized QuanLyTaiKhoan getInstance() {
+        Program.ConnectDB();
         if (instance == null) {
             instance = new QuanLyTaiKhoan();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -806,7 +807,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 TenDNhapTF.setText(OldUsname);
                 if (jTable1.getModel().getValueAt(r, 2).toString().equals("Nhân viên")) {
                     NVRadioButton.setSelected(true);
-                } else if (jTable1.getModel().getValueAt(r, 2).toString().equals("Quản trị viên")){
+                } else if (jTable1.getModel().getValueAt(r, 2).toString().equals("Quản trị viên")) {
                     QTVRadioButton.setSelected(true);
                 }
             }
@@ -825,12 +826,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_LogReloadMouseClicked
 
     private void LogComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_LogComboBoxItemStateChanged
-        if(LogComboBox.getSelectedItem()!=null){
+        if (LogComboBox.getSelectedItem() != null) {
             reloadLog();
         }
     }//GEN-LAST:event_LogComboBoxItemStateChanged
 
     private void reload() {
+        Program.ConnectDB();
         try {
             ArrayList<TaiKhoan> list = TaiKhoan.layDSTaiKhoan();
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
@@ -847,33 +849,32 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
-    private void reloadLog(){
+
+    private void reloadLog() {
         String act = LogComboBox.getSelectedItem().toString();
         ArrayList<String> list;
-        if(act.equals("Tất cả")){
+        if (act.equals("Tất cả")) {
             list = NhatKy.getLog();
             String log = "";
-            for(String str : list){
-                log+=str;
+            for (String str : list) {
+                log += str;
             }
             LogTextArea.setText(log);
-        } else
-        {
+        } else {
             list = NhatKy.getLogOf(act);
             String log = "";
-            for(String str : list){
-                log+=str;
+            for (String str : list) {
+                log += str;
             }
             LogTextArea.setText(log);
         }
     }
-    
-    private void reloadLogCombobox(){
+
+    private void reloadLogCombobox() {
         LogComboBox.removeAllItems();
         LogComboBox.addItem("Tất cả");
         ArrayList<String> actions = NhatKy.getAction();
-        for(String act : actions){
+        for (String act : actions) {
             LogComboBox.addItem(act);
         }
         LogComboBox.setSelectedItem("Tất cả");
@@ -886,7 +887,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             }
             if (x == 0) {
                 return "Quản trị viên";
-            } 
+            }
             if (x == -1) {
                 return "Tài khoản bị vô hiệu hoá";
             }
@@ -895,6 +896,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         }
         return "Không xác định";
     } //Convert trạng thái bàn -> đang sử dụng hoặc không
+
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;

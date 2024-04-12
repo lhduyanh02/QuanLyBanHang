@@ -8,10 +8,9 @@ import quanlybanhang.control.Program;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
 import javaswingdev.drawer.DrawerItem;
@@ -23,8 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import static quanlybanhang.control.Program.con;
 import quanlybanhang.model.ThucDon;
+import static quanlybanhang.model.ThucDon.layDSThucDon;
 import table.TableCustom;
 
 /**
@@ -124,7 +123,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
                         if (i == 6) {
                             drawer.hide();
                             closeThisUI();
-                            ThongKe.getInstance();
+                            GiaoDienThongKe.getInstance();
                         }
                     }
 
@@ -172,6 +171,7 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     }
 
     public static synchronized ThucDonNuoc getInstance() {
+        Program.ConnectDB();
         if (instance == null) {
             instance = new ThucDonNuoc();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -517,18 +517,16 @@ public class ThucDonNuoc extends javax.swing.JFrame {
     }
 
     public void reloadMenu() {
+        List<ThucDon> list = layDSThucDon(1);
         try {
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham where LoaiSp = '0';");
             DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
-            while (rs.next()) {
-                Object[] obj = {stt, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(5)};
+            for (ThucDon td : list) {
+                Object[] obj = {stt, td.getMaSP(), td.getTen(), td.getGia(), td.getGhiChu()};
                 m.addRow(obj);
                 stt++;
             }
-            s.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -77,6 +77,7 @@ public class PhieuChi {
     }
 
     public static ArrayList<PhieuChi> layDSphieuchi(){
+        Program.ConnectDB();
         ConnectDB();
         ArrayList<PhieuChi> RL= new ArrayList<PhieuChi>();
         try {
@@ -95,6 +96,7 @@ public class PhieuChi {
     }
     
     public static boolean xoaPhieuChi(String MaPC){
+        Program.ConnectDB();
         try {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`phieuchi` WHERE (`mapc` = '"+MaPC+"');");
@@ -112,6 +114,7 @@ public class PhieuChi {
     }
     
     public static boolean themPhieuChi(String MaPC, String NoiDung, int SoTien, String user) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
         if (CheckInputMethod.containsWhitespace(MaPC) || CheckInputMethod.containsVietnamese(MaPC) || MaPC.length() > 10) {
             JOptionPane.showMessageDialog(null, "Mã phiếu chi phải ít hơn 10 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
@@ -127,18 +130,18 @@ public class PhieuChi {
             Statement s = con.createStatement();
             if (MaPC.equals("")) {
                 s.executeUpdate("INSERT INTO htql_banhang.phieuchi "
-                        + "(NoiDungPC, SoTien, User) VALUES (N'" + NoiDung + "','"+SoTien+"','"+user+"');");
+                        + "(NoiDungPC, SoTien, usname) VALUES (N'" + NoiDung + "','"+SoTien+"','"+user+"');");
                 s.close();
                 return true;
             } else {
                 s.executeUpdate("INSERT INTO htql_banhang.phieuchi "
-                        + "(MaPC, NoiDungPC, SoTien, User) VALUES ('"+MaPC+"',N'" + NoiDung + "','"+SoTien+"','"+user+"');");
+                        + "(MaPC, NoiDungPC, SoTien, usname) VALUES ('"+MaPC+"',N'" + NoiDung + "','"+SoTien+"','"+user+"');");
                 s.close();
                 return true;
             }
 
         } catch (Exception e) {
-            System.out.println("Loi! [Class: Ban - Method: themBan]");
+            System.out.println("Loi! [Class: PhieuChi - Method: themPhieuChi]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }

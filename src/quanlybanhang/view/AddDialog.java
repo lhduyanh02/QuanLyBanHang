@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import quanlybanhang.control.Program;
 import quanlybanhang.control.Program.SharedMouseListener;
 import quanlybanhang.model.ThucDon;
 
@@ -20,6 +21,7 @@ public class AddDialog extends javax.swing.JDialog {
     public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Program.ConnectDB();
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         ThemLabel.addMouseListener(new SharedMouseListener());
         DatLaiLabel.addMouseListener(new SharedMouseListener());
