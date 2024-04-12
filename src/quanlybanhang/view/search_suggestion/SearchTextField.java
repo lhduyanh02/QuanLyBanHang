@@ -45,11 +45,11 @@ public class SearchTextField extends JTextField {
         paintIcon(g);
         //  paint border
         if (isFocusOwner()) {
-            g.setColor(new Color(6, 135, 196));
+            g.setColor(new Color(0, 0, 0));
             g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
             g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
         } else {
-            g.setColor(new Color(76, 181, 195));
+            g.setColor(new Color(153, 153, 153));
             g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
             g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
         }

@@ -1,27 +1,70 @@
 package quanlybanhang.model;
 
 import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import static quanlybanhang.control.Program.con;
 
-/**
- *
- * @author Admin
- */
 public class ThucDon {
 
-    private static ThucDon instance;
-
-    public static synchronized ThucDon getInstance() {
-        if (instance == null) {
-            instance = new ThucDon();
-            return instance;
-        } else {
-            return instance;
-        }
+    public String getMaSP() {
+        return MaSP;
     }
+
+    public void setMaSP(String MaSP) {
+        this.MaSP = MaSP;
+    }
+
+    public String getTen() {
+        return Ten;
+    }
+
+    public void setTen(String Ten) {
+        this.Ten = Ten;
+    }
+
+    public int getGia() {
+        return Gia;
+    }
+
+    public void setGia(int Gia) {
+        this.Gia = Gia;
+    }
+
+    public int getLoai() {
+        return Loai;
+    }
+
+    public void setLoai(int Loai) {
+        this.Loai = Loai;
+    }
+
+    public String getGhiChu() {
+        return GhiChu;
+    }
+
+    public void setGhiChu(String GhiChu) {
+        this.GhiChu = GhiChu;
+    }
+
+    public ThucDon(String MaSP, String Ten, int Gia, int Loai, String GhiChu) {
+        this.MaSP = MaSP;
+        this.Ten = Ten;
+        this.Gia = Gia;
+        this.Loai = Loai;
+        this.GhiChu = GhiChu;
+    }
+
+
+    private String MaSP;
+    private String Ten;
+    private int Gia;
+    private int Loai;
+    private String GhiChu;
 
     public static boolean xoaMon(Object MaSP) {
         try {
@@ -70,5 +113,37 @@ public class ThucDon {
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }
+    }
+    
+    public static List<ThucDon> layDSThucDon(int loai){
+        List<ThucDon> list = new ArrayList<ThucDon>();
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham WHERE loaisp = "+loai+";");
+            while(rs.next()){
+                list.add(new ThucDon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5)));
+            }
+            s.close();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: ThucDon - Method: layDSThucDon]");
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public static List<ThucDon> layDSThucDon(){
+        List<ThucDon> list = new ArrayList<ThucDon>();
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham WHERE loaisp <> -1");
+            while(rs.next()){
+                list.add(new ThucDon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5)));
+            }
+            s.close();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: ThucDon - Method: layDSThucDon]");
+            e.printStackTrace();
+        }
+        return list;
     }
 }

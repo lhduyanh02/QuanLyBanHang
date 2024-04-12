@@ -7,11 +7,9 @@ package quanlybanhang.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import quanlybanhang.control.Program;
@@ -21,15 +19,17 @@ import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 import quanlybanhang.model.Ban;
-import table.TableCustom;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.table.JTableHeader;
+import javax.swing.JPopupMenu;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.view.search_suggestion.MenuDataSearch;
+import quanlybanhang.view.search_suggestion.SearchPanel;
 
 /**
  *
@@ -37,8 +37,12 @@ import static quanlybanhang.control.Program.con;
  */
 public class GiaoDienThuNgan extends javax.swing.JFrame {
 
+    private JPopupMenu menu;
+    private SearchPanel searchPanel;
+    private int limitData = 8;
     private static GiaoDienThuNgan instance;
     private DrawerController drawer;
+    
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = 420;
@@ -47,14 +51,18 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public GiaoDienThuNgan() {
         initComponents();
+        
+        //SET THUỘC TÍNH CHO SEARCH BAR
+        menu = new JPopupMenu();
+        searchPanel = new SearchPanel();
+        menu.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+        menu.add(searchPanel);
+        menu.setFocusable(false);
 
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         ChuyenBanBtn.addMouseListener(new Program.SharedMouseListener());
         InTTBtn.addMouseListener(new Program.SharedMouseListener());
         ThanhToanBtn.addMouseListener(new Program.SharedMouseListener());
-
-        add(EditPanel, 0);
-        EditPanel.setSize(0, getContentPane().getHeight());
         
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
@@ -240,23 +248,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        EditPanel = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        TenBanTF = new javax.swing.JTextField();
-        MaBanTF = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jPanel7 = new javax.swing.JPanel();
-        LuuLabel = new javax.swing.JLabel();
-        DatLaiLabel = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         MenuLabel = new javax.swing.JLabel();
         UserTF = new javax.swing.JTextField();
         TenBanLabel = new javax.swing.JLabel();
-        TimKiemTF = new javax.swing.JTextField();
+        searchTextField = new quanlybanhang.view.search_suggestion.SearchTextField();
         jPanel2 = new javax.swing.JPanel();
         rightPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -274,134 +270,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ChuyenBanBtn = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-
-        EditPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        EditPanel.setMinimumSize(new java.awt.Dimension(420, 800));
-        EditPanel.setPreferredSize(new Dimension(420, getContentPane().getHeight()));
-        EditPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                EditPanelMouseEntered(evt);
-            }
-        });
-
-        TenBanTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        TenBanTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên bàn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
-
-        MaBanTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        MaBanTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã bàn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
-
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jRadioButton1.setText("Đang sử dụng ");
-
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        jRadioButton2.setText("Ngưng sử dụng ");
-        jRadioButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jPanel7.setBackground(new java.awt.Color(240, 240, 240));
-        jPanel7.setMinimumSize(new java.awt.Dimension(420, 81));
-        java.awt.GridBagLayout jPanel7Layout = new java.awt.GridBagLayout();
-        jPanel7Layout.columnWidths = new int[] {0, 58, 0};
-        jPanel7Layout.rowHeights = new int[] {0};
-        jPanel7.setLayout(jPanel7Layout);
-
-        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
-        LuuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LuuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
-        LuuLabel.setText("Lưu");
-        LuuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        LuuLabel.setOpaque(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 65;
-        gridBagConstraints.ipady = 18;
-        jPanel7.add(LuuLabel, gridBagConstraints);
-
-        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
-        DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        DatLaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
-        DatLaiLabel.setText("Đặt Lại");
-        DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        DatLaiLabel.setOpaque(true);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 54;
-        gridBagConstraints.ipady = 16;
-        jPanel7.add(DatLaiLabel, gridBagConstraints);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TenBanTF, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(MaBanTF, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(MaBanTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(TenBanTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
-        );
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 204));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 85, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout EditPanelLayout = new javax.swing.GroupLayout(EditPanel);
-        EditPanel.setLayout(EditPanelLayout);
-        EditPanelLayout.setHorizontalGroup(
-            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        EditPanelLayout.setVerticalGroup(
-            EditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EditPanelLayout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(196, Short.MAX_VALUE))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -439,7 +307,18 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TenBanLabel.setText("BÀN 01");
         TenBanLabel.setOpaque(true);
 
-        TimKiemTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchTextField.setName(""); // NOI18N
+        searchTextField.setSuffixIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/search-icon-46.png"))); // NOI18N
+        searchTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchTextFieldMouseClicked(evt);
+            }
+        });
+        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchTextFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -448,8 +327,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(MenuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TimKiemTF, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(TenBanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(80, 80, 80)
@@ -459,17 +338,19 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(TimKiemTF, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(TenBanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(MenuLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(UserTF, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 4, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(TenBanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(MenuLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(UserTF, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         rightPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -703,86 +584,52 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MenuLabelMouseClicked
 
-    private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EditPanelMouseEntered
-
-    private void openEditPanel() {
-        if (!isOpen) {
-            isOpen = true;
-            EditPanel.setVisible(true);
-            add(EditPanel, 0);
-
-            MouseAdapter a = new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    closeEditPanel();
-                }
-            };
-//            jScrollPane1.addMouseListener(a);
-//            jTable1.addMouseListener(a);
-            TenBanLabel.addMouseListener(a);
-//            jPanel4.addMouseListener(a);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-//                    reloadBtn.setEnabled(false);
-//                    addBtn.setEnabled(false);
-//                    updateBtn.setEnabled(false);
-//                    jTable1.setEnabled(false);
-                    for (int i = 0; i <= width; i += 5) {
-                        EditPanel.setSize(i, getContentPane().getHeight());
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(GiaoDienThuNgan.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }).start();
+    private void searchTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchTextFieldMouseClicked
+        if (searchPanel.getItemSize() > 0) {
+            menu.show(searchTextField, 0, searchTextField.getHeight());
         }
-    }
+    }//GEN-LAST:event_searchTextFieldMouseClicked
 
-    private void closeEditPanel() {
-        if (isOpen) {
-            isOpen = false;
-//            reloadBtn.setEnabled(true);
-//            addBtn.setEnabled(true);
-//            updateBtn.setEnabled(true);
-//            jTable1.setEnabled(true);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int i = 420; i >= 0; i -= 5) {
-                        EditPanel.setSize(i, height);
-                        try {
-                            Thread.sleep(1);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(GiaoDienThuNgan.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    EditPanel.setVisible(false);
-                    getContentPane().remove(EditPanel);
-                }
-            }).start();
+    private void searchTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextFieldKeyReleased
+        String text = searchTextField.getText().trim().toLowerCase();
+        searchPanel.setData(searchMenu(text));
+        if (searchPanel.getItemSize() > 0) {
+            menu.show(searchTextField, 0, searchTextField.getHeight());
+            menu.setPopupSize(menu.getWidth(), (searchPanel.getItemSize() * 35) + 2);
+        } else {
+            menu.setVisible(false);
         }
-    }
+    }//GEN-LAST:event_searchTextFieldKeyReleased
 
+    private List<MenuDataSearch> searchMenu(String search) {
+        List<MenuDataSearch> list = new ArrayList<>();
+        try {
+            Program.ConnectDB();
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT MaSP, TenSP, GiaSP, LoaiSP FROM htql_banhang.sanpham WHERE LOWER(TenSP) LIKE LOWER('%" + search.trim() + "%');");
+            while (rs.next()) {
+                list.add(new MenuDataSearch(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
+                if (list.size() == limitData) {
+                    break;
+                }
+            }
+            s.close();
+        } catch (Exception e) {
+            System.out.println("Loi khoi tao du lieu search menu");
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ChietKhauTF;
     private javax.swing.JLabel ChuyenBanBtn;
-    private javax.swing.JLabel DatLaiLabel;
-    private javax.swing.JPanel EditPanel;
     private javax.swing.JTextArea GhiChuTF;
     private javax.swing.JLabel InTTBtn;
-    private javax.swing.JLabel LuuLabel;
-    private javax.swing.JTextField MaBanTF;
     private javax.swing.JLabel MenuLabel;
     private javax.swing.JLabel TenBanLabel;
-    private javax.swing.JTextField TenBanTF;
     private javax.swing.JTextField TgianTF;
     private javax.swing.JLabel ThanhToanBtn;
-    private javax.swing.JTextField TimKiemTF;
     private javax.swing.JTextField TongCongTF;
     private javax.swing.JTextField UserTF;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -790,19 +637,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JPanel rightPanel;
+    private quanlybanhang.view.search_suggestion.SearchTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

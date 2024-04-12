@@ -44,25 +44,36 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="searchTextField1" min="-2" pref="98" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="729" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="searchTextField" min="-2" pref="420" max="-2" attributes="0"/>
+                  <EmptySpace pref="401" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="searchTextField1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="527" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="searchTextField" min="-2" pref="46" max="-2" attributes="0"/>
+                  <EmptySpace pref="505" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="quanlybanhang.view.search_suggestion.SearchTextField" name="searchTextField1">
+        <Component class="quanlybanhang.view.search_suggestion.SearchTextField" name="searchTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="searchTextField1"/>
+            <Property name="prefixIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/asserts/search.png"/>
+            </Property>
+            <Property name="suffixIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/asserts/search-icon-46.png"/>
+            </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="searchTextFieldMouseClicked"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchTextFieldKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
