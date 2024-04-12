@@ -1,4 +1,4 @@
-package quanlybanhang.view.search_suggestion;
+package quanlybanhang.view.item;
 
 import java.awt.Color;
 import java.awt.Component;

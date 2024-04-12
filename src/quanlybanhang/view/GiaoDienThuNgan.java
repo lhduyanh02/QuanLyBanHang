@@ -25,9 +25,9 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.model.ThucDon;
-import quanlybanhang.view.search_suggestion.MenuDataSearch;
-import quanlybanhang.view.search_suggestion.SearchPanel;
-import quanlybanhang.view.search_suggestion.TableItem;
+import quanlybanhang.view.item.MenuDataSearch;
+import quanlybanhang.view.item.SearchPanel;
+import quanlybanhang.view.item.TableItem;
 
 /**
  *
@@ -241,7 +241,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         MenuLabel = new javax.swing.JLabel();
         UserTF = new javax.swing.JTextField();
         TenBanLabel = new javax.swing.JLabel();
-        searchTextField = new quanlybanhang.view.search_suggestion.SearchTextField();
+        searchTextField = new quanlybanhang.view.item.SearchTextField();
         jPanel2 = new javax.swing.JPanel();
         TablePanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -640,6 +640,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JPanel leftPanel;
-    private quanlybanhang.view.search_suggestion.SearchTextField searchTextField;
+    private quanlybanhang.view.item.SearchTextField searchTextField;
     // End of variables declaration//GEN-END:variables
 }

@@ -61,7 +61,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="quanlybanhang.view.search_suggestion.SearchTextField" name="searchTextField">
+        <Component class="quanlybanhang.view.item.SearchTextField" name="searchTextField">
           <Properties>
             <Property name="prefixIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/asserts/search.png"/>
