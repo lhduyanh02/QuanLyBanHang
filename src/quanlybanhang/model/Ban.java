@@ -19,7 +19,6 @@ import static quanlybanhang.control.Program.con;
  */
 public class Ban {
 
-    private static Ban instance;
     private String maban;
     private String tenban;
     private String trangthai;
@@ -43,15 +42,6 @@ public class Ban {
 
     public String getTrangthai() {
         return trangthai;
-    }
-
-    public static synchronized Ban getInstance() {
-        if (instance == null) {
-            instance = new Ban();
-            return instance;
-        } else {
-            return instance;
-        }
     }
 
     public static boolean themBan(String MaBan, String TenBan) {
@@ -155,18 +145,6 @@ public class Ban {
         this.trangthai = trangthai;
     }
 
-//    public static ResultSet layDSban() {
-//        ResultSet rs = null;
-//        try {
-//            Statement s = con.createStatement();
-//            rs = s.executeQuery("SELECT * FROM htql_banhang.ban;");
-//            return rs;
-//        } catch (Exception e) {
-//            System.out.println("Loi! [Class: Ban - Method: layDSban]");
-//            e.printStackTrace();
-//        }
-//        return rs;
-//    }
     public static ArrayList<Ban> layDSban() {
         ArrayList<Ban> ReturnList = new ArrayList<Ban>();
         try {

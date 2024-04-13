@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
 
 public class ThucDon {
@@ -67,6 +68,7 @@ public class ThucDon {
     private String GhiChu;
 
     public static boolean xoaMon(Object MaSP) {
+        Program.ConnectDB();
         try {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("UPDATE `htql_banhang`.`sanpham` SET loaiSP='-1' WHERE (`MaSP` = N'" + MaSP + "');");
@@ -85,6 +87,7 @@ public class ThucDon {
     }
 
     public static boolean themMon(String MaSP, String TenSP, int GiaSP, int LoaiSP, String GhiChu) {
+        Program.ConnectDB();
         try {
             Statement s = con.createStatement();
             s.executeUpdate("INSERT INTO htql_banhang.sanpham "
@@ -100,6 +103,7 @@ public class ThucDon {
     }
 
     public static boolean suaMon(String MaCu, String MaSP, String TenSP, int GiaSP, String GhiChu) {
+        Program.ConnectDB();
         try {
             Statement s = con.createStatement();
             //UPDATE htql_banhang.sanpham SET MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = N'" + GhiChu + "' WHERE (MaSP = '" + MaCu + "');
@@ -116,6 +120,7 @@ public class ThucDon {
     }
     
     public static List<ThucDon> layDSThucDon(int loai){
+        Program.ConnectDB();
         List<ThucDon> list = new ArrayList<ThucDon>();
         try {
             Statement s = con.createStatement();
@@ -132,6 +137,7 @@ public class ThucDon {
     }
     
     public static ArrayList<ThucDon> layDSThucDon(){
+        Program.ConnectDB();
         ArrayList<ThucDon> list = new ArrayList<ThucDon>();
         try {
             Statement s = con.createStatement();
