@@ -4,21 +4,22 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import quanlybanhang.model.Ban;
+import quanlybanhang.view.GiaoDienThuNgan;
 
 public class TableItem extends javax.swing.JPanel {
 
-    private String MaBan;
-    private String TenBan;
-    private String TrangThai;
+//    private String MaBan;
+//    private String TenBan;
+//    private String TrangThai;
+    private Ban ban;
 
-    public TableItem(String mb, String tb, String tt) {
-        MaBan = mb;
-        TenBan = tb;
-        TrangThai = tt;
+    public TableItem(Ban b) {
+        ban = b;
         initComponents();
-        MaBanlbl.setText(mb);
-        TenBanlbl.setText(tb);
-        if (TrangThai.equals("free")) {
+        MaBanlbl.setText(ban.getMaban());
+        TenBanlbl.setText(ban.getTenban());
+        if (ban.getTrangthai().equals("free")) {
             setBackground(new Color(204, 255, 204));
         } else {
             setBackground(new Color(255, 153, 153));
@@ -30,21 +31,21 @@ public class TableItem extends javax.swing.JPanel {
         com.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(MaBan);
+                GiaoDienThuNgan.setSelectedBan(ban);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (TrangThai.equals("free")) {
+                if (ban.getTrangthai().equals("free")) {
                     setBackground(new Color(153, 255, 153));
                 } else {
-                    setBackground(new Color(255, 153, 102));
+                    setBackground(new Color(255, 102, 51));
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if (TrangThai.equals("free")) {
+                if (ban.getTrangthai().equals("free")) {
                     setBackground(new Color(204, 255, 204));
                 } else {
                     setBackground(new Color(255, 153, 153));
