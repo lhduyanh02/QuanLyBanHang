@@ -2,6 +2,7 @@ package quanlybanhang.view.item;
 
 import java.util.List;
 import net.miginfocom.swing.MigLayout;
+import quanlybanhang.model.ThucDon;
 
 public class SearchPanel extends javax.swing.JPanel {
 
@@ -10,9 +11,9 @@ public class SearchPanel extends javax.swing.JPanel {
         setLayout(new MigLayout("fillx", "0[]0", "0[]0"));
     }
 
-    public void setData(List<MenuDataSearch> data){
+    public void setData(List<ThucDon> data){
         this.removeAll();
-        for(MenuDataSearch d : data){
+        for(ThucDon d : data){
             SearchMenuItem item = new SearchMenuItem(d);
             this.add(item, "wrap");
         }

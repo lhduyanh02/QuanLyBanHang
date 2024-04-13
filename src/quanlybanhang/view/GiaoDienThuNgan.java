@@ -21,7 +21,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 import quanlybanhang.model.ThucDon;
-import quanlybanhang.view.item.MenuDataSearch;
 import quanlybanhang.view.item.SearchPanel;
 import quanlybanhang.view.item.TableItem;
 
@@ -629,12 +628,12 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         reloadTableList();
     }//GEN-LAST:event_ReloadBtnMouseClicked
 
-    private List<MenuDataSearch> searchMenu(String search) {
-        List<MenuDataSearch> list = new ArrayList<>();
+    private List<ThucDon> searchMenu(String search) {
+        List<ThucDon> list = new ArrayList<>();
         try {
             for (ThucDon td : thucdon) {
                 if (td.getTen().toLowerCase().contains(search.trim().toLowerCase())) {
-                    list.add(new MenuDataSearch(td.getMaSP(), td.getTen(), td.getGia(), td.getLoai()));
+                    list.add(new ThucDon(td.getMaSP(), td.getTen(), td.getGia(), td.getLoai(), td.getGhiChu()));
                     if (list.size() == limitData) {
                         break;
                     }

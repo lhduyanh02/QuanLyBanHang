@@ -5,23 +5,24 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
+import quanlybanhang.model.ThucDon;
 
 public class SearchMenuItem extends javax.swing.JPanel {
-    private MenuDataSearch data;
-    public SearchMenuItem(MenuDataSearch d) {
+    private ThucDon data;
+    public SearchMenuItem(ThucDon d) {
         initComponents();
         data = d;
         setData(data);
         addSeparatorLabel(PriceLabel);
     }
 
-    private void setData(MenuDataSearch data){
+    private void setData(ThucDon data){
         addEventMouse(this);
-        NameLabel.setText(data.getName());
-        PriceLabel.setText(String.valueOf(data.getPrice()));
-        if(data.getType() == 0){
+        NameLabel.setText(data.getTen());
+        PriceLabel.setText(String.valueOf(data.getGia()));
+        if(data.getLoai()== 0){
             IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons8-meal-30.png")));
-        } else if(data.getType() == 1){
+        } else if(data.getLoai()== 1){
             IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons8-drink-30.png")));
         }
     }
@@ -40,7 +41,7 @@ public class SearchMenuItem extends javax.swing.JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(data.getID());
+                System.out.println(data.getMaSP());
             }
             
         });
