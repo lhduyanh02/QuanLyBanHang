@@ -103,16 +103,16 @@ public class DangNhap extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        UsernameTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        UsernameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
+        UsernameTF.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
+        UsernameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
         UsernameTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UsernameTFActionPerformed(evt);
             }
         });
 
-        PasswordTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 18))); // NOI18N
+        PasswordTF.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
+        PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
         PasswordTF.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         PasswordTF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -123,7 +123,7 @@ public class DangNhap extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(249, 247, 201));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 5));
 
-        DangNhapLabel.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
+        DangNhapLabel.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         DangNhapLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         DangNhapLabel.setText("Đăng nhập");
         DangNhapLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -134,7 +134,7 @@ public class DangNhap extends javax.swing.JDialog {
             }
         });
 
-        ThoatLabel.setFont(new java.awt.Font("Helvetica", 1, 13)); // NOI18N
+        ThoatLabel.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         ThoatLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ThoatLabel.setText("Thoát");
         ThoatLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -199,7 +199,7 @@ public class DangNhap extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(249, 247, 201));
-        jLabel1.setFont(new java.awt.Font("Cambria", 1, 32)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ĐĂNG NHẬP");
 

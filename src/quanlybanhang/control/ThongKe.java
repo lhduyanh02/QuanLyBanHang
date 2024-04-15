@@ -103,7 +103,7 @@ public class ThongKe {
         ArrayList<ThongKe> list = new ArrayList<ThongKe>();
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * "
+            ResultSet rs = s.executeQuery("SELECT mapc AS id, noidungpc AS noidung, tgchi AS thoi_gian, CONCAT('-', sotien) AS sotien, usname "
                     + "FROM htql_banhang.phieuchi "
                     + "WHERE cast(TGChi as Date) BETWEEN '" + start + "' AND '" + end + "' ORDER BY TGChi DESC;");
             while(rs.next()){

@@ -87,7 +87,7 @@
                   <Component id="GiaMonTF" min="-2" pref="58" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="104" max="-2" attributes="0"/>
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
+                  <EmptySpace pref="33" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="MonAnRadioBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="NuocRadioBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -101,7 +101,7 @@
         <Component class="javax.swing.JTextField" name="MaMonTF">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Helvetica" size="14" style="0"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -109,6 +109,7 @@
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true"/>
                   </Border>
+                  <Font PropertyName="font" name="Helvetica" size="18" style="2"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -117,7 +118,7 @@
         <Component class="javax.swing.JTextField" name="TenMonTF">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Helvetica" size="14" style="0"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -125,6 +126,7 @@
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true"/>
                   </Border>
+                  <Font PropertyName="font" name="Helvetica" size="18" style="2"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -133,7 +135,7 @@
         <Component class="javax.swing.JTextField" name="GiaMonTF">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Helvetica" size="14" style="0"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -141,6 +143,7 @@
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder roundedCorners="true"/>
                   </Border>
+                  <Font PropertyName="font" name="Helvetica" size="18" style="2"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -152,7 +155,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Helvetica" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="M&#xf3;n &#x103;n"/>
           </Properties>
@@ -163,7 +166,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Helvetica" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="N&#x1b0;&#x1edb;c"/>
             <Property name="horizontalAlignment" type="int" value="4"/>
@@ -177,6 +180,7 @@
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder/>
                   </Border>
+                  <Font PropertyName="font" name="Helvetica" size="18" style="2"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -190,10 +194,16 @@
             <Component class="javax.swing.JTextArea" name="GhiChuTF">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Helvetica" size="14" style="0"/>
+                </Property>
                 <Property name="rows" type="int" value="5"/>
                 <Property name="wrapStyleWord" type="boolean" value="true"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Text Cursor"/>
                 </Property>
               </Properties>
             </Component>
@@ -335,7 +345,7 @@
               <Color blue="d9" green="c7" red="7f" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Cambria" size="32" style="1"/>
+              <Font name="Avenir Next" size="32" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="TH&#xca;M M&#xd3;N"/>

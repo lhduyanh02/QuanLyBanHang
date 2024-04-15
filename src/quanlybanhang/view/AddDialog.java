@@ -144,30 +144,32 @@ public class AddDialog extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        MaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã món"));
+        MaMonTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã món", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        TenMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên món"));
+        TenMonTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên món", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        GiaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món"));
+        GiaMonTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
         MonAnRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
-        MonAnRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        MonAnRadioBtn.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
         MonAnRadioBtn.setText("Món ăn");
 
         NuocRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
-        NuocRadioBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NuocRadioBtn.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
         NuocRadioBtn.setText("Nước");
         NuocRadioBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ghi chú"));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ghi chú", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
         GhiChuTF.setColumns(20);
+        GhiChuTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         GhiChuTF.setRows(5);
         GhiChuTF.setWrapStyleWord(true);
         GhiChuTF.setBorder(null);
+        GhiChuTF.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(GhiChuTF);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -198,7 +200,7 @@ public class AddDialog extends javax.swing.JDialog {
                 .addComponent(GiaMonTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(MonAnRadioBtn)
                     .addComponent(NuocRadioBtn))
@@ -271,7 +273,7 @@ public class AddDialog extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(249, 247, 201));
 
         jLabel1.setBackground(new java.awt.Color(127, 199, 217));
-        jLabel1.setFont(new java.awt.Font("Cambria", 1, 32)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("THÊM MÓN");
 
