@@ -4,11 +4,19 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import quanlybanhang.model.ChiTietHD;
+import quanlybanhang.model.HoaDon;
 import quanlybanhang.model.ThucDon;
+import quanlybanhang.view.GiaoDienThuNgan;
 
 public class SearchMenuItem extends javax.swing.JPanel {
+
     private ThucDon data;
+
     public SearchMenuItem(ThucDon d) {
         initComponents();
         data = d;
@@ -16,19 +24,19 @@ public class SearchMenuItem extends javax.swing.JPanel {
         addSeparatorLabel(PriceLabel);
     }
 
-    private void setData(ThucDon data){
+    private void setData(ThucDon data) {
         addEventMouse(this);
         NameLabel.setText(data.getTen());
         PriceLabel.setText(String.valueOf(data.getGia()));
-        if(data.getLoai()== 0){
+        if (data.getLoai() == 0) {
             IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons8-meal-30.png")));
-        } else if(data.getLoai()== 1){
+        } else if (data.getLoai() == 1) {
             IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons8-drink-30.png")));
         }
     }
-    
-    private void addEventMouse(Component com){
-        com.addMouseListener(new MouseAdapter(){
+
+    private void addEventMouse(Component com) {
+        com.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 setBackground(new Color(240, 240, 240));
@@ -41,15 +49,27 @@ public class SearchMenuItem extends javax.swing.JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(data.getMaSP());
+                if (GiaoDienThuNgan.getSelectedBan() == null) {
+                    Icon icon = new ImageIcon(SearchMenuItem.class.getResource("/asserts/X-icon.png"));
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn trước khi thêm món",
+                            "Không có bàn được chọn", JOptionPane.ERROR_MESSAGE, icon);
+                    return;
+                }
+                if (GiaoDienThuNgan.getSelectedBan().getTrangthai().equals("free")) {
+                    String mahd = HoaDon.taoHoaDon(new HoaDon("", GiaoDienThuNgan.getSelectedBan().getMaban(), 90));
+                    ChiTietHD.themChiTietHD(new ChiTietHD(mahd, data.getMaSP(), 1));
+                } else {
+                    ChiTietHD.themChiTietHD(new ChiTietHD(GiaoDienThuNgan.getSelectedBan().getTrangthai(), data.getMaSP(), 1));
+                    GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                }
             }
-            
+
         });
     }
-    
-    public void addSeparatorLabel(JLabel label){
+
+    public void addSeparatorLabel(JLabel label) {
         String content = label.getText();
-        if(content.equals("")){
+        if (content.equals("")) {
             return;
         }
         content = content.replaceAll("[.,]", "");
@@ -57,7 +77,7 @@ public class SearchMenuItem extends javax.swing.JPanel {
         content = String.format("%,d", l);
         label.setText(content);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

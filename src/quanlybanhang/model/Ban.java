@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package quanlybanhang.model;
 
 import java.sql.Statement;
@@ -12,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.view.QuanLyBan;
 
 /**
  *
@@ -75,6 +72,7 @@ public class Ban {
         } catch (Exception e) {
             System.out.println("Loi! [Class: Ban - Method: themBan]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyBan.paintEditPanel();
             return false;
         }
     }
@@ -102,6 +100,7 @@ public class Ban {
         } catch (Exception e) {
             System.out.println("Loi! [Class: Ban - Method: suaBan]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyBan.paintEditPanel();
         }
         return false;
     }
@@ -119,7 +118,7 @@ public class Ban {
                 }
             }
 
-            int rs = s.executeUpdate("DELETE FROM `htql_banhang`.`ban` WHERE (`maban` = '"+MaBan+"');");
+            int rs = s.executeUpdate("UPDATE `htql_banhang`.`ban` SET trangthai = '-1' WHERE (maban = '"+MaBan+"');");
             s.close();
 
             if (rs == 1) {
@@ -129,6 +128,7 @@ public class Ban {
         } catch (Exception e) {
             System.out.println("Loi! [Class: Ban - Method: xoaBan]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyBan.paintEditPanel();
         }
         return false;
     }
@@ -149,7 +149,7 @@ public class Ban {
         ArrayList<Ban> ReturnList = new ArrayList<Ban>();
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban order by tenban ASC;");
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban WHERE trangthai <> '-1' order by tenban ASC;");
             while (rs.next()) {
                 ReturnList.add(new Ban(rs.getString(1), rs.getString(2), rs.getString(3)));
             }
