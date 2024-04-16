@@ -144,13 +144,13 @@ public class AddDialog extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        MaMonTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        MaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         MaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã món", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        TenMonTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        TenMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TenMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên món", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        GiaMonTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        GiaMonTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         GiaMonTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Giá món", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
         MonAnRadioBtn.setBackground(new java.awt.Color(255, 255, 255));
@@ -165,7 +165,7 @@ public class AddDialog extends javax.swing.JDialog {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ghi chú", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
         GhiChuTF.setColumns(20);
-        GhiChuTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        GhiChuTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         GhiChuTF.setRows(5);
         GhiChuTF.setWrapStyleWord(true);
         GhiChuTF.setBorder(null);

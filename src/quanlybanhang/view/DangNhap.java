@@ -103,7 +103,7 @@ public class DangNhap extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        UsernameTF.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
+        UsernameTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         UsernameTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
         UsernameTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,7 +111,7 @@ public class DangNhap extends javax.swing.JDialog {
             }
         });
 
-        PasswordTF.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
+        PasswordTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         PasswordTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
         PasswordTF.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         PasswordTF.addMouseListener(new java.awt.event.MouseAdapter() {
