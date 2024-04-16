@@ -97,14 +97,14 @@ public class DoiMatKhau extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         ConfirmBtn = new javax.swing.JLabel();
         ExitBtn = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(249, 247, 201));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ĐỔI MẬT KHẨU");
 
@@ -121,11 +121,14 @@ public class DoiMatKhau extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        OldPass.setBorder(javax.swing.BorderFactory.createTitledBorder("Mật khẩu hiện tại"));
+        OldPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        OldPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu hiện tại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        NewPass.setBorder(javax.swing.BorderFactory.createTitledBorder("Mật khẩu mới"));
+        NewPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        NewPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        ConfirmPass.setBorder(javax.swing.BorderFactory.createTitledBorder("Nhập lại mật khẩu"));
+        ConfirmPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        ConfirmPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhập lại mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,18 +147,18 @@ public class DoiMatKhau extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(OldPass, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(NewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addComponent(ConfirmPass, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(249, 247, 201));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         ConfirmBtn.setBackground(new java.awt.Color(240, 240, 240));
-        ConfirmBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ConfirmBtn.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         ConfirmBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ConfirmBtn.setText("Xác nhận");
         ConfirmBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -176,7 +179,7 @@ public class DoiMatKhau extends javax.swing.JDialog {
         jPanel3.add(ConfirmBtn, gridBagConstraints);
 
         ExitBtn.setBackground(new java.awt.Color(240, 240, 240));
-        ExitBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ExitBtn.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         ExitBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ExitBtn.setText("Hủy");
         ExitBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -196,8 +199,6 @@ public class DoiMatKhau extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(0, 35, 0, 0);
         jPanel3.add(ExitBtn, gridBagConstraints);
 
-        jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,11 +206,6 @@ public class DoiMatKhau extends javax.swing.JDialog {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,14 +213,9 @@ public class DoiMatKhau extends javax.swing.JDialog {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(290, 290, 290)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(77, Short.MAX_VALUE)))
         );
 
         pack();
@@ -282,6 +273,5 @@ public class DoiMatKhau extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

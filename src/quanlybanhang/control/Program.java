@@ -68,10 +68,11 @@ public class Program {
     }
 
     public static void closeApp() {
+        Icon icon = new ImageIcon(Program.class.getResource("/asserts/X-icon.png"));
         if (JOptionPane.showConfirmDialog(null,
-                "Are you sure you want to close this window?", "Close Window?",
+                "Bạn có chắc muốn đóng chương trình?", "Xác nhận",
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                JOptionPane.QUESTION_MESSAGE, icon) == JOptionPane.YES_OPTION) {
             try {
                 NhatKy.writeLog("Đăng xuất", "Đăng xuất thành công");
                 con.close();

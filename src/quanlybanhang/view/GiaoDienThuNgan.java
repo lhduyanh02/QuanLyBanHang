@@ -114,20 +114,21 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
-                .addChild(new DrawerItem("Giao diện thu ngân").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Giao diện thu ngân").icon(new ImageIcon(getClass().getResource("/asserts/icons-cart.png"))).build())
+                .addChild(new DrawerItem("Quản lý thực đơn món ăn").icon(new ImageIcon(getClass().getResource("/asserts/icons-food-menu.png"))).build())
+                .addChild(new DrawerItem("Quản lý thực đơn nước").icon(new ImageIcon(getClass().getResource("/asserts/icons-menu.png"))).build())
+                .addChild(new DrawerItem("Quản lý bàn").icon(new ImageIcon(getClass().getResource("/asserts/icons-desk.png"))).build())
+                .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/icons-cost.png"))).build())
+                .addChild(new DrawerItem("Quản lý tài khoản").icon(new ImageIcon(getClass().getResource("/asserts/icons-account.png"))).build())
+                .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/icons-stocks-growth.png"))).build())
+                .addFooter(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/asserts/icons-password.png"))).build())
                 .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
                     @Override
                     public void selected(int i, DrawerItem di) {
 //                        System.out.println(i + " - "+ di);
                         //Nút thoát
-                        if (i == 7) {
+                        if (i == 8) {
                             try {
                                 Program.closeApp();
                             } catch (Exception ex) {
@@ -168,6 +169,10 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                             drawer.hide();
                             closeThisUI();
                             GiaoDienThongKe.getInstance();
+                        }
+                        if (i == 7) { //ĐỔI MẬT KHẨU
+                            drawer.hide();
+                            DoiMatKhau.getInstance();
                         }
                     }
 
@@ -310,6 +315,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadTableList]");
             e.printStackTrace();
+
         }
         setSelectedBan(bancu);
         instance.TablePanel.revalidate();
@@ -450,10 +456,19 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ghi chú", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 14))); // NOI18N
 
         GhiChuTF.setColumns(20);
+        GhiChuTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        GhiChuTF.setLineWrap(true);
         GhiChuTF.setRows(5);
+        GhiChuTF.setWrapStyleWord(true);
         GhiChuTF.setBorder(null);
+        GhiChuTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                GhiChuTFKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(GhiChuTF);
 
+        TgianTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         TgianTF.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         TongCongTF.setEditable(false);
@@ -462,6 +477,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TongCongTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TongCongTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tổng cộng", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
 
+        ChietKhauTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         ChietKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chiết khấu (%)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -575,8 +591,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        DonHangTable.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 204));
-
         DonHangTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -716,6 +732,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         reloadThucDon();
         reloadTableList();
     }//GEN-LAST:event_ReloadBtnMouseClicked
+
+    private void GhiChuTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GhiChuTFKeyPressed
+        if (GhiChuTF.getText().length() > 10){
+            System.out.println("hehêheh");
+            evt.consume();
+            GhiChuTF.setEditable(false);
+        }
+    }//GEN-LAST:event_GhiChuTFKeyPressed
 
     private List<ThucDon> searchMenu(String search) {
         List<ThucDon> list = new ArrayList<>();
