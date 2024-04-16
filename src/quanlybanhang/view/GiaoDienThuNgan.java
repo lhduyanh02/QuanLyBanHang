@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package quanlybanhang.view;
 
 import java.awt.Color;
@@ -17,11 +13,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import quanlybanhang.model.Ban;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
+import quanlybanhang.model.ChiTietHD;
 import quanlybanhang.model.ThucDon;
 import quanlybanhang.view.item.SearchPanel;
+import quanlybanhang.view.item.TableActionCellEditor;
+import quanlybanhang.view.item.TableActionCellRenderer;
+import quanlybanhang.view.item.TableActionEvent;
 import quanlybanhang.view.item.TableItem;
 
 /**
@@ -45,6 +48,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ChonBan = ban;
         instance.TenBanLabel.setText(ChonBan.getTenban());
     }
+
     private static ArrayList<ThucDon> thucdon;
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,6 +58,25 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public GiaoDienThuNgan() {
         initComponents();
+        TableActionEvent evt = new TableActionEvent() {
+            @Override
+            public void onAdd(int row) {
+                System.out.println("Add row: " + row);
+            }
+
+            @Override
+            public void onMinus(int row) {
+                System.out.println("Minus row: " + row);
+            }
+
+            @Override
+            public void onDelete(int row) {
+                System.out.println("Delete row: " + row);
+            }
+        };
+
+        DonHangTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
+        DonHangTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(evt));
         UserTF.setText(DangNhap.getUser());
         TenBanLabel.setText("- BÀN -");
 
@@ -213,6 +236,33 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         instance.dispose();
     }
 
+    public static void reloadChiTietHD(Ban b) {
+        instance.searchTextField.setText("");
+        try {
+            if (b.getTrangthai().equals("free")) {
+                ((DefaultTableModel) instance.DonHangTable.getModel()).setRowCount(0);
+                return;
+            }
+            Map<String, String> map = new HashMap<>();
+            for (ThucDon t : thucdon) {
+                map.put(t.getMaSP(), t.getTen());
+            }
+            ArrayList<ChiTietHD> list = ChiTietHD.layChiTietHD(b.getTrangthai());
+            DefaultTableModel m = ((DefaultTableModel) instance.DonHangTable.getModel());
+            m.setRowCount(0);
+            int stt = 1;
+            for (ChiTietHD c : list) {
+                Object[] obj = {stt, map.get(c.getMaSP()), c.getGiaSP(), c.getSoLuong(), c.getThanhTien()};
+                m.addRow(obj);
+                stt++;
+            }
+            instance.menu.setVisible(false);
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadChiTietHD]");
+            e.printStackTrace();
+        }
+    }
+
     // Khởi tạo bàn 
     private void reloadTableList() {
         ChonBan = null;
@@ -222,7 +272,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         try {
             ArrayList<Ban> list = Ban.layDSban();
-            if(list.isEmpty()){return;}
+            if (list.isEmpty()) {
+                return;
+            }
             for (Ban b : list) {
                 TableItem tb = new TableItem(b);
                 TablePanel.add(tb);
@@ -236,10 +288,32 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TablePanel.repaint();
     }
 
-    private static void reloadOrder() {
-        if(ChonBan == null){
-            return;
+    public static void reloadTableList(Ban bancu) {
+        ChonBan = null;
+        instance.TablePanel.removeAll();
+        instance.TablePanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
+        instance.jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
+
+        try {
+            ArrayList<Ban> list = Ban.layDSban();
+            if (list.isEmpty()) {
+                return;
+            }
+            for (Ban b : list) {
+                TableItem tb = new TableItem(b);
+                instance.TablePanel.add(tb);
+                if (b.getMaban().equals(bancu.getMaban())) {
+                    bancu = b;
+                    reloadChiTietHD(b);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadTableList]");
+            e.printStackTrace();
         }
+        setSelectedBan(bancu);
+        instance.TablePanel.revalidate();
+        instance.TablePanel.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -270,7 +344,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ReloadBtn = new javax.swing.JLabel();
         ChuyenBanBtn = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        DonHangTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -501,7 +575,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 204));
+
+        DonHangTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -509,28 +585,39 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 "STT", "Tên hàng hoá", "Đơn giá", "Số lượng", "Thành tiền", ""
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(35);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(35);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(180);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(90);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(70);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(90);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(100);
+        DonHangTable.setOpaque(false);
+        DonHangTable.setRowHeight(42);
+        DonHangTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        DonHangTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        DonHangTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(DonHangTable);
+        if (DonHangTable.getColumnModel().getColumnCount() > 0) {
+            DonHangTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+            DonHangTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            DonHangTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+            DonHangTable.getColumnModel().getColumn(1).setMaxWidth(180);
+            DonHangTable.getColumnModel().getColumn(2).setPreferredWidth(90);
+            DonHangTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+            DonHangTable.getColumnModel().getColumn(3).setMaxWidth(70);
+            DonHangTable.getColumnModel().getColumn(4).setPreferredWidth(90);
+            DonHangTable.getColumnModel().getColumn(5).setMinWidth(120);
+            DonHangTable.getColumnModel().getColumn(5).setPreferredWidth(120);
+            DonHangTable.getColumnModel().getColumn(5).setMaxWidth(120);
         }
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
@@ -624,6 +711,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private void ReloadBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReloadBtnMouseClicked
         UserTF.setText(DangNhap.getUser());
         TenBanLabel.setText("- BÀN -");
+        ChonBan=null;
+        ((DefaultTableModel)DonHangTable.getModel()).setRowCount(0);
         reloadThucDon();
         reloadTableList();
     }//GEN-LAST:event_ReloadBtnMouseClicked
@@ -658,6 +747,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ChietKhauTF;
     private javax.swing.JLabel ChuyenBanBtn;
+    private javax.swing.JTable DonHangTable;
     private javax.swing.JTextArea GhiChuTF;
     private javax.swing.JLabel InTTBtn;
     private javax.swing.JLabel MenuLabel;
@@ -677,7 +767,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel leftPanel;
     private quanlybanhang.view.item.SearchTextField searchTextField;
     // End of variables declaration//GEN-END:variables

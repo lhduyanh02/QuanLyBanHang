@@ -5,13 +5,11 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import quanlybanhang.model.Ban;
+import quanlybanhang.model.HoaDon;
 import quanlybanhang.view.GiaoDienThuNgan;
 
 public class TableItem extends javax.swing.JPanel {
 
-//    private String MaBan;
-//    private String TenBan;
-//    private String TrangThai;
     private Ban ban;
 
     public TableItem(Ban b) {
@@ -32,6 +30,10 @@ public class TableItem extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 GiaoDienThuNgan.setSelectedBan(ban);
+                GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+//                if(ban.getTrangthai().equals("free")){
+//                    HoaDon.taoHoaDon(new HoaDon("", ban.getMaban(), 15));
+//                }
             }
 
             @Override

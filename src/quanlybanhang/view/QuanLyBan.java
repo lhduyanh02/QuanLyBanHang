@@ -742,21 +742,11 @@ public class QuanLyBan extends javax.swing.JFrame {
         }
     }
 
-//    private String convert(int x) {
-//        try {
-//            if (x == 1) {
-//                return "Đang sử dụng";
-//            }
-//            if (x == 0) {
-//                return "Ngừng sử dụng";
-//            } else {
-//                return "Không xác định";
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Loi! [Class: QuanLyBan - Method: convert]");
-//        }
-//        return "Không xác định";
-//    } //Convert trạng thái bàn -> đang sử dụng hoặc không
+    public static void paintEditPanel(){
+        instance.EditPanel.repaint();
+        instance.EditPanel.revalidate();
+    }
+    
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;
