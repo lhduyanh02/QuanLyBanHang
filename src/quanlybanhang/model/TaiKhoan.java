@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.view.QuanLyTaiKhoan;
 
 /**
  *
@@ -60,11 +61,13 @@ public class TaiKhoan {
         if (TK.username.equals("") || CheckInputMethod.containsWhitespace(TK.username) || CheckInputMethod.containsVietnamese(TK.username) || TK.username.length() > 15) {
             JOptionPane.showMessageDialog(null, "Tên đăng nhập không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
                     "Lỗi Tên Đăng Nhập", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
             return false;
         }
         if (TK.password.equals("") || TK.password.length() > 30 || TK.password.length() < 6) {
             JOptionPane.showMessageDialog(null, "Mật khẩu phải lớn hơn 6 ký tự và ít hơn 30 ký tự.",
                     "Lỗi Mật Khẩu", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
             return false;
         }
         try {
@@ -72,12 +75,13 @@ public class TaiKhoan {
             s.executeUpdate("INSERT INTO htql_banhang.taikhoan "
                     + "(usname, passwd, access) VALUES (N'" + TK.username + "', N'" + TK.password + "', '" + TK.loai + "');");
             s.close();
-            NhatKy.writeLog("Tài khoản", "Thêm tài khoản: " + TK.username + " - Loại: "+ TK.loai);
+            NhatKy.writeLog("Tài khoản", "Thêm tài khoản: " + TK.username + " - Loại: " + TK.loai);
             return true;
 
         } catch (Exception e) {
             System.out.println("Loi! [Class: TaiKhoan - Method: themTK]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
             return false;
         }
     }
@@ -88,6 +92,7 @@ public class TaiKhoan {
         if (TK.username.equals("") || CheckInputMethod.containsWhitespace(TK.username) || CheckInputMethod.containsVietnamese(TK.username) || TK.username.length() > 15) {
             JOptionPane.showMessageDialog(null, "Tên đăng nhập không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
                     "Lỗi Tên Đăng Nhập", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
             return false;
         }
         // Nếu người dùng đổi mật khẩu
@@ -95,6 +100,7 @@ public class TaiKhoan {
             if (TK.password.length() > 30 || TK.password.length() < 6) {
                 JOptionPane.showMessageDialog(null, "Mật khẩu mới phải lớn hơn 6 ký tự và ít hơn 30 ký tự.",
                         "Lỗi Mật Khẩu", JOptionPane.ERROR_MESSAGE, icon);
+                QuanLyTaiKhoan.paintEditPanel();
                 return false;
             }
         }
@@ -105,20 +111,21 @@ public class TaiKhoan {
                 int rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET usname = N'" + TK.username + "', access = '" + TK.loai + "' WHERE (usname = '" + usname + "');");
                 s.close();
                 if (rs == 1) {
-                    NhatKy.writeLog("Tài khoản", "Sửa tài khoản: " + usname + " -> "+ TK.username + " - " + TK.loai);
+                    NhatKy.writeLog("Tài khoản", "Sửa tài khoản: " + usname + " -> " + TK.username + " - " + TK.loai);
                     return true;
                 }
             } else {
                 int rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET usname = N'" + TK.username + "', passwd = '" + TK.password + "', access = '" + TK.loai + "' WHERE (usname = '" + usname + "');");
                 s.close();
                 if (rs == 1) {
-                    NhatKy.writeLog("Tài khoản", "Sửa tài khoản và mật khẩu: " + usname + " -> "+ TK.username + " - " + TK.loai);
+                    NhatKy.writeLog("Tài khoản", "Sửa tài khoản và mật khẩu: " + usname + " -> " + TK.username + " - " + TK.loai);
                     return true;
                 }
             }
         } catch (Exception e) {
             System.out.println("Loi! [Class: TaiKhoan - Method: suaTaiKhoan]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
         }
         return false;
     }
@@ -137,6 +144,7 @@ public class TaiKhoan {
             System.out.println("Loi! [Class: TaiKhoan - Method: vohieuhoa]");
             Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
         }
         return false;
     }
@@ -163,16 +171,16 @@ public class TaiKhoan {
         Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
         try {
             Statement s = con.createStatement();
-            int rs=0;
-            ResultSet r = s.executeQuery("SELECT passwd FROM htql_banhang.taikhoan WHERE usname = '"+usname+"';");
+            int rs = 0;
+            ResultSet r = s.executeQuery("SELECT passwd FROM htql_banhang.taikhoan WHERE usname = '" + usname + "';");
             r.next();
             String x = r.getString(1);
-            if(x.equals(oldpass)){
+            if (x.equals(oldpass)) {
                 rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET passwd = '" + newpass + "' WHERE (usname = '" + usname + "');");
                 s.close();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Sai mật khẩu, vui lòng kiểm tra lại!", "Sai mật khẩu", JOptionPane.ERROR_MESSAGE, icon);
+                QuanLyTaiKhoan.paintEditPanel();
                 return false;
             }
             if (rs == 1) {
@@ -182,6 +190,7 @@ public class TaiKhoan {
         } catch (Exception e) {
             System.out.println("Loi! [Class: TaiKhoan - Method: doiMatKhau]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyTaiKhoan.paintEditPanel();
             e.printStackTrace();
         }
         return false;

@@ -715,12 +715,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_logBtnMouseClicked
 
     private void disableBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (isOpen == true) {
             return;
         } else {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
                 boolean rslt = TaiKhoan.vohieuhoa((String) jTable1.getModel().getValueAt(r, 1));
                 if (rslt) {
@@ -796,12 +797,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnMouseClicked
 
     private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (isOpen == true) {
             return;
         } else {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
                 act = "edit";
                 openEditPanel();
@@ -939,6 +941,11 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 }
             }).start();
         }
+    }
+    
+    public static void paintEditPanel() {
+        instance.EditPanel.repaint();
+        instance.EditPanel.revalidate();
     }
 
     private void closeEditPanel() {
