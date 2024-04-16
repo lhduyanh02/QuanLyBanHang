@@ -121,13 +121,13 @@ public class DoiMatKhau extends javax.swing.JDialog {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        OldPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        OldPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         OldPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu hiện tại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        NewPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        NewPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         NewPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
-        ConfirmPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        ConfirmPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ConfirmPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhập lại mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

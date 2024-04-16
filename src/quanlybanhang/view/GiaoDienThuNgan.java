@@ -387,7 +387,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         UserTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NHÂN VIÊN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         TenBanLabel.setBackground(new java.awt.Color(255, 255, 255));
-        TenBanLabel.setFont(new java.awt.Font("Helvetica", 1, 20)); // NOI18N
+        TenBanLabel.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
         TenBanLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TenBanLabel.setText("- BÀN -");
         TenBanLabel.setOpaque(true);
@@ -456,7 +456,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ghi chú", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 14))); // NOI18N
 
         GhiChuTF.setColumns(20);
-        GhiChuTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        GhiChuTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         GhiChuTF.setLineWrap(true);
         GhiChuTF.setRows(5);
         GhiChuTF.setWrapStyleWord(true);
@@ -473,11 +473,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         TongCongTF.setEditable(false);
         TongCongTF.setBackground(new java.awt.Color(255, 255, 255));
-        TongCongTF.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        TongCongTF.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TongCongTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TongCongTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tổng cộng", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
 
-        ChietKhauTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        ChietKhauTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ChietKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chiết khấu (%)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -485,7 +485,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TgianTF, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
@@ -591,8 +591,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        DonHangTable.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 204));
+
+        DonHangTable.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         DonHangTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
