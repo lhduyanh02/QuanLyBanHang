@@ -41,10 +41,10 @@ public class DangNhap extends javax.swing.JDialog {
         return access;
     }
 
-    public static String getUser(){
+    public static String getUser() {
         return user;
     }
-    
+
     public DangNhap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -95,6 +95,7 @@ public class DangNhap extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         DangNhapLabel = new javax.swing.JLabel();
         ThoatLabel = new javax.swing.JLabel();
+        ForgetPwdBtn = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -150,11 +151,11 @@ public class DangNhap extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addContainerGap(48, Short.MAX_VALUE)
                 .addComponent(DangNhapLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(ThoatLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DangNhapLabel, ThoatLabel});
@@ -171,26 +172,43 @@ public class DangNhap extends javax.swing.JDialog {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {DangNhapLabel, ThoatLabel});
 
+        ForgetPwdBtn.setFont(new java.awt.Font("Helvetica", 2, 16)); // NOI18N
+        ForgetPwdBtn.setForeground(new java.awt.Color(102, 167, 230));
+        ForgetPwdBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ForgetPwdBtn.setText("<html><u>Quên mật khẩu</u></html>");
+        ForgetPwdBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ForgetPwdBtnMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(UsernameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                    .addComponent(PasswordTF))
-                .addGap(67, 67, 67))
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(UsernameTF, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                            .addComponent(PasswordTF))
+                        .addGap(67, 67, 67))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(ForgetPwdBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(UsernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
+                .addGap(18, 18, 18)
+                .addComponent(ForgetPwdBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -277,9 +295,15 @@ public class DangNhap extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_PasswordTFMouseClicked
 
+    private void ForgetPwdBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgetPwdBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+        JOptionPane.showMessageDialog(this, "Nếu bạn quên mật khẩu, vui lòng liên hệ quản trị viên.", "Quên mật khẩu", JOptionPane.INFORMATION_MESSAGE, icon);
+    }//GEN-LAST:event_ForgetPwdBtnMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DangNhapLabel;
+    private javax.swing.JLabel ForgetPwdBtn;
     private javax.swing.JPasswordField PasswordTF;
     private javax.swing.JLabel ThoatLabel;
     private javax.swing.JTextField UsernameTF;
@@ -345,7 +369,7 @@ public class DangNhap extends javax.swing.JDialog {
             }
             s.close();
 
-            if(access==-1){
+            if (access == -1) {
                 JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị vô hiệu hóa, vui lòng liên hệ nhân viên quản lý.",
                         "Tài khoản vô hiệu", JOptionPane.ERROR_MESSAGE, icon);
                 return;

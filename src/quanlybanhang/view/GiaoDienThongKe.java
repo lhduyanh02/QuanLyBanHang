@@ -237,7 +237,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         ControlPanel.setBackground(new java.awt.Color(255, 255, 204));
 
         PhieuThuBtn.setBackground(new java.awt.Color(240, 240, 240));
-        PhieuThuBtn.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        PhieuThuBtn.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
         PhieuThuBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PhieuThuBtn.setText("PHIẾU THU");
         PhieuThuBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -249,7 +249,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         });
 
         PhieuChiBtn.setBackground(new java.awt.Color(240, 240, 240));
-        PhieuChiBtn.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        PhieuChiBtn.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
         PhieuChiBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         PhieuChiBtn.setText("PHIẾU CHI");
         PhieuChiBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -261,7 +261,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         });
 
         TatCaBtn.setBackground(new java.awt.Color(240, 240, 240));
-        TatCaBtn.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        TatCaBtn.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
         TatCaBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TatCaBtn.setText("TẤT CẢ");
         TatCaBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -313,15 +313,14 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
                 .addGroup(ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ControlPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PhieuChiBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TatCaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ExportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(PhieuThuBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(ExportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(ControlPanelLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(DrawerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 8, Short.MAX_VALUE))
+            .addComponent(PhieuThuBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PhieuChiBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(TatCaBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ControlPanelLayout.setVerticalGroup(
             ControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +482,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
             .addGroup(TopPanelLayout.createSequentialGroup()
                 .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+                .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                 .addContainerGap())
         );
         TopPanelLayout.setVerticalGroup(

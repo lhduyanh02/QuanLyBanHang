@@ -141,11 +141,11 @@
           <SubComponents>
             <Component class="javax.swing.JTextPane" name="jTextPane1">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="24" style="3"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new java.awt.Font(&quot;Segoe UI&quot;, 0, 18)" type="code"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="&quot;*B&#x1ea1;n &#x111;ang &#x111;&#x103;ng nh&#x1ead;p b&#x1eb1;ng t&#xe0;i kho&#x1ea3;n &quot;+ DangNhap.getUser()+&quot;.\n&quot;&#xa;    + &quot;*&#x110;&#x103;ng nh&#x1ead;p th&#xe0;nh c&#xf4;ng: &quot; +Program.getTimeNow()&#xa;    + &quot;\n\nCh&#x1ecd;n m&#x1ed9;t ch&#x1ee9;c n&#x103;ng trong menu &#x111;&#x1ec3; ti&#x1ebf;p t&#x1ee5;c, hehe.&quot;" type="code"/>
+                  <Connection code="&quot;- B&#x1ea1;n &#x111;ang &#x111;&#x103;ng nh&#x1ead;p b&#x1eb1;ng t&#xe0;i kho&#x1ea3;n &quot;+ DangNhap.getUser()+&quot;.\n\n&quot;&#xa;    + &quot;- &#x110;&#x103;ng nh&#x1ead;p th&#xe0;nh c&#xf4;ng: &quot; +Program.getTimeNow()&#xa;    + &quot;\n\n- H&#xe3;y ch&#x1ecd;n m&#x1ed9;t ch&#x1ee9;c n&#x103;ng trong menu &#x111;&#x1ec3; ti&#x1ebf;p t&#x1ee5;c.&quot;" type="code"/>
                 </Property>
                 <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>

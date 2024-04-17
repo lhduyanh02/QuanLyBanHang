@@ -462,10 +462,11 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtnMouseClicked
 
     private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         try {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
                 int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xoá món không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
@@ -503,9 +504,10 @@ public class ThucDonMonAn extends javax.swing.JFrame {
     }
 
     private void editMenu() {
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         int r = jTable1.getSelectedRow();
         if (r == -1) {
-            JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Không có món nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
         } else {
             String MaSP = (String) jTable1.getModel().getValueAt(r, 1);
             String TenSP = (String) jTable1.getModel().getValueAt(r, 2);

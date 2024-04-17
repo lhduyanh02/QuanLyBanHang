@@ -230,10 +230,10 @@ public class WelcomeUI extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextPane1.setFont(new java.awt.Font("Monospaced", 3, 24)); // NOI18N
-        jTextPane1.setText("*Bạn đang đăng nhập bằng tài khoản "+ DangNhap.getUser()+".\n"
-            + "*Đăng nhập thành công: " +Program.getTimeNow()
-            + "\n\nChọn một chức năng trong menu để tiếp tục, hehe.");
+        jTextPane1.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        jTextPane1.setText("- Bạn đang đăng nhập bằng tài khoản "+ DangNhap.getUser()+".\n\n"
+            + "- Đăng nhập thành công: " +Program.getTimeNow()
+            + "\n\n- Hãy chọn một chức năng trong menu để tiếp tục.");
         jTextPane1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextPane1.setEnabled(false);
         jScrollPane2.setViewportView(jTextPane1);
