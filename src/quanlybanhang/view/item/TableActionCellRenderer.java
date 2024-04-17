@@ -2,6 +2,7 @@ package quanlybanhang.view.item;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -14,5 +15,5 @@ public class TableActionCellRenderer extends DefaultTableCellRenderer {
         ActionPanel action = new ActionPanel();
         action.setBackground(com.getBackground());
         return action;
-    }
+    }  
 }

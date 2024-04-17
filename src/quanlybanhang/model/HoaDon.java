@@ -3,6 +3,7 @@ package quanlybanhang.model;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.Icon;
@@ -155,11 +156,11 @@ public class HoaDon {
             System.out.println("Loi! [Class: HoaDon - Method: capNhatGhiChu]");
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
-                        "Không thể cập nhật ghi chú", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                    "Không thể cập nhật ghi chú", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return;
         }
     }
-    
+
     public void capNhatChietKhau(float discount) {
         if (this == null) {
             return;
@@ -178,8 +179,65 @@ public class HoaDon {
             System.out.println("Loi! [Class: HoaDon - Method: capNhatChietKhau]");
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
-                        "Không thể cập nhật chiết khấu", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                    "Không thể cập nhật chiết khấu", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return;
+        }
+    }
+
+    public static void doiBan(HoaDon hd, String MBmoi) {
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
+//        try {
+//            Statement s = con.createStatement();
+//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban WHERE maban = '" + MBmoi + "' AND trangthai = 'free';");
+//            if(!rs.next()){
+//                JOptionPane.showMessageDialog(null, "Bàn này không có sẵn, không thể chuyển bàn",
+//                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+//                s.close();
+//                return;
+//            }
+//            int AffectedRows = s.executeUpdate("UPDATE htql_banhang.hoadon "
+//                    + "SET maban = '"+MBmoi+"' WHERE (MaHD = '"+hd.getMaHD()+"');");
+//            if (AffectedRows!=1) {
+//                JOptionPane.showMessageDialog(null, "Đổi bàn không thành công, hãy thử lại sau!",
+//                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+//                s.close();
+//                return;
+//            } else{
+//                AffectedRows = s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '"+hd.getMaHD()+"' WHERE (maban = '"+MBmoi+"');");
+//            }
+//        } catch (Exception e) {
+//        }
+
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban WHERE maban = '" + MBmoi + "' AND trangthai = 'free';");
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(null, "Bàn này không có sẵn, không thể chuyển bàn",
+                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+                return;
+            }
+            s.close();
+            try {
+                con.setAutoCommit(false);
+                s = con.createStatement();
+                s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = 'free' WHERE (maban = '"+hd.getMaBan()+"');");
+                s.executeUpdate("UPDATE htql_banhang.hoadon "
+                    + "SET maban = '"+MBmoi+"' WHERE (MaHD = '"+hd.getMaHD()+"');");
+                s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '"+hd.getMaHD()+"' WHERE (maban = '"+MBmoi+"');");
+                con.commit();
+            } catch (SQLException e) {
+                con.rollback();
+            }finally{
+                con.setAutoCommit(true);
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: HoaDon - Method: doiBan]");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    "Không thể đổi bàn", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+
         }
     }
 

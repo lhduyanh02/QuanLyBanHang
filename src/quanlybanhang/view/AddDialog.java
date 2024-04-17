@@ -15,9 +15,6 @@ import quanlybanhang.model.ThucDon;
 
 public class AddDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form AddDialog
-     */
     public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
