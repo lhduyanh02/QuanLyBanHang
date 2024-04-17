@@ -639,12 +639,13 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnMouseClicked
 
     private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (isOpen == true) {
             return;
         } else {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
                 act = "edit";
                 openEditPanel();
@@ -705,12 +706,13 @@ public class QuanLyBan extends javax.swing.JFrame {
     }//GEN-LAST:event_LuuLabelMouseClicked
 
     private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (isOpen == true) {
             return;
         } else {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
                 boolean rslt = Ban.xoaBan((String) jTable1.getModel().getValueAt(r, 1));
                 if (rslt) {
@@ -747,11 +749,11 @@ public class QuanLyBan extends javax.swing.JFrame {
         }
     }
 
-    public static void paintEditPanel(){
+    public static void paintEditPanel() {
         instance.EditPanel.repaint();
         instance.EditPanel.revalidate();
     }
-    
+
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;

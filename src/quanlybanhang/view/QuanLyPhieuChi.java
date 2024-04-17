@@ -634,12 +634,13 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }//GEN-LAST:event_addBtnMouseClicked
 
     private void deleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
         if (isOpen) {
             return;
         } else {
             int r = jTable1.getSelectedRow();
             if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có phiếu chi nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Không có phiếu chi nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
                 boolean rslt = PhieuChi.xoaPhieuChi((String) jTable1.getModel().getValueAt(r, 1));
                 if (rslt) {
