@@ -49,6 +49,7 @@ public class SearchMenuItem extends javax.swing.JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                GiaoDienThuNgan.setChuyenBan(false);
                 if (GiaoDienThuNgan.getSelectedBan() == null) {
                     Icon icon = new ImageIcon(SearchMenuItem.class.getResource("/asserts/X-icon.png"));
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn trước khi thêm món",

@@ -21,6 +21,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import quanlybanhang.model.ChiTietHD;
 import quanlybanhang.model.HoaDon;
@@ -44,6 +45,15 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private DrawerController drawer;
     private static Ban ChonBan;
     private static HoaDon ChonHoaDon;
+    private static boolean DangChuyenBan=false;
+    
+    public static boolean dangChuyenBan(){
+        return DangChuyenBan;
+    }
+    
+    public static void setChuyenBan(boolean b){
+        DangChuyenBan = b;
+    }
 
     public static Ban getSelectedBan() {
         return ChonBan;
@@ -64,30 +74,43 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     private static ArrayList<ThucDon> thucdon;
 
+    private static Map<Integer, String> MaHD_Map;
+
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = 420;
     int height = screenSize.height;
     boolean isOpen = false;
 
+    private String getMaHD() {
+        return "";
+    }
+    private TableActionEvent evt = new TableActionEvent() {
+        @Override
+        public void onAdd(int row) {
+            ChiTietHD.themSoLuong(ChonHoaDon.getMaHD(), instance.MaHD_Map.get(row));
+            reloadChiTietHD(ChonBan);
+        }
+
+        @Override
+        public void onMinus(int row) {
+            if(((int)instance.DonHangTable.getModel().getValueAt(row, 3))==1 && instance.DonHangTable.isEditing()){
+                instance.DonHangTable.getCellEditor().stopCellEditing();
+            }
+            ChiTietHD.giamSoLuong(ChonHoaDon.getMaHD(), instance.MaHD_Map.get(row));
+            reloadChiTietHD(ChonBan);
+        }
+
+        @Override
+        public void onDelete(int row) {
+            if(instance.DonHangTable.isEditing())
+                instance.DonHangTable.getCellEditor().stopCellEditing();
+            ChiTietHD.xoaChiTietHD(ChonHoaDon.getMaHD(), instance.MaHD_Map.get(row));
+            reloadChiTietHD(ChonBan);
+        }
+    };
+
     public GiaoDienThuNgan() {
         initComponents();
-        TableActionEvent evt = new TableActionEvent() {
-            @Override
-            public void onAdd(int row) {
-                System.out.println("Add row: " + row);
-            }
-
-            @Override
-            public void onMinus(int row) {
-                System.out.println("Minus row: " + row);
-            }
-
-            @Override
-            public void onDelete(int row) {
-                System.out.println("Delete row: " + row);
-            }
-        };
-
         DonHangTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
         DonHangTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(evt));
         UserTF.setText(DangNhap.getUser());
@@ -253,6 +276,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }
 
     public static void reloadChiTietHD(Ban b) {
+        DangChuyenBan=false;
         instance.searchTextField.setText("");
         try {
             if (b.getTrangthai().equals("free")) { //Nếu bàn đang được chọn không có hóa đơn nào
@@ -269,9 +293,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             DefaultTableModel m = ((DefaultTableModel) instance.DonHangTable.getModel());
             m.setRowCount(0);
             int stt = 1;
+            MaHD_Map = new HashMap<>();
             for (ChiTietHD c : list) {
                 Object[] obj = {stt, map.get(c.getMaSP()), c.getGiaSP(), c.getSoLuong(), c.getThanhTien()};
                 m.addRow(obj);
+                MaHD_Map.put((stt - 1), c.getMaSP());
                 stt++;
             }
             setChonHoaDon(HoaDon.layThongTinHD(b.getTrangthai()));
@@ -284,6 +310,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }
 
     public static void resetUI() {
+        DangChuyenBan=false;
         instance.UserTF.setText(DangNhap.getUser());
         instance.TenBanLabel.setText("- BÀN -");
         ChonBan = null;
@@ -484,15 +511,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TablePanel.setLayout(TablePanelLayout);
         TablePanelLayout.setHorizontalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TablePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
         );
         TablePanelLayout.setVerticalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
         );
+
+        leftPanel.setMaximumSize(new java.awt.Dimension(5000, 32767));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 204));
 
@@ -590,6 +616,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ThanhToanBtn.setText("Thanh toán");
         ThanhToanBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ThanhToanBtn.setOpaque(true);
+        ThanhToanBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ThanhToanBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 8;
         gridBagConstraints.gridy = 0;
@@ -638,6 +669,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ChuyenBanBtn.setText("Chuyển bàn");
         ChuyenBanBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ChuyenBanBtn.setOpaque(true);
+        ChuyenBanBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ChuyenBanBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
@@ -803,7 +839,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }//GEN-LAST:event_ReloadBtnMouseClicked
 
     private void GhiChuTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_GhiChuTFFocusLost
-        if(ChonHoaDon==null){
+        if (ChonHoaDon == null) {
             return;
         }
         if (GhiChuTF.getText().length() > 150) {
@@ -820,7 +856,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         GhiChuTF.setFocusable(true);
     }//GEN-LAST:event_GhiChuTFMouseClicked
 
-    private static float isValidDiscount(String ck){
+    private static float isValidDiscount(String ck) {
         Icon icon = new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/X-icon.png"));
         try {
             float rs = Float.parseFloat(ck);
@@ -831,49 +867,72 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             return -1;
         }
     }
-    
+
     private void ChietKhauTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ChietKhauTFKeyTyped
-        if(!Character.isDigit(evt.getKeyChar()) || evt.getKeyChar()== '.'){
+        DangChuyenBan=false;
+        if (!Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == '.') {
             evt.consume();
         }
-        if(evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText())!=-1){
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText()) != -1) {
             ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
+            ChietKhauTF.setFocusable(false);
+            ChietKhauTF.setFocusable(true);
         }
     }//GEN-LAST:event_ChietKhauTFKeyTyped
 
-    public static void capNhatTTHoaDon(){
-        if(ChonHoaDon==null){
+    public static void capNhatTTHoaDon() {
+        if (ChonHoaDon == null) {
             return;
         }
         if (instance.GhiChuTF.getText().length() > 150) {
             instance.GhiChuTF.setText(instance.GhiChuTF.getText().substring(0, 149));
         }
         instance.ChonHoaDon.capNhatGhiChu(instance.GhiChuTF.getText());
-        
-        if(isValidDiscount(instance.ChietKhauTF.getText())!=-1 && isValidDiscount(instance.ChietKhauTF.getText())<100 && isValidDiscount(instance.ChietKhauTF.getText())>=0){
+
+        if (isValidDiscount(instance.ChietKhauTF.getText()) != -1 && isValidDiscount(instance.ChietKhauTF.getText()) < 100 && isValidDiscount(instance.ChietKhauTF.getText()) >= 0) {
             instance.ChonHoaDon.capNhatChietKhau(isValidDiscount(instance.ChietKhauTF.getText()));
-            
+
         }
     }
-    
+
     private void GhiChuTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GhiChuTFKeyTyped
-        if(GhiChuTF.getText().length()>149){
+        if (GhiChuTF.getText().length() > 149) {
             evt.consume();
         }
-        if(evt.getKeyChar() == KeyEvent.VK_ENTER){
-            GhiChuTF.setText(GhiChuTF.getText().substring(0, GhiChuTF.getText().length()-1));
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            GhiChuTF.setText(GhiChuTF.getText().substring(0, GhiChuTF.getText().length() - 1));
             ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
             GhiChuTF.setFocusable(false);
         }
     }//GEN-LAST:event_GhiChuTFKeyTyped
 
     private void ChietKhauTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChietKhauTFMouseClicked
-         if (ChonHoaDon == null) {
+        if (ChonHoaDon == null) {
             ChietKhauTF.setFocusable(false);
             JOptionPane.showMessageDialog(null, "Chưa có hóa đơn", "Chưa chọn bàn", JOptionPane.OK_OPTION);
         }
         ChietKhauTF.setFocusable(true);
     }//GEN-LAST:event_ChietKhauTFMouseClicked
+
+    private void ChuyenBanBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChuyenBanBtnMouseClicked
+        if(dangChuyenBan()){
+            DangChuyenBan = false;
+            Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/success-icon.png"));
+            JOptionPane.showMessageDialog(null, "Đã hủy chuyển bàn!", "Thông báo", JOptionPane.OK_OPTION, icon);
+        }
+        else {
+            DangChuyenBan = true;
+            Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/icons8-notice-48.png"));
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn cần chuyển đến!", "Chuyển bàn", JOptionPane.OK_OPTION, icon);
+        }
+    }//GEN-LAST:event_ChuyenBanBtnMouseClicked
+
+    private void ThanhToanBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThanhToanBtnMouseClicked
+        DangChuyenBan=false;
+        if (ChonBan != null && ChonHoaDon != null) {
+            new ThanhToan(this, rootPaneCheckingEnabled, ChonHoaDon).setVisible(true);
+        }
+    }//GEN-LAST:event_ThanhToanBtnMouseClicked
 
     private List<ThucDon> searchMenu(String search) {
         List<ThucDon> list = new ArrayList<>();

@@ -10,13 +10,13 @@ import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
 
 public class ChiTietHD {
-
+    
     private String MaHD;
     private String MaSP;
     private int SoLuong;
     private float GiaSP;
     private float ThanhTien;
-
+    
     public static boolean themChiTietHD(ChiTietHD c) {
         Program.ConnectDB();
         Icon icon = new ImageIcon(ChiTietHD.class.getResource("/asserts/X-icon.png"));
@@ -45,7 +45,7 @@ public class ChiTietHD {
                 return false;
             } else {
                 int AffectedRows = s.executeUpdate("INSERT INTO htql_banhang.chitiet_hd (MaHD, MaSP, SoLuong) "
-                        + "VALUES ('"+c.MaHD+"', '"+c.MaSP+"', '"+c.SoLuong+"') ON DUPLICATE KEY UPDATE SoLuong = SoLuong + 1;;");
+                        + "VALUES ('" + c.MaHD + "', '" + c.MaSP + "', '" + c.SoLuong + "') ON DUPLICATE KEY UPDATE SoLuong = SoLuong + 1;;");
                 if (AffectedRows == 0) {
                     JOptionPane.showMessageDialog(null, "Lỗi thêm món vào hóa đơn, hãy thử lại",
                             "Lỗi thêm món", JOptionPane.ERROR_MESSAGE, icon);
@@ -63,13 +63,13 @@ public class ChiTietHD {
         }
     }
     
-    public static ArrayList<ChiTietHD> layChiTietHD(String mahd){
+    public static ArrayList<ChiTietHD> layChiTietHD(String mahd) {
         Program.ConnectDB();
         ArrayList<ChiTietHD> list = new ArrayList<ChiTietHD>();
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.chitiet_hd WHERE MaHD = '"+mahd+"';");
-            while(rs.next()){
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.chitiet_hd WHERE MaHD = '" + mahd + "';");
+            while (rs.next()) {
                 list.add(new ChiTietHD(rs.getString(1), rs.getString(2), rs.getInt(3),
                         rs.getFloat(4), rs.getFloat(5)));
             }
@@ -83,13 +83,13 @@ public class ChiTietHD {
         }
         return list;
     }
-
+    
     public ChiTietHD(String MaHD, String MaSP, int SoLuong) {
         this.MaHD = MaHD;
         this.MaSP = MaSP;
         this.SoLuong = SoLuong;
     }
-
+    
     public ChiTietHD(String MaHD, String MaSP, int SoLuong, float GiaSP, float ThanhTien) {
         this.MaHD = MaHD;
         this.MaSP = MaSP;
@@ -97,43 +97,106 @@ public class ChiTietHD {
         this.GiaSP = GiaSP;
         this.ThanhTien = ThanhTien;
     }
-
+    
+    public static void themSoLuong(String mahd, String masp) {
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(ChiTietHD.class.getResource("/asserts/X-icon.png"));
+        try {
+            Statement s = con.createStatement();
+            int AffectedRows = s.executeUpdate("UPDATE htql_banhang.chitiet_hd "
+                    + "SET SoLuong = SoLuong + 1 "
+                    + "WHERE MaHD = '"+mahd+"' AND MaSP = '"+masp+"';");
+            if(AffectedRows<1){
+                JOptionPane.showMessageDialog(null, "Không thể thêm số lượng, vui lòng tải lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            }
+            s.executeUpdate("DELETE FROM chitiet_hd WHERE MaHD = '"+mahd+"' AND SoLuong <= 0;");
+            s.close();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: ChiTietHD - Method: themSoLuong]");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                    "Không thể thêm số lượng, vui lòng tải lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
+    }
+    
+    public static void xoaChiTietHD(String mahd, String masp) {
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(ChiTietHD.class.getResource("/asserts/X-icon.png"));
+        try {
+            Statement s = con.createStatement();
+            int AffectedRows = s.executeUpdate("DELETE FROM htql_banhang.chitiet_hd WHERE (MaHD = '"+mahd+"') and (MaSP = '"+masp+"');");
+            if(AffectedRows<1){
+                JOptionPane.showMessageDialog(null, "Không thể xóa, vui lòng tải lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            }
+            s.close();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: ChiTietHD - Method: xoaChiTietHD]");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                    "Không thể xóa chi tiết hóa đơn, vui lòng tải lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
+    }
+    
+    public static void giamSoLuong(String mahd, String masp) {
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(ChiTietHD.class.getResource("/asserts/X-icon.png"));
+        try {
+            Statement s = con.createStatement();
+            int AffectedRows = s.executeUpdate("UPDATE htql_banhang.chitiet_hd "
+                    + "SET SoLuong = SoLuong - 1 "
+                    + "WHERE MaHD = '"+mahd+"' AND MaSP = '"+masp+"';");
+            if(AffectedRows<1){
+                JOptionPane.showMessageDialog(null, "Không thể thêm số lượng, vui lòng tải lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            }
+            s.executeUpdate("DELETE FROM chitiet_hd WHERE MaHD = '"+mahd+"' AND SoLuong <= 0;");
+            s.close();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: ChiTietHD - Method: giamSoLuong]");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, 
+                    "Không thể giảm số lượng, vui lòng tải lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
+    }
+    
     public String getMaHD() {
         return MaHD;
     }
-
+    
     public void setMaHD(String MaHD) {
         this.MaHD = MaHD;
     }
-
+    
     public String getMaSP() {
         return MaSP;
     }
-
+    
     public void setMaSP(String MaSP) {
         this.MaSP = MaSP;
     }
-
+    
     public int getSoLuong() {
         return SoLuong;
     }
-
+    
     public void setSoLuong(int SoLuong) {
         this.SoLuong = SoLuong;
     }
-
+    
     public float getGiaSP() {
         return GiaSP;
     }
-
+    
     public void setGiaSP(float GiaSP) {
         this.GiaSP = GiaSP;
     }
-
+    
     public float getThanhTien() {
         return ThanhTien;
     }
-
+    
     public void setThanhTien(float ThanhTien) {
         this.ThanhTien = ThanhTien;
     }
