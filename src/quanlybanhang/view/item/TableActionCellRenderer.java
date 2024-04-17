@@ -15,5 +15,4 @@ public class TableActionCellRenderer extends DefaultTableCellRenderer {
         action.setBackground(com.getBackground());
         return action;
     }
-
 }

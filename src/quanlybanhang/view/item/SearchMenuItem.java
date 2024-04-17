@@ -56,11 +56,14 @@ public class SearchMenuItem extends javax.swing.JPanel {
                     return;
                 }
                 if (GiaoDienThuNgan.getSelectedBan().getTrangthai().equals("free")) {
-                    String mahd = HoaDon.taoHoaDon(new HoaDon("", GiaoDienThuNgan.getSelectedBan().getMaban(), 90));
+                    String mahd = HoaDon.taoHoaDon(new HoaDon("", GiaoDienThuNgan.getSelectedBan().getMaban(), 0));
                     ChiTietHD.themChiTietHD(new ChiTietHD(mahd, data.getMaSP(), 1));
+                    GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                    GiaoDienThuNgan.setThongTinHD(GiaoDienThuNgan.getChonHoaDon());
                 } else {
                     ChiTietHD.themChiTietHD(new ChiTietHD(GiaoDienThuNgan.getSelectedBan().getTrangthai(), data.getMaSP(), 1));
                     GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                    GiaoDienThuNgan.setThongTinHD(GiaoDienThuNgan.getChonHoaDon());
                 }
             }
 

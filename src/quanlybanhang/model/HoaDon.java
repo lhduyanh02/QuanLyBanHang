@@ -25,6 +25,9 @@ public class HoaDon {
     private float TongThanhToan;
     private Timestamp NgayLapHD;
 
+    public HoaDon() {
+    }
+
     public HoaDon(String MaHD, int TrangThai, String GhiChu, String MaBan, float TongTien, float ChietKhau, Timestamp NgayLapHD) {
         this.MaHD = MaHD;
         this.usname = DangNhap.getUser();
@@ -54,8 +57,9 @@ public class HoaDon {
     }
 
     public static String taoHoaDon(HoaDon hd) {
+        Program.ConnectDB();
         String NewInvoice = "";
-        Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
+        Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
         if (hd.MaBan.equals("") || hd.MaBan.isBlank() || hd.MaBan.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Không tìm thấy mã bàn, không thể tạo hóa đơn",
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
@@ -79,7 +83,7 @@ public class HoaDon {
                     return "";
                 }
                 rs = s.executeQuery("SELECT MaHD FROM htql_banhang.hoadon "
-                        + "WHERE usname = '" + DangNhap.getUser() + "' AND maban = '" + hd.MaBan + "' AND ChietKhau = '" + hd.ChietKhau + "' ORDER BY NgayLapHD Desc Limit 1;");
+                        + "WHERE usname = '" + DangNhap.getUser() + "' AND maban = '" + hd.MaBan + "' AND ChietKhau = '" + hd.ChietKhau + "' AND TrangThai = '0' ORDER BY NgayLapHD Desc Limit 1;");
                 if (!rs.next()) {
                     JOptionPane.showMessageDialog(null, "Không thể lấy được mã hóa đơn mới",
                             "Lỗi lấy mã hóa đơn", JOptionPane.ERROR_MESSAGE, icon);
@@ -87,7 +91,7 @@ public class HoaDon {
                     return "";
                 } else {
                     NewInvoice = rs.getString(1);
-                    s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '"+NewInvoice+"' WHERE (maban = '" + hd.MaBan + "');");
+                    s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '" + NewInvoice + "' WHERE (maban = '" + hd.MaBan + "');");
                 }
                 GiaoDienThuNgan.reloadTableList(GiaoDienThuNgan.getSelectedBan());
                 s.close();
@@ -98,6 +102,84 @@ public class HoaDon {
             System.out.println("Loi! [Class: HoaDon - Method: taoHoaDon]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return "";
+        }
+    }
+
+    public static HoaDon layThongTinHD(String mahd) {
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
+        HoaDon hd = new HoaDon();
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.hoadon WHERE MaHD = '" + mahd + "';");
+            if (rs.next()) {
+                hd.setMaHD(rs.getString(1));
+                hd.setUsname(rs.getString(2));
+                hd.setTrangThai(rs.getInt(3));
+                hd.setGhiChu(rs.getString(4));
+                hd.setMaBan(rs.getString(5));
+                hd.setTongTien(rs.getFloat(6));
+                hd.setChietKhau(rs.getFloat(7));
+                hd.setTongThanhToan(rs.getFloat(8));
+                hd.setNgayLapHD(rs.getTimestamp(9));
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Không tìm thấy mã hóa đơn", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            }
+            s.close();
+
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: HoaDon - Method: layThongTinHD]");
+            JOptionPane.showMessageDialog(null,
+                    "Không thể lấy thông tin hóa đơn", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return new HoaDon();
+        }
+        return hd;
+    }
+
+    public void capNhatGhiChu(String note) {
+        if (this == null) {
+            return;
+        }
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
+        try {
+            Statement s = con.createStatement();
+            int AffectedRows = s.executeUpdate("UPDATE `htql_banhang`.`hoadon` SET "
+                    + "`GhiChu` = '" + note + "' WHERE (`MaHD` = '" + this.getMaHD() + "');");
+            if (AffectedRows != 1) {
+                JOptionPane.showMessageDialog(null,
+                        "Không thể cập nhật ghi chú", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: HoaDon - Method: capNhatGhiChu]");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                        "Không thể cập nhật ghi chú", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
+    }
+    
+    public void capNhatChietKhau(float discount) {
+        if (this == null) {
+            return;
+        }
+        Program.ConnectDB();
+        Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
+        try {
+            Statement s = con.createStatement();
+            int AffectedRows = s.executeUpdate("UPDATE `htql_banhang`.`hoadon` SET "
+                    + "`ChietKhau` = '" + discount + "' WHERE (`MaHD` = '" + this.getMaHD() + "');");
+            if (AffectedRows != 1) {
+                JOptionPane.showMessageDialog(null,
+                        "Không thể cập nhật chiết khấu", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: HoaDon - Method: capNhatChietKhau]");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                        "Không thể cập nhật chiết khấu", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
         }
     }
 
