@@ -29,11 +29,9 @@ public class TableItem extends javax.swing.JPanel {
         com.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                GiaoDienThuNgan.capNhatTTHoaDon();
                 GiaoDienThuNgan.setSelectedBan(ban);
                 GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
-//                if(ban.getTrangthai().equals("free")){
-//                    HoaDon.taoHoaDon(new HoaDon("", ban.getMaban(), 15));
-//                }
             }
 
             @Override

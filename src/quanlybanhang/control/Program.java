@@ -123,7 +123,7 @@ public class Program {
         return sdf.format(date);
     }
 
-    public static String formatDate(Date date) { //Dùng để truyền vào so sánh trong Mysql 
+    public static String formatDate(Date date) { //Dùng để truyền vào so sánh trong Mysql khi chọn ngày
         // Định dạng lại timestamp theo định dạng mới
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);

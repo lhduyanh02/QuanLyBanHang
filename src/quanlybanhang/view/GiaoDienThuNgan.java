@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -17,9 +18,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 import quanlybanhang.model.ChiTietHD;
+import quanlybanhang.model.HoaDon;
 import quanlybanhang.model.ThucDon;
 import quanlybanhang.view.item.SearchPanel;
 import quanlybanhang.view.item.TableActionCellEditor;
@@ -39,6 +43,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private static GiaoDienThuNgan instance;
     private DrawerController drawer;
     private static Ban ChonBan;
+    private static HoaDon ChonHoaDon;
 
     public static Ban getSelectedBan() {
         return ChonBan;
@@ -47,6 +52,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     public static void setSelectedBan(Ban ban) {
         ChonBan = ban;
         instance.TenBanLabel.setText(ChonBan.getTenban());
+    }
+
+    public static HoaDon getChonHoaDon() {
+        return ChonHoaDon;
+    }
+
+    public static void setChonHoaDon(HoaDon ChonHoaDon) {
+        GiaoDienThuNgan.ChonHoaDon = ChonHoaDon;
     }
 
     private static ArrayList<ThucDon> thucdon;
@@ -223,15 +236,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             instance = new GiaoDienThuNgan();
             Program.ConnectDB();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            instance.reloadTableList();
-            instance.reloadThucDon();
+            instance.resetUI();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             Program.ConnectDB();
-            instance.reloadTableList();
-            instance.reloadThucDon();
+            instance.resetUI();
             instance.setVisible(true);
             return instance;
         }
@@ -244,11 +255,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     public static void reloadChiTietHD(Ban b) {
         instance.searchTextField.setText("");
         try {
-            if (b.getTrangthai().equals("free")) {
+            if (b.getTrangthai().equals("free")) { //Nếu bàn đang được chọn không có hóa đơn nào
                 ((DefaultTableModel) instance.DonHangTable.getModel()).setRowCount(0);
+                ChonHoaDon = null;
+                setThongTinHD(ChonHoaDon);
                 return;
             }
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> map = new HashMap<>(); //Nếu bàn được chọn có lưu mã hóa đơn, tạo hash map mã sản phẩm tới tên sản phẩm
             for (ThucDon t : thucdon) {
                 map.put(t.getMaSP(), t.getTen());
             }
@@ -261,11 +274,41 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 m.addRow(obj);
                 stt++;
             }
+            setChonHoaDon(HoaDon.layThongTinHD(b.getTrangthai()));
+            setThongTinHD(ChonHoaDon);
             instance.menu.setVisible(false);
         } catch (Exception e) {
             System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadChiTietHD]");
             e.printStackTrace();
         }
+    }
+
+    public static void resetUI() {
+        instance.UserTF.setText(DangNhap.getUser());
+        instance.TenBanLabel.setText("- BÀN -");
+        ChonBan = null;
+        ChonHoaDon = null;
+        ((DefaultTableModel) instance.DonHangTable.getModel()).setRowCount(0);
+        instance.reloadThucDon();
+        instance.reloadTableList();
+        instance.GhiChuTF.setText("");
+        instance.ThoiGianTF.setText("");
+        instance.TongCongTF.setText("");
+        instance.ChietKhauTF.setText("");
+    }
+
+    public static void setThongTinHD(HoaDon hd) {
+        if (hd == null) {
+            instance.GhiChuTF.setText("");
+            instance.ThoiGianTF.setText("");
+            instance.TongCongTF.setText("");
+            instance.ChietKhauTF.setText("");
+            return;
+        }
+        instance.GhiChuTF.setText(hd.getGhiChu());
+        instance.TongCongTF.setText(String.valueOf(hd.getTongTien()));
+        instance.ThoiGianTF.setText(Program.formatTimestamp(hd.getNgayLapHD()));
+        instance.ChietKhauTF.setText(String.valueOf(hd.getChietKhau()));
     }
 
     // Khởi tạo bàn 
@@ -341,7 +384,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         GhiChuTF = new javax.swing.JTextArea();
-        TgianTF = new javax.swing.JTextField();
+        ThoiGianTF = new javax.swing.JTextField();
         TongCongTF = new javax.swing.JTextField();
         ChietKhauTF = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
@@ -441,7 +484,10 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TablePanel.setLayout(TablePanelLayout);
         TablePanelLayout.setHorizontalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+            .addGroup(TablePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addContainerGap())
         );
         TablePanelLayout.setVerticalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,6 +498,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 204));
 
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ghi chú", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 14))); // NOI18N
 
@@ -461,15 +508,28 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         GhiChuTF.setRows(5);
         GhiChuTF.setWrapStyleWord(true);
         GhiChuTF.setBorder(null);
+        GhiChuTF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                GhiChuTFFocusLost(evt);
+            }
+        });
+        GhiChuTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GhiChuTFMouseClicked(evt);
+            }
+        });
         GhiChuTF.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                GhiChuTFKeyPressed(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                GhiChuTFKeyTyped(evt);
             }
         });
         jScrollPane2.setViewportView(GhiChuTF);
 
-        TgianTF.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        TgianTF.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        ThoiGianTF.setEditable(false);
+        ThoiGianTF.setBackground(new java.awt.Color(255, 255, 255));
+        ThoiGianTF.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        ThoiGianTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ThoiGianTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thời gian lập hóa đơn", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
 
         TongCongTF.setEditable(false);
         TongCongTF.setBackground(new java.awt.Color(255, 255, 255));
@@ -477,8 +537,19 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TongCongTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TongCongTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tổng cộng", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
 
-        ChietKhauTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ChietKhauTF.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        ChietKhauTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChietKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chiết khấu (%)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+        ChietKhauTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ChietKhauTFMouseClicked(evt);
+            }
+        });
+        ChietKhauTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ChietKhauTFKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -488,7 +559,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TgianTF, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                    .addComponent(ThoiGianTF, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                     .addComponent(TongCongTF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ChietKhauTF, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -499,9 +570,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ChietKhauTF)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(TgianTF, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ThoiGianTF, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TongCongTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TongCongTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
@@ -626,12 +697,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         if (DonHangTable.getColumnModel().getColumnCount() > 0) {
             DonHangTable.getColumnModel().getColumn(0).setPreferredWidth(50);
             DonHangTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            DonHangTable.getColumnModel().getColumn(1).setPreferredWidth(150);
-            DonHangTable.getColumnModel().getColumn(1).setMaxWidth(180);
-            DonHangTable.getColumnModel().getColumn(2).setPreferredWidth(90);
-            DonHangTable.getColumnModel().getColumn(3).setPreferredWidth(70);
-            DonHangTable.getColumnModel().getColumn(3).setMaxWidth(70);
-            DonHangTable.getColumnModel().getColumn(4).setPreferredWidth(90);
+            DonHangTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+            DonHangTable.getColumnModel().getColumn(1).setMaxWidth(1000);
+            DonHangTable.getColumnModel().getColumn(2).setPreferredWidth(120);
+            DonHangTable.getColumnModel().getColumn(2).setMaxWidth(200);
+            DonHangTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+            DonHangTable.getColumnModel().getColumn(3).setMaxWidth(150);
+            DonHangTable.getColumnModel().getColumn(4).setPreferredWidth(120);
+            DonHangTable.getColumnModel().getColumn(4).setMaxWidth(200);
             DonHangTable.getColumnModel().getColumn(5).setMinWidth(120);
             DonHangTable.getColumnModel().getColumn(5).setPreferredWidth(120);
             DonHangTable.getColumnModel().getColumn(5).setMaxWidth(120);
@@ -726,21 +799,81 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }//GEN-LAST:event_searchTextFieldKeyReleased
 
     private void ReloadBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReloadBtnMouseClicked
-        UserTF.setText(DangNhap.getUser());
-        TenBanLabel.setText("- BÀN -");
-        ChonBan=null;
-        ((DefaultTableModel)DonHangTable.getModel()).setRowCount(0);
-        reloadThucDon();
-        reloadTableList();
+        resetUI();
     }//GEN-LAST:event_ReloadBtnMouseClicked
 
-    private void GhiChuTFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GhiChuTFKeyPressed
-        if (GhiChuTF.getText().length() > 10){
-            System.out.println("hehêheh");
-            evt.consume();
-            GhiChuTF.setEditable(false);
+    private void GhiChuTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_GhiChuTFFocusLost
+        if(ChonHoaDon==null){
+            return;
         }
-    }//GEN-LAST:event_GhiChuTFKeyPressed
+        if (GhiChuTF.getText().length() > 150) {
+            GhiChuTF.setText(GhiChuTF.getText().substring(0, 149));
+        }
+        ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
+    }//GEN-LAST:event_GhiChuTFFocusLost
+
+    private void GhiChuTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GhiChuTFMouseClicked
+        if (ChonHoaDon == null) {
+            GhiChuTF.setFocusable(false);
+            JOptionPane.showMessageDialog(null, "Chưa có hóa đơn", "Chưa chọn bàn", JOptionPane.OK_OPTION);
+        }
+        GhiChuTF.setFocusable(true);
+    }//GEN-LAST:event_GhiChuTFMouseClicked
+
+    private static float isValidDiscount(String ck){
+        Icon icon = new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/X-icon.png"));
+        try {
+            float rs = Float.parseFloat(ck);
+            return rs;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy mã bàn, không thể tạo hóa đơn",
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return -1;
+        }
+    }
+    
+    private void ChietKhauTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ChietKhauTFKeyTyped
+        if(!Character.isDigit(evt.getKeyChar()) || evt.getKeyChar()== '.'){
+            evt.consume();
+        }
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText())!=-1){
+            ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
+        }
+    }//GEN-LAST:event_ChietKhauTFKeyTyped
+
+    public static void capNhatTTHoaDon(){
+        if(ChonHoaDon==null){
+            return;
+        }
+        if (instance.GhiChuTF.getText().length() > 150) {
+            instance.GhiChuTF.setText(instance.GhiChuTF.getText().substring(0, 149));
+        }
+        instance.ChonHoaDon.capNhatGhiChu(instance.GhiChuTF.getText());
+        
+        if(isValidDiscount(instance.ChietKhauTF.getText())!=-1 && isValidDiscount(instance.ChietKhauTF.getText())<100 && isValidDiscount(instance.ChietKhauTF.getText())>=0){
+            instance.ChonHoaDon.capNhatChietKhau(isValidDiscount(instance.ChietKhauTF.getText()));
+            
+        }
+    }
+    
+    private void GhiChuTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GhiChuTFKeyTyped
+        if(GhiChuTF.getText().length()>149){
+            evt.consume();
+        }
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER){
+            GhiChuTF.setText(GhiChuTF.getText().substring(0, GhiChuTF.getText().length()-1));
+            ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
+            GhiChuTF.setFocusable(false);
+        }
+    }//GEN-LAST:event_GhiChuTFKeyTyped
+
+    private void ChietKhauTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChietKhauTFMouseClicked
+         if (ChonHoaDon == null) {
+            ChietKhauTF.setFocusable(false);
+            JOptionPane.showMessageDialog(null, "Chưa có hóa đơn", "Chưa chọn bàn", JOptionPane.OK_OPTION);
+        }
+        ChietKhauTF.setFocusable(true);
+    }//GEN-LAST:event_ChietKhauTFMouseClicked
 
     private List<ThucDon> searchMenu(String search) {
         List<ThucDon> list = new ArrayList<>();
@@ -779,8 +912,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JLabel ReloadBtn;
     private javax.swing.JPanel TablePanel;
     private javax.swing.JLabel TenBanLabel;
-    private javax.swing.JTextField TgianTF;
     private javax.swing.JLabel ThanhToanBtn;
+    private javax.swing.JTextField ThoiGianTF;
     private javax.swing.JTextField TongCongTF;
     private javax.swing.JTextField UserTF;
     private javax.swing.ButtonGroup buttonGroup1;

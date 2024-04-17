@@ -9,6 +9,8 @@ public class ActionPanel extends javax.swing.JPanel {
         initComponents();
     }
     
+    
+    
     public void initEvent(TableActionEvent event, int row) {
         AddBtn.addActionListener(new ActionListener(){
             @Override
