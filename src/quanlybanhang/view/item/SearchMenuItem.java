@@ -29,9 +29,9 @@ public class SearchMenuItem extends javax.swing.JPanel {
         NameLabel.setText(data.getTen());
         PriceLabel.setText(String.valueOf(data.getGia()));
         if (data.getLoai() == 0) {
-            IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons8-meal-30.png")));
+            IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-noodle.png")));
         } else if (data.getLoai() == 1) {
-            IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons8-drink-30.png")));
+            IconLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-drink.png")));
         }
     }
 

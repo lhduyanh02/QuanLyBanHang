@@ -344,7 +344,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         addBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         addBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
-        addBtn.setText("Thêm");
+        addBtn.setText("Thêm mới");
         addBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addBtn.setOpaque(true);
         addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -363,7 +363,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         deleteBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         deleteBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         deleteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-edit.png"))); // NOI18N
-        deleteBtn.setText("Xóa");
+        deleteBtn.setText("Xóa bàn");
         deleteBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         deleteBtn.setOpaque(true);
         deleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -638,34 +638,6 @@ public class QuanLyBan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addBtnMouseClicked
 
-    private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
-        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
-        if (isOpen == true) {
-            return;
-        } else {
-            int r = jTable1.getSelectedRow();
-            if (r == -1) {
-                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-            } else {
-                act = "edit";
-                openEditPanel();
-                jRadioButton1.setVisible(true);
-                jRadioButton2.setVisible(true);
-
-                MaBanCu = (String) jTable1.getModel().getValueAt(r, 1);
-                MaBanTF.setText(MaBanCu);
-                TenBanTF.setText((String) jTable1.getModel().getValueAt(r, 2));
-                if (jTable1.getModel().getValueAt(r, 3).toString().equals("free")) {
-                    jRadioButton2.setSelected(true);
-                } else {
-                    jRadioButton1.setSelected(true);
-                }
-            }
-
-        }
-
-    }//GEN-LAST:event_updateBtnMouseClicked
-
     private void EditPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditPanelMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_EditPanelMouseEntered
@@ -730,6 +702,33 @@ public class QuanLyBan extends javax.swing.JFrame {
         MaBanTF.setText("");
         buttonGroup1.clearSelection();
     }//GEN-LAST:event_DatLaiLabelMouseClicked
+
+    private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+        Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
+        if (isOpen == true) {
+            return;
+        } else {
+            int r = jTable1.getSelectedRow();
+            if (r == -1) {
+                JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            } else {
+                act = "edit";
+                openEditPanel();
+                jRadioButton1.setVisible(true);
+                jRadioButton2.setVisible(true);
+
+                MaBanCu = (String) jTable1.getModel().getValueAt(r, 1);
+                MaBanTF.setText(MaBanCu);
+                TenBanTF.setText((String) jTable1.getModel().getValueAt(r, 2));
+                if (jTable1.getModel().getValueAt(r, 3).toString().equals("free")) {
+                    jRadioButton2.setSelected(true);
+                } else {
+                    jRadioButton1.setSelected(true);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_updateBtnMouseClicked
 
     private void reload() {
         try {

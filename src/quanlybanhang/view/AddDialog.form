@@ -68,9 +68,9 @@
                           <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                           <Component id="NuocRadioBtn" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="MaMonTF" alignment="1" pref="335" max="32767" attributes="0"/>
-                      <Component id="TenMonTF" alignment="1" pref="335" max="32767" attributes="0"/>
-                      <Component id="GiaMonTF" alignment="1" pref="335" max="32767" attributes="0"/>
+                      <Component id="MaMonTF" alignment="1" max="32767" attributes="0"/>
+                      <Component id="TenMonTF" alignment="1" max="32767" attributes="0"/>
+                      <Component id="GiaMonTF" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
               </Group>
