@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import quanlybanhang.model.Ban;
 import quanlybanhang.model.HoaDon;
 import quanlybanhang.view.GiaoDienThuNgan;
@@ -29,9 +32,21 @@ public class TableItem extends javax.swing.JPanel {
         com.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                GiaoDienThuNgan.capNhatTTHoaDon();
-                GiaoDienThuNgan.setSelectedBan(ban);
-                GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                if (!GiaoDienThuNgan.dangChuyenBan()) {
+                    GiaoDienThuNgan.capNhatTTHoaDon();
+                    GiaoDienThuNgan.resetUI();
+                    GiaoDienThuNgan.setSelectedBan(ban);
+                    GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                } else {
+                    GiaoDienThuNgan.capNhatTTHoaDon();
+                    HoaDon.doiBan(GiaoDienThuNgan.getChonHoaDon(), ban.getMaban());
+                    ban.setTrangthai(GiaoDienThuNgan.getChonHoaDon().getMaHD());
+                    GiaoDienThuNgan.resetUI();
+                    GiaoDienThuNgan.setSelectedBan(ban);
+                    GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                    Icon icon = new ImageIcon(TableItem.class.getResource("/asserts/success-icon.png"));
+                    JOptionPane.showMessageDialog(null, "Chuyển bàn thành công!", "Đã chuyển bàn", JOptionPane.OK_OPTION, icon);
+                }
             }
 
             @Override
