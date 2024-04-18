@@ -471,7 +471,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TenBanLabel.setOpaque(true);
 
         searchTextField.setName(""); // NOI18N
-        searchTextField.setSuffixIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/search-icon-46.png"))); // NOI18N
+        searchTextField.setSuffixIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-search.png"))); // NOI18N
         searchTextField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchTextFieldMouseClicked(evt);
