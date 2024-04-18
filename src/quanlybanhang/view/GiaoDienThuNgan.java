@@ -349,7 +349,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     // Khởi tạo bàn 
     private void reloadTableList() {
         ChonBan = null;
-//        TablePanel.removeAll();
         banpanel.removeAll();
         banpanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
         jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
@@ -874,6 +873,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             GhiChuTF.setText(GhiChuTF.getText().substring(0, 149));
         }
         ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
+        setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
     }//GEN-LAST:event_GhiChuTFFocusLost
 
     private void GhiChuTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GhiChuTFMouseClicked
@@ -903,6 +903,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         }
         if (evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText()) != -1) {
             ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
+            setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
             ChietKhauTF.setFocusable(false);
             ChietKhauTF.setFocusable(true);
         }
@@ -919,7 +920,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         if (isValidDiscount(instance.ChietKhauTF.getText()) != -1 && isValidDiscount(instance.ChietKhauTF.getText()) < 100 && isValidDiscount(instance.ChietKhauTF.getText()) >= 0) {
             instance.ChonHoaDon.capNhatChietKhau(isValidDiscount(instance.ChietKhauTF.getText()));
-
         }
     }
 
@@ -930,7 +930,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
             GhiChuTF.setText(GhiChuTF.getText().substring(0, GhiChuTF.getText().length() - 1));
             ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
+            setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
             GhiChuTF.setFocusable(false);
+            GhiChuTF.setFocusable(true);
         }
     }//GEN-LAST:event_GhiChuTFKeyTyped
 
