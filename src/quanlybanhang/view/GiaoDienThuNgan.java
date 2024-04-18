@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import quanlybanhang.model.ChiTietHD;
@@ -31,6 +33,7 @@ import quanlybanhang.view.item.TableActionCellEditor;
 import quanlybanhang.view.item.TableActionCellRenderer;
 import quanlybanhang.view.item.TableActionEvent;
 import quanlybanhang.view.item.TableItem;
+import wraplayout.WrapLayout;
 
 /**
  *
@@ -74,8 +77,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     private static ArrayList<ThucDon> thucdon;
 
-    private static Map<Integer, String> MaHD_Map;
+    private static Map<Integer, String> MaHD_Map; //Map số thứ tự đến mã sản phẩm
+    private static Map<String, String> Ma_TenSP_Map; // Map Mã sp đến tên sp
 
+    public static Map<String, String> getSanPhamMap(){
+        return Ma_TenSP_Map;
+    }
+    
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = 420;
     int height = screenSize.height;
@@ -285,9 +293,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 setThongTinHD(ChonHoaDon);
                 return;
             }
-            Map<String, String> map = new HashMap<>(); //Nếu bàn được chọn có lưu mã hóa đơn, tạo hash map mã sản phẩm tới tên sản phẩm
+            Ma_TenSP_Map = new HashMap<>(); //Nếu bàn được chọn có lưu mã hóa đơn, tạo hash map mã sản phẩm tới tên sản phẩm
             for (ThucDon t : thucdon) {
-                map.put(t.getMaSP(), t.getTen());
+                Ma_TenSP_Map.put(t.getMaSP(), t.getTen());
             }
             ArrayList<ChiTietHD> list = ChiTietHD.layChiTietHD(b.getTrangthai());
             DefaultTableModel m = ((DefaultTableModel) instance.DonHangTable.getModel());
@@ -295,7 +303,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             int stt = 1;
             MaHD_Map = new HashMap<>();
             for (ChiTietHD c : list) {
-                Object[] obj = {stt, map.get(c.getMaSP()), c.getGiaSP(), c.getSoLuong(), c.getThanhTien()};
+                Object[] obj = {stt, Ma_TenSP_Map.get(c.getMaSP()), c.getGiaSP(), c.getSoLuong(), c.getThanhTien()};
                 m.addRow(obj);
                 MaHD_Map.put((stt - 1), c.getMaSP());
                 stt++;
@@ -341,10 +349,10 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     // Khởi tạo bàn 
     private void reloadTableList() {
         ChonBan = null;
-        TablePanel.removeAll();
-        TablePanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
+//        TablePanel.removeAll();
+        banpanel.removeAll();
+        banpanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
         jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
-
         try {
             ArrayList<Ban> list = Ban.layDSban();
             if (list.isEmpty()) {
@@ -352,15 +360,15 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             }
             for (Ban b : list) {
                 TableItem tb = new TableItem(b);
-                TablePanel.add(tb);
+                banpanel.add(tb);
             }
+                
         } catch (Exception e) {
             System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadTableList]");
             e.printStackTrace();
         }
-
-        TablePanel.revalidate();
-        TablePanel.repaint();
+        banpanel.revalidate();
+        banpanel.repaint();
     }
 
     public static void reloadTableList(Ban bancu) {
@@ -368,7 +376,6 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         instance.TablePanel.removeAll();
         instance.TablePanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
         instance.jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
-
         try {
             ArrayList<Ban> list = Ban.layDSban();
             if (list.isEmpty()) {
@@ -406,6 +413,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         TablePanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
+        banpanel = new javax.swing.JPanel();
         leftPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -507,11 +515,31 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         TablePanel.setBackground(new java.awt.Color(255, 255, 255));
         TablePanel.setMaximumSize(new java.awt.Dimension(450, 32767));
 
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane3.setMaximumSize(new java.awt.Dimension(444, 453));
+        jScrollPane3.setPreferredSize(new java.awt.Dimension(444, 453));
+
+        banpanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout banpanelLayout = new javax.swing.GroupLayout(banpanel);
+        banpanel.setLayout(banpanelLayout);
+        banpanelLayout.setHorizontalGroup(
+            banpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 432, Short.MAX_VALUE)
+        );
+        banpanelLayout.setVerticalGroup(
+            banpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 581, Short.MAX_VALUE)
+        );
+
+        jScrollPane3.setViewportView(banpanel);
+
         javax.swing.GroupLayout TablePanelLayout = new javax.swing.GroupLayout(TablePanel);
         TablePanel.setLayout(TablePanelLayout);
         TablePanelLayout.setHorizontalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         TablePanelLayout.setVerticalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -975,6 +1003,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private javax.swing.JTextField ThoiGianTF;
     private javax.swing.JTextField TongCongTF;
     private javax.swing.JTextField UserTF;
+    private javax.swing.JPanel banpanel;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
