@@ -153,7 +153,7 @@ public class ThanhToan extends javax.swing.JDialog {
         ChiTietPanel.setLayout(ChiTietPanelLayout);
         ChiTietPanelLayout.setHorizontalGroup(
             ChiTietPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 448, Short.MAX_VALUE)
+            .addGap(0, 478, Short.MAX_VALUE)
         );
         ChiTietPanelLayout.setVerticalGroup(
             ChiTietPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,14 +199,12 @@ public class ThanhToan extends javax.swing.JDialog {
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         GhiChuTA.setEditable(false);
         GhiChuTA.setBackground(new java.awt.Color(255, 255, 255));
         GhiChuTA.setColumns(20);
         GhiChuTA.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         GhiChuTA.setLineWrap(true);
-        GhiChuTA.setRows(5);
         GhiChuTA.setWrapStyleWord(true);
         GhiChuTA.setBorder(null);
         GhiChuTA.setEnabled(false);
@@ -228,11 +226,11 @@ public class ThanhToan extends javax.swing.JDialog {
                         .addGroup(TongKetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TongTienInf, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ThanhTienInf, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGap(56, 56, 56)
                         .addComponent(NgayLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChietKhauInf, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ChietKhauInf, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -253,9 +251,11 @@ public class ThanhToan extends javax.swing.JDialog {
                     .addComponent(ThanhTienInf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(TongKetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NgayLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(7, Short.MAX_VALUE))
+                    .addGroup(TongKetPanelLayout.createSequentialGroup()
+                        .addComponent(NgayLabel4)
+                        .addGap(0, 38, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -264,7 +264,7 @@ public class ThanhToan extends javax.swing.JDialog {
         ThongTinPanel.setLayout(ThongTinPanelLayout);
         ThongTinPanelLayout.setHorizontalGroup(
             ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
             .addGroup(ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(TTHoaDonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(DSMonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -282,7 +282,7 @@ public class ThanhToan extends javax.swing.JDialog {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(DSMonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(TongKetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TongKetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -314,7 +314,7 @@ public class ThanhToan extends javax.swing.JDialog {
             .addGroup(ControlPanelLayout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(BackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(73, 73, 73))
         );
@@ -361,7 +361,7 @@ public class ThanhToan extends javax.swing.JDialog {
         BanInf.setText(GiaoDienThuNgan.getSelectedBan().getTenban());
         NhanVienInf.setText(DangNhap.getUser());
         TongTienInf.setText(Float.valueOf(hd.getTongTien()).intValue()+" VND");
-        ChietKhauInf.setText(String.valueOf(hd.getChietKhau()));
+        ChietKhauInf.setText(String.valueOf(hd.getChietKhau())+"%");
         ThanhTienInf.setText(Float.valueOf(hd.getTongThanhToan()).intValue()+" VND");
         GhiChuTA.setText(hd.getGhiChu());
         
