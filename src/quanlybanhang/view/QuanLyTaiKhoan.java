@@ -257,15 +257,15 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         });
 
         TenDNhapTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        TenDNhapTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+        TenDNhapTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 18))); // NOI18N
 
         buttonGroup1.add(QTVRadioButton);
-        QTVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        QTVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         QTVRadioButton.setText("Quản trị viên");
         QTVRadioButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         buttonGroup1.add(NVRadioButton);
-        NVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        NVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         NVRadioButton.setText("Nhân viên");
         NVRadioButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         NVRadioButton.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -308,7 +308,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         jPanel7.add(DatLaiLabel, gridBagConstraints);
 
         MatKhauTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        MatKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Nhập mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        MatKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 18))); // NOI18N
         MatKhauTF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 MatKhauTFMouseClicked(evt);
@@ -316,7 +316,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         });
 
         NhapLaiMKTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        NhapLaiMKTF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Nhập lại mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        NhapLaiMKTF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Nhập lại mật khẩu ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 18))); // NOI18N
         NhapLaiMKTF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 NhapLaiMKTFMouseClicked(evt);
@@ -338,13 +338,12 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(NhapLaiMKTF)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(MatKhauTF)
-                        .addComponent(TenDNhapTF)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                            .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(NVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(MatKhauTF)
+                    .addComponent(TenDNhapTF)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(55, 55, 55))
         );
         jPanel5Layout.setVerticalGroup(
@@ -720,11 +719,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void logBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logBtnMouseClicked
-        LogPanel.setVisible(true);
-        jPanel4.setVisible(false);
-        jPanel2.setComponentZOrder(LogPanel, 0);
-        reloadLogCombobox();
-        reloadLog();
+        if (!isOpen) {
+            LogPanel.setVisible(true);
+            jPanel4.setVisible(false);
+            jPanel2.setComponentZOrder(LogPanel, 0);
+            reloadLogCombobox();
+            reloadLog();
+        }
     }//GEN-LAST:event_logBtnMouseClicked
 
     private void disableBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableBtnMouseClicked

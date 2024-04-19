@@ -5,10 +5,9 @@ import quanlybanhang.model.ChiTietHD;
 import quanlybanhang.view.GiaoDienThuNgan;
 
 public class ChiTietHDItem extends javax.swing.JPanel {
-
-    public ChiTietHDItem(ChiTietHD c) {
+    public ChiTietHDItem(ChiTietHD c, int stt) {
         initComponents();
-        TenMonLabel.setText(GiaoDienThuNgan.getSanPhamMap().get(c.getMaSP()));
+        TenMonLabel.setText(stt+". "+GiaoDienThuNgan.getSanPhamMap().get(c.getMaSP()));
         GiaLabel.setText(Float.valueOf(c.getGiaSP()).intValue()+" VND");
         SoLuongLabel.setText(String.valueOf(c.getSoLuong()));
         ThanhTienLabel.setText(Float.valueOf(c.getThanhTien()).intValue()+" VND");

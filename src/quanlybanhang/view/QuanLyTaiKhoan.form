@@ -55,14 +55,12 @@
                       <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="NhapLaiMKTF" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="MatKhauTF" max="32767" attributes="0"/>
-                              <Component id="TenDNhapTF" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="QTVRadioButton" min="-2" pref="172" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="NVRadioButton" min="-2" pref="157" max="-2" attributes="0"/>
-                              </Group>
+                          <Component id="MatKhauTF" max="32767" attributes="0"/>
+                          <Component id="TenDNhapTF" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="QTVRadioButton" min="-2" pref="172" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="NVRadioButton" min="-2" pref="157" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
@@ -106,7 +104,7 @@
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true"/>
                       </Border>
-                      <Font PropertyName="font" name="Helvetica" size="14" style="1"/>
+                      <Font PropertyName="font" name="Helvetica" size="18" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>
@@ -118,7 +116,7 @@
                   <ComponentRef name="buttonGroup1"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Helvetica" size="14" style="1"/>
+                  <Font name="Helvetica" size="18" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n tr&#x1ecb; vi&#xea;n"/>
                 <Property name="horizontalAlignment" type="int" value="2"/>
@@ -130,7 +128,7 @@
                   <ComponentRef name="buttonGroup1"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Helvetica" size="14" style="1"/>
+                  <Font name="Helvetica" size="18" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nh&#xe2;n vi&#xea;n"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -215,11 +213,11 @@
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Nh&#x1ead;p m&#x1ead;t kh&#x1ea9;u m&#x1edb;i">
+                    <TitledBorder title="M&#x1ead;t kh&#x1ea9;u">
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder/>
                       </Border>
-                      <Font PropertyName="font" name="Segoe UI" size="14" style="1"/>
+                      <Font PropertyName="font" name="Helvetica" size="18" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>
@@ -235,11 +233,11 @@
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Nh&#x1ead;p l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u m&#x1edb;i">
+                    <TitledBorder title="Nh&#x1ead;p l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u ">
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder/>
                       </Border>
-                      <Font PropertyName="font" name="Segoe UI" size="14" style="1"/>
+                      <Font PropertyName="font" name="Helvetica" size="18" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>

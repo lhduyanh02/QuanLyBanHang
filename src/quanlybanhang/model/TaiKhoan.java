@@ -71,6 +71,12 @@ public class TaiKhoan {
             QuanLyTaiKhoan.paintEditPanel();
             return false;
         }
+        // Nếu mật khẩu chứa các ký tự đặc biệt
+        if (!CheckInputMethod.isValidPass(TK.password)) {
+            JOptionPane.showMessageDialog(null, "Mật khẩu không chứa các ký tự đặc biệt ngoại trừ @!#$%&, vui lòng kiểm tra lại",
+                    "Lỗi Mật Khẩu", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+        }
         try {
             Statement s = con.createStatement();
             s.executeUpdate("INSERT INTO htql_banhang.taikhoan "
@@ -102,6 +108,12 @@ public class TaiKhoan {
                 JOptionPane.showMessageDialog(null, "Mật khẩu mới phải lớn hơn 6 ký tự và ít hơn 30 ký tự.",
                         "Lỗi Mật Khẩu", JOptionPane.ERROR_MESSAGE, icon);
                 QuanLyTaiKhoan.paintEditPanel();
+                return false;
+            }
+            // Nếu mật khẩu chứa các ký tự đặc biệt
+            if (!CheckInputMethod.isValidPass(TK.password)) {
+                JOptionPane.showMessageDialog(null, "Mật khẩu không chứa các ký tự đặc biệt ngoại trừ @!#$%&, vui lòng kiểm tra lại",
+                        "Lỗi Mật Khẩu", JOptionPane.ERROR_MESSAGE, icon);
                 return false;
             }
         }

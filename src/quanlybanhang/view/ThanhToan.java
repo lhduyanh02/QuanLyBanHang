@@ -390,9 +390,9 @@ public class ThanhToan extends javax.swing.JDialog {
             if (list.isEmpty()) {
                 return;
             }
-            
+            int stt=1;
             for (ChiTietHD c : list) {
-                ChiTietHDItem item = new ChiTietHDItem(c);
+                ChiTietHDItem item = new ChiTietHDItem(c, stt++);
                 ChiTietPanel.add(item);
             }
         } catch (Exception e) {
