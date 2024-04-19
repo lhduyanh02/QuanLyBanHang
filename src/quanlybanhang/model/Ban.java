@@ -91,7 +91,14 @@ public class Ban {
         }
         try {
             Statement s = con.createStatement();
-            int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
+            ResultSet r = s.executeQuery("SELECT 1 FROM htql_banhang.ban WHERE maban = '"+MBCu+"' AND trangthai = 'free'");
+            if(!r.next()){
+                JOptionPane.showMessageDialog(null, "Bàn này hiện không thể sửa, hãy thử lại sau.",
+                    "Không thể sửa", JOptionPane.ERROR_MESSAGE, icon);
+            return false;
+            }
+//            int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
+            int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "' WHERE (maban = '" + MBCu + "');");
             s.close();
             if (rs == 1) {
                 NhatKy.writeLog("Bàn", "Sửa bàn " + MBCu + " -> " + BanMoi.maban +" - " + BanMoi.tenban);

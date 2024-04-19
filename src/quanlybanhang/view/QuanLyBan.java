@@ -644,11 +644,11 @@ public class QuanLyBan extends javax.swing.JFrame {
 
     private void LuuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LuuLabelMouseClicked
         Icon icon = new ImageIcon(getClass().getResource("/asserts/X-icon.png"));
-        if (act.equals("edit") && buttonGroup1.getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn trạng thái.",
-                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-            return;
-        }
+//        if (act.equals("edit") && buttonGroup1.getSelection() == null) {
+//            JOptionPane.showMessageDialog(null, "Vui lòng chọn trạng thái.",
+//                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+//            return;
+//        }
 
         boolean rslt;
         if (act.equals("add")) {
@@ -660,7 +660,7 @@ public class QuanLyBan extends javax.swing.JFrame {
             }
         }
         if (act.equals("edit")) {
-            String stt = "";
+            String stt = "free";
             if (jRadioButton1.isSelected()) {
 //                stt = 1;
             } else if (jRadioButton2.isSelected()) {
@@ -714,8 +714,8 @@ public class QuanLyBan extends javax.swing.JFrame {
             } else {
                 act = "edit";
                 openEditPanel();
-                jRadioButton1.setVisible(true);
-                jRadioButton2.setVisible(true);
+                jRadioButton1.setVisible(false);
+                jRadioButton2.setVisible(false);
 
                 MaBanCu = (String) jTable1.getModel().getValueAt(r, 1);
                 MaBanTF.setText(MaBanCu);

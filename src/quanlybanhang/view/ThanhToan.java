@@ -2,6 +2,7 @@ package quanlybanhang.view;
 
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import net.miginfocom.swing.MigLayout;
 import quanlybanhang.control.Program;
 import quanlybanhang.model.Ban;
@@ -203,10 +204,11 @@ public class ThanhToan extends javax.swing.JDialog {
         GhiChuTA.setEditable(false);
         GhiChuTA.setBackground(new java.awt.Color(255, 255, 255));
         GhiChuTA.setColumns(20);
-        GhiChuTA.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        GhiChuTA.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         GhiChuTA.setLineWrap(true);
         GhiChuTA.setWrapStyleWord(true);
         GhiChuTA.setBorder(null);
+        GhiChuTA.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         GhiChuTA.setEnabled(false);
         jScrollPane1.setViewportView(GhiChuTA);
 
@@ -273,7 +275,7 @@ public class ThanhToan extends javax.swing.JDialog {
         ThongTinPanelLayout.setVerticalGroup(
             ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThongTinPanelLayout.createSequentialGroup()
-                .addGap(0, 693, Short.MAX_VALUE)
+                .addGap(0, 708, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ThongTinPanelLayout.createSequentialGroup()
@@ -306,6 +308,11 @@ public class ThanhToan extends javax.swing.JDialog {
         ConfirmBtn.setText("Thanh Toán");
         ConfirmBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ConfirmBtn.setOpaque(true);
+        ConfirmBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ConfirmBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout ControlPanelLayout = new javax.swing.GroupLayout(ControlPanel);
         ControlPanel.setLayout(ControlPanelLayout);
@@ -354,6 +361,16 @@ public class ThanhToan extends javax.swing.JDialog {
     private void BackBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackBtnMouseClicked
         this.dispose();
     }//GEN-LAST:event_BackBtnMouseClicked
+
+    private void ConfirmBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmBtnMouseClicked
+        int op = JOptionPane.showConfirmDialog(this, 
+                "Xác nhận thanh toán và đóng hóa đơn?","Xác nhận thanh toán", JOptionPane.YES_NO_OPTION);
+        if(op==0){ // Yes option
+            hd.ThanhToan();
+            this.dispose();
+            GiaoDienThuNgan.resetUI();
+        }
+    }//GEN-LAST:event_ConfirmBtnMouseClicked
 
     private void setData(String MaHD) {
         MaHDInf.setText(hd.getMaHD());
