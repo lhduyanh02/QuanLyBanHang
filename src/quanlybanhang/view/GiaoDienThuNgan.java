@@ -48,13 +48,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private DrawerController drawer;
     private static Ban ChonBan;
     private static HoaDon ChonHoaDon;
-    private static boolean DangChuyenBan=false;
-    
-    public static boolean dangChuyenBan(){
+    private static boolean DangChuyenBan = false;
+
+    public static boolean dangChuyenBan() {
         return DangChuyenBan;
     }
-    
-    public static void setChuyenBan(boolean b){
+
+    public static void setChuyenBan(boolean b) {
         DangChuyenBan = b;
     }
 
@@ -80,10 +80,10 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private static Map<Integer, String> MaHD_Map; //Map số thứ tự đến mã sản phẩm
     private static Map<String, String> Ma_TenSP_Map; // Map Mã sp đến tên sp
 
-    public static Map<String, String> getSanPhamMap(){
+    public static Map<String, String> getSanPhamMap() {
         return Ma_TenSP_Map;
     }
-    
+
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = 420;
     int height = screenSize.height;
@@ -97,23 +97,28 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         public void onAdd(int row) {
             ChiTietHD.themSoLuong(ChonHoaDon.getMaHD(), instance.MaHD_Map.get(row));
             reloadChiTietHD(ChonBan);
+            setThongTinHD(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
         }
 
         @Override
         public void onMinus(int row) {
-            if(((int)instance.DonHangTable.getModel().getValueAt(row, 3))==1 && instance.DonHangTable.isEditing()){
+            if (((int) instance.DonHangTable.getModel().getValueAt(row, 3)) == 1 && instance.DonHangTable.isEditing()) {
                 instance.DonHangTable.getCellEditor().stopCellEditing();
             }
             ChiTietHD.giamSoLuong(ChonHoaDon.getMaHD(), instance.MaHD_Map.get(row));
             reloadChiTietHD(ChonBan);
+            setThongTinHD(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
+
         }
 
         @Override
         public void onDelete(int row) {
-            if(instance.DonHangTable.isEditing())
+            if (instance.DonHangTable.isEditing()) {
                 instance.DonHangTable.getCellEditor().stopCellEditing();
+            }
             ChiTietHD.xoaChiTietHD(ChonHoaDon.getMaHD(), instance.MaHD_Map.get(row));
             reloadChiTietHD(ChonBan);
+            setThongTinHD(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
         }
     };
 
@@ -284,7 +289,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }
 
     public static void reloadChiTietHD(Ban b) {
-        DangChuyenBan=false;
+        DangChuyenBan = false;
         instance.searchTextField.setText("");
         try {
             if (b.getTrangthai().equals("free")) { //Nếu bàn đang được chọn không có hóa đơn nào
@@ -318,7 +323,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }
 
     public static void resetUI() {
-        DangChuyenBan=false;
+        DangChuyenBan = false;
         instance.UserTF.setText(DangNhap.getUser());
         instance.TenBanLabel.setText("- BÀN -");
         ChonBan = null;
@@ -361,7 +366,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 TableItem tb = new TableItem(b);
                 banpanel.add(tb);
             }
-                
+
         } catch (Exception e) {
             System.out.println("Loi! [Class: GiaoDienThuNgan - Method: reloadTableList]");
             e.printStackTrace();
@@ -593,6 +598,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         ChietKhauTF.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         ChietKhauTF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ChietKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chiết khấu (%)", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+        ChietKhauTF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ChietKhauTFFocusLost(evt);
+            }
+        });
         ChietKhauTF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ChietKhauTFMouseClicked(evt);
@@ -887,21 +897,33 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private static float isValidDiscount(String ck) {
         Icon icon = new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/X-icon.png"));
         try {
+            if(ChonHoaDon==null){
+                instance.ChietKhauTF.setText("");
+                instance.ChietKhauTF.setFocusable(false);
+                instance.ChietKhauTF.setFocusable(true);
+            }
             float rs = Float.parseFloat(ck);
+            if (ChonHoaDon!=null && (rs > 100 || rs<0)) {
+                ChonHoaDon.capNhatChietKhau(0);
+                setThongTinHD(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
+                return -1;
+            }
             return rs;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Không tìm thấy mã bàn, không thể tạo hóa đơn",
+            JOptionPane.showMessageDialog(null, "Chiết khấu không hợp lệ",
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            ChonHoaDon.capNhatChietKhau(0);
+            setThongTinHD(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
             return -1;
         }
     }
 
     private void ChietKhauTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ChietKhauTFKeyTyped
-        DangChuyenBan=false;
+        DangChuyenBan = false;
         if (!Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == '.') {
             evt.consume();
         }
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText()) != -1) {
+        if (ChonHoaDon!=null && evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText()) != -1) {
             ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
             setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
             ChietKhauTF.setFocusable(false);
@@ -945,12 +967,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }//GEN-LAST:event_ChietKhauTFMouseClicked
 
     private void ChuyenBanBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChuyenBanBtnMouseClicked
-        if(dangChuyenBan()){
+        if (dangChuyenBan()) {
             DangChuyenBan = false;
             Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/success-icon.png"));
             JOptionPane.showMessageDialog(null, "Đã hủy chuyển bàn!", "Thông báo", JOptionPane.OK_OPTION, icon);
-        }
-        else {
+        } else {
             DangChuyenBan = true;
             Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/icons8-notice-48.png"));
             JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn cần chuyển đến!", "Chuyển bàn", JOptionPane.OK_OPTION, icon);
@@ -958,11 +979,20 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }//GEN-LAST:event_ChuyenBanBtnMouseClicked
 
     private void ThanhToanBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThanhToanBtnMouseClicked
-        DangChuyenBan=false;
+        DangChuyenBan = false;
         if (ChonBan != null && ChonHoaDon != null) {
             new ThanhToan(this, rootPaneCheckingEnabled, ChonHoaDon).setVisible(true);
         }
     }//GEN-LAST:event_ThanhToanBtnMouseClicked
+
+    private void ChietKhauTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ChietKhauTFFocusLost
+        if (ChonHoaDon != null && isValidDiscount(ChietKhauTF.getText()) != -1) {
+            ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
+            setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
+            ChietKhauTF.setFocusable(false);
+            ChietKhauTF.setFocusable(true);
+        }
+    }//GEN-LAST:event_ChietKhauTFFocusLost
 
     private List<ThucDon> searchMenu(String search) {
         List<ThucDon> list = new ArrayList<>();
