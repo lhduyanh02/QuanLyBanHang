@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.view.DoiMatKhau;
 import quanlybanhang.view.QuanLyTaiKhoan;
 
 /**
@@ -179,8 +180,7 @@ public class TaiKhoan {
                 rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET passwd = '" + newpass + "' WHERE (usname = '" + usname + "');");
                 s.close();
             } else {
-                JOptionPane.showMessageDialog(null, "Sai mật khẩu, vui lòng kiểm tra lại!", "Sai mật khẩu", JOptionPane.ERROR_MESSAGE, icon);
-                QuanLyTaiKhoan.paintEditPanel();
+                JOptionPane.showMessageDialog(DoiMatKhau.getInstance(), "Sai mật khẩu, vui lòng kiểm tra lại!", "Sai mật khẩu", JOptionPane.ERROR_MESSAGE, icon);
                 return false;
             }
             if (rs == 1) {
@@ -190,7 +190,6 @@ public class TaiKhoan {
         } catch (Exception e) {
             System.out.println("Loi! [Class: TaiKhoan - Method: doiMatKhau]");
             JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-            QuanLyTaiKhoan.paintEditPanel();
             e.printStackTrace();
         }
         return false;

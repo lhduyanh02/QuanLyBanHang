@@ -184,7 +184,7 @@ public class WelcomeUI extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("HỆ THỐNG QUẢN LÝ QUÁN ĂN");
+        jLabel1.setText("HỆ THỐNG QUẢN LÝ NHÀ HÀNG");
         jLabel1.setAlignmentY(0.0F);
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
