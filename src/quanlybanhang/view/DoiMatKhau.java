@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package quanlybanhang.view;
 
 import java.awt.event.MouseAdapter;
@@ -12,17 +8,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.control.Program;
-import quanlybanhang.model.Ban;
 import quanlybanhang.model.TaiKhoan;
-import static quanlybanhang.view.DangNhap.containsSpecialChars;
 import static quanlybanhang.view.DangNhap.containsVietnamese;
-import static quanlybanhang.view.DangNhap.containsWhitespace;
 
-/**
- *
- * @author Admin
- */
 public class DoiMatKhau extends javax.swing.JDialog {
 
     private static DoiMatKhau instance;
@@ -46,38 +36,6 @@ public class DoiMatKhau extends javax.swing.JDialog {
     public DoiMatKhau(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
-        MouseAdapter doubleClick = new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) { // Kiểm tra xem double-click đã được thực hiện hay không
-                    JPasswordField passwordField = (JPasswordField) e.getComponent();
-                    if (isAlreadyOneClick) {
-                        if (hidePW) {
-                            passwordField.setEchoChar((char) 0);
-                            hidePW = false;
-                        } else {
-                            passwordField.setEchoChar('\u25CF');
-                            hidePW = true;
-                        }
-                        isAlreadyOneClick = false;
-                    } else {
-                        isAlreadyOneClick = true;
-                        Timer t = new Timer("doubleclickTimer", false);
-                        t.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                isAlreadyOneClick = false;
-                            }
-                        }, 500);
-                    }
-                }
-            }
-        };
-        OldPass.addMouseListener(doubleClick);
-        NewPass.addMouseListener(doubleClick);
-        ConfirmPass.addMouseListener(doubleClick);
     }
 
     private void resetPwd() {
@@ -126,12 +84,27 @@ public class DoiMatKhau extends javax.swing.JDialog {
 
         OldPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         OldPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu hiện tại", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
+        OldPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OldPassMouseClicked(evt);
+            }
+        });
 
         NewPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         NewPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
+        NewPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NewPassMouseClicked(evt);
+            }
+        });
 
         ConfirmPass.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         ConfirmPass.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhập lại mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
+        ConfirmPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ConfirmPassMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -232,6 +205,11 @@ public class DoiMatKhau extends javax.swing.JDialog {
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return;
         }
+        if (!CheckInputMethod.isValidPass(new String(NewPass.getPassword()))) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không chứa các ký tự đặc biệt ngoại trừ @!#$%&, vui lòng kiểm tra lại",
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return;
+        }
         if (NewPass.getPassword().equals("") || containsVietnamese(NewPass) || new String(NewPass.getPassword()).length() > 30 || new String(NewPass.getPassword()).length() < 6) {
             JOptionPane.showMessageDialog(this, "Mật khẩu mới phải lớn hơn 6 và nhỏ hơn 30 ký tự, vui lòng kiểm tra lại",
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
@@ -264,6 +242,82 @@ public class DoiMatKhau extends javax.swing.JDialog {
     private void ExitBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitBtnMouseClicked
         this.dispose();
     }//GEN-LAST:event_ExitBtnMouseClicked
+
+    private void OldPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OldPassMouseClicked
+        if (isAlreadyOneClick) {
+            if (hidePW == true) {
+                OldPass.setEchoChar((char) 0);
+                hidePW = false;
+            } else {
+                char ch = 0x25cf;
+                OldPass.setEchoChar(ch);
+                hidePW = true;
+            }
+            isAlreadyOneClick = false;
+        } else {
+            isAlreadyOneClick = true;
+            Timer t = new Timer("doubleclickTimer", false);
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    isAlreadyOneClick = false;
+                }
+            }, 500);
+        }
+    }//GEN-LAST:event_OldPassMouseClicked
+
+    private void NewPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewPassMouseClicked
+        if (isAlreadyOneClick) {
+            if (hidePW == true) {
+                NewPass.setEchoChar((char) 0);
+                ConfirmPass.setEchoChar((char) 0);
+                hidePW = false;
+            } else {
+                char ch = 0x25cf;
+                NewPass.setEchoChar(ch);
+                ConfirmPass.setEchoChar(ch);
+                hidePW = true;
+            }
+            isAlreadyOneClick = false;
+        } else {
+            isAlreadyOneClick = true;
+            Timer t = new Timer("doubleclickTimer", false);
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    isAlreadyOneClick = false;
+                }
+            }, 500);
+        }
+    }//GEN-LAST:event_NewPassMouseClicked
+
+    private void ConfirmPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmPassMouseClicked
+        if (isAlreadyOneClick) {
+            if (hidePW == true) {
+                NewPass.setEchoChar((char) 0);
+                ConfirmPass.setEchoChar((char) 0);
+                hidePW = false;
+            } else {
+                char ch = 0x25cf;
+                NewPass.setEchoChar(ch);
+                ConfirmPass.setEchoChar(ch);
+                hidePW = true;
+            }
+            isAlreadyOneClick = false;
+        } else {
+            isAlreadyOneClick = true;
+            Timer t = new Timer("doubleclickTimer", false);
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    isAlreadyOneClick = false;
+                }
+            }, 500);
+        }
+    }//GEN-LAST:event_ConfirmPassMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ConfirmBtn;

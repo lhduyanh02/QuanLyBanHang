@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import table.TableCustom;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -27,10 +29,6 @@ import javax.swing.JOptionPane;
 import quanlybanhang.model.NhatKy;
 import quanlybanhang.model.TaiKhoan;
 
-/**
- *
- * @author Admin
- */
 public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
     private static QuanLyTaiKhoan instance;
@@ -42,6 +40,8 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     int width = 420;
     int height = screenSize.height;
     boolean isOpen = false;
+    boolean isAlreadyOneClick = false;
+    boolean hidePW = true;
 
     public QuanLyTaiKhoan() {
         initComponents();
@@ -216,8 +216,6 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         EditPanel = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         TenDNhapTF = new javax.swing.JTextField();
-        MatKhauTF = new javax.swing.JTextField();
-        NhapLaiMKTF = new javax.swing.JTextField();
         QTVRadioButton = new javax.swing.JRadioButton();
         NVRadioButton = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
@@ -225,6 +223,8 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         DatLaiLabel = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
+        MatKhauTF = new javax.swing.JPasswordField();
+        NhapLaiMKTF = new javax.swing.JPasswordField();
         jPanel6 = new javax.swing.JPanel();
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -259,12 +259,6 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         TenDNhapTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         TenDNhapTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Tên đăng nhập", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
 
-        MatKhauTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        MatKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
-
-        NhapLaiMKTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        NhapLaiMKTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nhập lại mật khẩu", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
-
         buttonGroup1.add(QTVRadioButton);
         QTVRadioButton.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         QTVRadioButton.setText("Quản trị viên");
@@ -296,6 +290,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 65;
         gridBagConstraints.ipady = 18;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 30);
         jPanel7.add(LuuLabel, gridBagConstraints);
 
         DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
@@ -309,23 +304,29 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 54;
         gridBagConstraints.ipady = 16;
+        gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 0);
         jPanel7.add(DatLaiLabel, gridBagConstraints);
+
+        MatKhauTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        MatKhauTF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Nhập mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        MatKhauTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MatKhauTFMouseClicked(evt);
+            }
+        });
+
+        NhapLaiMKTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        NhapLaiMKTF.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Nhập lại mật khẩu mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        NhapLaiMKTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                NhapLaiMKTFMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TenDNhapTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(NVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(MatKhauTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NhapLaiMKTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,17 +334,29 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                     .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(NhapLaiMKTF)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(MatKhauTF)
+                        .addComponent(TenDNhapTF)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                            .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(NVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(55, 55, 55))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(TenDNhapTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(65, 65, 65)
                 .addComponent(MatKhauTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(NhapLaiMKTF, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addGap(58, 58, 58)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(NVRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(QTVRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -382,7 +395,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -752,13 +765,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         boolean rslt;
 
         if (act.equals("add")) {
-            if (!MatKhauTF.getText().equals(NhapLaiMKTF.getText())) {
+            if (!new String(MatKhauTF.getPassword()).equals(new String(NhapLaiMKTF.getPassword()))) {
                 JOptionPane.showMessageDialog(null, "Mật khẩu không trùng khớp.",
                         "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
                 return;
             }
 
-            rslt = TaiKhoan.themTK(new TaiKhoan(TenDNhapTF.getText(), MatKhauTF.getText(), acc));
+            rslt = TaiKhoan.themTK(new TaiKhoan(TenDNhapTF.getText(), new String(MatKhauTF.getPassword()), acc));
             if (rslt) {
                 Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
                 JOptionPane.showMessageDialog(this, "Thêm tài khoản thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, scicon);
@@ -767,12 +780,12 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         }
 
         if (act.equals("edit")) {
-            if (!MatKhauTF.getText().equals(NhapLaiMKTF.getText())) {
+            if (!new String(MatKhauTF.getPassword()).equals(new String(NhapLaiMKTF.getPassword()))) {
                 JOptionPane.showMessageDialog(null, "Mật khẩu không trùng khớp.",
                         "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
                 return;
             }
-            TaiKhoan TK = new TaiKhoan(TenDNhapTF.getText(), MatKhauTF.getText(), acc);
+            TaiKhoan TK = new TaiKhoan(TenDNhapTF.getText(), new String(MatKhauTF.getPassword()), acc);
             rslt = TaiKhoan.suaTaiKhoan(OldUsname, TK);
             if (rslt) {
                 Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
@@ -837,6 +850,58 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             reloadLog();
         }
     }//GEN-LAST:event_LogComboBoxItemStateChanged
+
+    private void MatKhauTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MatKhauTFMouseClicked
+        if (isAlreadyOneClick) {
+            if (hidePW == true) {
+                MatKhauTF.setEchoChar((char) 0);
+                NhapLaiMKTF.setEchoChar((char) 0);
+                hidePW = false;
+            } else {
+                char ch = 0x25cf;
+                MatKhauTF.setEchoChar(ch);
+                NhapLaiMKTF.setEchoChar(ch);
+                hidePW = true;
+            }
+            isAlreadyOneClick = false;
+        } else {
+            isAlreadyOneClick = true;
+            Timer t = new Timer("doubleclickTimer", false);
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    isAlreadyOneClick = false;
+                }
+            }, 500);
+        }
+    }//GEN-LAST:event_MatKhauTFMouseClicked
+
+    private void NhapLaiMKTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NhapLaiMKTFMouseClicked
+        if (isAlreadyOneClick) {
+            if (hidePW == true) {
+                MatKhauTF.setEchoChar((char) 0);
+                NhapLaiMKTF.setEchoChar((char) 0);
+                hidePW = false;
+            } else {
+                char ch = 0x25cf;
+                MatKhauTF.setEchoChar(ch);
+                NhapLaiMKTF.setEchoChar(ch);
+                hidePW = true;
+            }
+            isAlreadyOneClick = false;
+        } else {
+            isAlreadyOneClick = true;
+            Timer t = new Timer("doubleclickTimer", false);
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    isAlreadyOneClick = false;
+                }
+            }, 500);
+        }
+    }//GEN-LAST:event_NhapLaiMKTFMouseClicked
 
     private void reload() {
         Program.ConnectDB();
@@ -942,7 +1007,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             }).start();
         }
     }
-    
+
     public static void paintEditPanel() {
         instance.EditPanel.repaint();
         instance.EditPanel.revalidate();
@@ -983,9 +1048,9 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
     private javax.swing.JScrollPane LogScrollPane;
     private javax.swing.JTextArea LogTextArea;
     private javax.swing.JLabel LuuLabel;
-    private javax.swing.JTextField MatKhauTF;
+    private javax.swing.JPasswordField MatKhauTF;
     private javax.swing.JRadioButton NVRadioButton;
-    private javax.swing.JTextField NhapLaiMKTF;
+    private javax.swing.JPasswordField NhapLaiMKTF;
     private javax.swing.JRadioButton QTVRadioButton;
     private javax.swing.JTextField TenDNhapTF;
     private javax.swing.JLabel addBtn;

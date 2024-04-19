@@ -126,6 +126,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="OldPassMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="NewPass">
           <Properties>
@@ -140,6 +143,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="NewPassMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="ConfirmPass">
           <Properties>
@@ -154,6 +160,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ConfirmPassMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

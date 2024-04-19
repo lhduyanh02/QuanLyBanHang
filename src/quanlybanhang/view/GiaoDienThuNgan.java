@@ -372,8 +372,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public static void reloadTableList(Ban bancu) {
         ChonBan = null;
-        instance.TablePanel.removeAll();
-        instance.TablePanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
+        instance.banpanel.removeAll();
+        instance.banpanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
         instance.jScrollPane3.getVerticalScrollBar().setUnitIncrement(16);
         try {
             ArrayList<Ban> list = Ban.layDSban();
@@ -382,7 +382,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             }
             for (Ban b : list) {
                 TableItem tb = new TableItem(b);
-                instance.TablePanel.add(tb);
+                instance.banpanel.add(tb);
                 if (b.getMaban().equals(bancu.getMaban())) {
                     bancu = b;
                     reloadChiTietHD(b);
@@ -394,8 +394,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         }
         setSelectedBan(bancu);
-        instance.TablePanel.revalidate();
-        instance.TablePanel.repaint();
+        instance.banpanel.revalidate();
+        instance.banpanel.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -464,7 +464,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         UserTF.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "NHÂN VIÊN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         TenBanLabel.setBackground(new java.awt.Color(255, 255, 255));
-        TenBanLabel.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
+        TenBanLabel.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         TenBanLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TenBanLabel.setText("- BÀN -");
         TenBanLabel.setOpaque(true);
@@ -529,7 +529,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         );
         banpanelLayout.setVerticalGroup(
             banpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 581, Short.MAX_VALUE)
+            .addGap(0, 583, Short.MAX_VALUE)
         );
 
         jScrollPane3.setViewportView(banpanel);
@@ -542,7 +542,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         );
         TablePanelLayout.setVerticalGroup(
             TablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
         );
 
         leftPanel.setMaximumSize(new java.awt.Dimension(5000, 32767));
@@ -785,7 +785,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -928,7 +928,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             evt.consume();
         }
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            GhiChuTF.setText(GhiChuTF.getText().substring(0, GhiChuTF.getText().length() - 1));
+            GhiChuTF.setText(GhiChuTF.getText().replaceAll("\r", " ").replaceAll("\n", " "));
             ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
             setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
             GhiChuTF.setFocusable(false);

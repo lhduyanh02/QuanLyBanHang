@@ -11,11 +11,22 @@ import java.util.regex.Pattern;
  * @author Admin
  */
 public class CheckInputMethod {
+
     // Hàm kiểm tra ký tự đặc biệt
-    private static boolean isSpecialCharacter(char c) {
+    public static boolean isSpecialCharacter(char c) {
         // Bạn có thể thêm hoặc bớt đi các ký tự đặc biệt tùy thuộc vào yêu cầu của bạn
         String specialCharacters = "!@#$%^&*()-_+=<>?";
         return specialCharacters.contains(String.valueOf(c));
+    }
+
+    public static boolean isValidPass(String s) {
+        String forbiddenCharacters = ".,:-_'\")(`+=~`/\\|:[]{} ";
+        for (char c : s.toCharArray()) {
+            if (forbiddenCharacters.indexOf(c) != -1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     //Kiểm tra có chứa ký tự đặc biệt

@@ -1,6 +1,7 @@
 package quanlybanhang.model;
 
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.sql.SQLException;
@@ -96,7 +97,6 @@ public class HoaDon {
                 }
                 GiaoDienThuNgan.reloadTableList(GiaoDienThuNgan.getSelectedBan());
                 s.close();
-                System.out.println(NewInvoice);
                 return NewInvoice;
             }
         } catch (Exception e) {
@@ -145,9 +145,13 @@ public class HoaDon {
         Program.ConnectDB();
         Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
         try {
-            Statement s = con.createStatement();
-            int AffectedRows = s.executeUpdate("UPDATE `htql_banhang`.`hoadon` SET "
-                    + "`GhiChu` = '" + note + "' WHERE (`MaHD` = '" + this.getMaHD() + "');");
+            PreparedStatement pstmt = con.prepareStatement("UPDATE `htql_banhang`.`hoadon` SET `GhiChu` = ? WHERE (`MaHD` = ?)");
+
+            pstmt.setString(1, note.trim()); // GhiChu
+            pstmt.setString(2, this.getMaHD()); // MaHD
+
+            int AffectedRows = pstmt.executeUpdate();
+            pstmt.close();
             if (AffectedRows != 1) {
                 JOptionPane.showMessageDialog(null,
                         "Không thể cập nhật ghi chú", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
@@ -168,13 +172,17 @@ public class HoaDon {
         Program.ConnectDB();
         Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
         try {
-            Statement s = con.createStatement();
-            int AffectedRows = s.executeUpdate("UPDATE `htql_banhang`.`hoadon` SET "
-                    + "`ChietKhau` = '" + discount + "' WHERE (`MaHD` = '" + this.getMaHD() + "');");
+            PreparedStatement pstmt = con.prepareStatement("UPDATE `htql_banhang`.`hoadon` SET `ChietKhau` = ? WHERE (`MaHD` = ?)");
+
+            pstmt.setDouble(1, discount); // ChietKhau
+            pstmt.setString(2, this.getMaHD()); // MaHD
+
+            int AffectedRows = pstmt.executeUpdate();
             if (AffectedRows != 1) {
                 JOptionPane.showMessageDialog(null,
                         "Không thể cập nhật chiết khấu", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             }
+            pstmt.close();
         } catch (Exception e) {
             System.out.println("Loi! [Class: HoaDon - Method: capNhatChietKhau]");
             e.printStackTrace();
@@ -187,28 +195,6 @@ public class HoaDon {
     public static void doiBan(HoaDon hd, String MBmoi) {
         Program.ConnectDB();
         Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
-//        try {
-//            Statement s = con.createStatement();
-//            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban WHERE maban = '" + MBmoi + "' AND trangthai = 'free';");
-//            if(!rs.next()){
-//                JOptionPane.showMessageDialog(null, "Bàn này không có sẵn, không thể chuyển bàn",
-//                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-//                s.close();
-//                return;
-//            }
-//            int AffectedRows = s.executeUpdate("UPDATE htql_banhang.hoadon "
-//                    + "SET maban = '"+MBmoi+"' WHERE (MaHD = '"+hd.getMaHD()+"');");
-//            if (AffectedRows!=1) {
-//                JOptionPane.showMessageDialog(null, "Đổi bàn không thành công, hãy thử lại sau!",
-//                        "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-//                s.close();
-//                return;
-//            } else{
-//                AffectedRows = s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '"+hd.getMaHD()+"' WHERE (maban = '"+MBmoi+"');");
-//            }
-//        } catch (Exception e) {
-//        }
-
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.ban WHERE maban = '" + MBmoi + "' AND trangthai = 'free';");
@@ -221,14 +207,14 @@ public class HoaDon {
             try {
                 con.setAutoCommit(false);
                 s = con.createStatement();
-                s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = 'free' WHERE (maban = '"+hd.getMaBan()+"');");
+                s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = 'free' WHERE (maban = '" + hd.getMaBan() + "');");
                 s.executeUpdate("UPDATE htql_banhang.hoadon "
-                    + "SET maban = '"+MBmoi+"' WHERE (MaHD = '"+hd.getMaHD()+"');");
-                s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '"+hd.getMaHD()+"' WHERE (maban = '"+MBmoi+"');");
+                        + "SET maban = '" + MBmoi + "' WHERE (MaHD = '" + hd.getMaHD() + "');");
+                s.executeUpdate("UPDATE htql_banhang.ban SET trangthai = '" + hd.getMaHD() + "' WHERE (maban = '" + MBmoi + "');");
                 con.commit();
             } catch (SQLException e) {
                 con.rollback();
-            }finally{
+            } finally {
                 con.setAutoCommit(true);
             }
         } catch (Exception e) {
@@ -238,6 +224,40 @@ public class HoaDon {
                     "Không thể đổi bàn", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return;
 
+        }
+    }
+
+    public void ThanhToan() {
+        Program.ConnectDB();
+        Icon iconX = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
+        Icon iconCheck = new ImageIcon(HoaDon.class.getResource("/asserts/success-icon.png"));
+        try {
+            PreparedStatement ps = con.prepareStatement("SELECT 1 FROM htql_banhang.hoadon "
+                    + "WHERE MaHD = ? AND TrangThai = '0';");
+            ps.setString(1, this.getMaHD());
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(null, "Không thể thanh toán hóa đơn này, vui lòng tải lại",
+                        "Chú ý", JOptionPane.ERROR_MESSAGE, iconX);
+                return;
+            }
+            ps.close();
+            try {
+                con.setAutoCommit(false);
+                ps = con.prepareStatement("UPDATE htql_banhang.hoadon SET TrangThai = '1' WHERE (MaHD = ?);");
+                ps.setString(1, this.getMaHD()); // MaHD
+                ps.executeUpdate();
+                ps = con.prepareStatement("UPDATE htql_banhang.ban SET trangthai = 'free' WHERE (MaBan = ?);");
+                ps.setString(1, this.getMaBan()); // MaBan
+                con.commit();
+            } catch (SQLException ex) {
+                con.rollback();
+                ex.printStackTrace();
+            } finally {
+                Program.ConnectDB();
+                con.setAutoCommit(true);
+            }
+        } catch (Exception e) {
         }
     }
 
