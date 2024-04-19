@@ -75,7 +75,7 @@
               <Font name="Avenir Next" size="36" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="H&#x1ec6; TH&#x1ed0;NG QU&#x1ea2;N L&#xdd; QU&#xc1;N &#x102;N"/>
+            <Property name="text" type="java.lang.String" value="H&#x1ec6; TH&#x1ed0;NG QU&#x1ea2;N L&#xdd; NH&#xc0; H&#xc0;NG"/>
             <Property name="alignmentY" type="float" value="0.0"/>
           </Properties>
         </Component>

@@ -234,7 +234,6 @@ public class DoiMatKhau extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             System.out.println("Loi! [Class: DoiMatKhau - Method: ConfirmBtnMouseClicked]");
-            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             e.printStackTrace();
         }
 
