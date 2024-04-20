@@ -124,6 +124,8 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public GiaoDienThuNgan() {
         initComponents();
+//        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/X-icon.png")).getImage());
+        this.setTitle("Quản lý đơn hàng");
         DonHangTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
         DonHangTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(evt));
         UserTF.setText(DangNhap.getUser());
