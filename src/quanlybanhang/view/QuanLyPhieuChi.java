@@ -8,6 +8,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -51,6 +52,13 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
 
     public QuanLyPhieuChi() {
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         add(EditPanel, 0);
         EditPanel.setSize(0, getContentPane().getHeight());
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
@@ -848,24 +856,24 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
             return;
-        } else if(!Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())){
+        } else if (!Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())) {
             if (StartDate.getDate().before(EndDate.getDate())) {
                 try {
-                ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
-                DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-                m.setRowCount(0);
-                int stt = 1;
-                for (PhieuChi pc : list) {
-                    Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
-                        Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
-                    m.addRow(obj);
-                    stt++;
+                    ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
+                    DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+                    m.setRowCount(0);
+                    int stt = 1;
+                    for (PhieuChi pc : list) {
+                        Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
+                            Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
+                        m.addRow(obj);
+                        stt++;
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
+                    ex.printStackTrace();
                 }
-            } catch (Exception ex) {
-                System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
-                ex.printStackTrace();
-            }
-            return;
+                return;
             }
         }
 

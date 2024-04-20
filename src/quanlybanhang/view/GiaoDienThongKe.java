@@ -7,6 +7,7 @@ package quanlybanhang.view;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Taskbar;
 import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +36,13 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
 
     public GiaoDienThongKe() {
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         ExportBtn.addMouseListener(new Program.SharedMouseListener());
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
         PhieuThuBtn.addMouseListener(new Program.SharedMouseListener());
@@ -194,7 +202,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
         ((JTextFieldDateEditor) StartDate.getDateEditor()).setText("");
         ((JTextFieldDateEditor) EndDate.getDateEditor()).setText("");
-        selected="";
+        selected = "";
         TongThuTF.setText("");
         TongChiTF.setText("");
         LoiNhuanTF.setText("");
@@ -629,7 +637,7 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDatePropertyChange
 
     private void reload() {
-        if(Objects.isNull(StartDate.getDate()) || Objects.isNull(EndDate.getDate())){
+        if (Objects.isNull(StartDate.getDate()) || Objects.isNull(EndDate.getDate())) {
             ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
             return;
         }
@@ -638,15 +646,17 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
             TongChiTF.setText("");
             TongThuTF.setText("");
             ArrayList<ThongKe> list = new ArrayList<ThongKe>();
-        if(selected.equals("PhieuThu")){
-            list = ThongKe.layPhieuThu(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
-        } else if(selected.equals("PhieuChi")){
-            list = ThongKe.layPhieuChi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
-        } else if(selected.equals("TatCa")){
-            list = ThongKe.layThongKe(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
-        }else return;
-        
-        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            if (selected.equals("PhieuThu")) {
+                list = ThongKe.layPhieuThu(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
+            } else if (selected.equals("PhieuChi")) {
+                list = ThongKe.layPhieuChi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
+            } else if (selected.equals("TatCa")) {
+                list = ThongKe.layThongKe(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
+            } else {
+                return;
+            }
+
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
             m.setRowCount(0);
             int stt = 1;
             int thu = 0;
@@ -654,16 +664,16 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
             for (ThongKe tk : list) {
                 Object[] obj = {stt, tk.getID(), tk.getNoiDung(), tk.getThoiGian(), tk.getSoTien(), tk.getNguoiTao()};
                 m.addRow(obj);
-                if(tk.getSoTien()>=0){
-                    thu+=tk.getSoTien();
-                } else{
-                    chi+=tk.getSoTien();
+                if (tk.getSoTien() >= 0) {
+                    thu += tk.getSoTien();
+                } else {
+                    chi += tk.getSoTien();
                 }
                 stt++;
             }
             TongThuTF.setText(String.valueOf(thu));
             TongChiTF.setText(String.valueOf(chi));
-            LoiNhuanTF.setText(String.valueOf(thu+chi));
+            LoiNhuanTF.setText(String.valueOf(thu + chi));
             AddDialog.addSeparator(TongThuTF);
             AddDialog.addSeparator(TongChiTF);
             AddDialog.addSeparator(LoiNhuanTF);

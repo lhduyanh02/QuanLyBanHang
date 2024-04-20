@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.awt.Component;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
+import java.awt.Taskbar;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -42,6 +43,13 @@ public class DangNhap extends javax.swing.JDialog {
     public DangNhap(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -381,7 +389,6 @@ public class DangNhap extends javax.swing.JDialog {
 //                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
 //        }
 //    }
-    
     private void DangNhap() {
         Icon icon = new ImageIcon(DangNhap.class.getResource("/asserts/X-icon.png"));
         if (UsernameTF.getText().equals("") || containsSpecialChars(UsernameTF) || containsWhitespace(UsernameTF) || containsVietnamese(UsernameTF) || UsernameTF.getText().length() > 10) {
@@ -397,15 +404,15 @@ public class DangNhap extends javax.swing.JDialog {
             return;
         }
         try {
-            
-        user = UsernameTF.getText().trim();
-        String pass = new String(PasswordTF.getPassword());
-        access = TaiKhoan.DangNhap(user, pass);
-        if(access!=Integer.MIN_VALUE && access != -1){
-            KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
-            this.dispose();
-            WelcomeUI.getInstance();
-        }
+
+            user = UsernameTF.getText().trim();
+            String pass = new String(PasswordTF.getPassword());
+            access = TaiKhoan.DangNhap(user, pass);
+            if (access != Integer.MIN_VALUE && access != -1) {
+                KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(keyEventDispatcher);
+                this.dispose();
+                WelcomeUI.getInstance();
+            }
         } catch (Exception e) {
             System.out.println("Loi! [Class: DangNhap - Method: DangNhap]");
         }

@@ -3,6 +3,7 @@ package quanlybanhang.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import quanlybanhang.control.Program;
@@ -124,8 +125,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public GiaoDienThuNgan() {
         initComponents();
-//        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/X-icon.png")).getImage());
-        this.setTitle("Quản lý đơn hàng");
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         DonHangTable.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRenderer());
         DonHangTable.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(evt));
         UserTF.setText(DangNhap.getUser());
