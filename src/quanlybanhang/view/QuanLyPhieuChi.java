@@ -876,6 +876,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         instance.EditPanel.revalidate();
     }
 
+    public static void paintEditPanel() {
+        instance.EditPanel.repaint();
+        instance.EditPanel.revalidate();
+    }
+
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;
