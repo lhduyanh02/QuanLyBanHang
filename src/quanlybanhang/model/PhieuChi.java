@@ -17,6 +17,7 @@ import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.ConnectDB;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.control.ThongKe;
 import quanlybanhang.view.QuanLyPhieuChi;
 
 /**
@@ -91,8 +92,29 @@ public class PhieuChi {
         }
         return RL;
     }
-
-    public static boolean xoaPhieuChi(String MaPC) {
+    
+    public static ArrayList<PhieuChi> layDSphieuchi(String start, String end){
+        Program.ConnectDB();
+        ArrayList<PhieuChi> list = new ArrayList<PhieuChi>();
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("SELECT mapc AS id, noidungpc AS noidung, tgchi AS thoi_gian, sotien, usname "
+                    + "FROM htql_banhang.phieuchi "
+                    + "WHERE cast(TGChi as Date) BETWEEN '" + start + "' AND '" + end + "' ORDER BY TGChi DESC;");
+            while(rs.next()){
+                list.add(new PhieuChi(rs.getString(1), rs.getString(2), rs.getTimestamp(3), rs.getFloat(4), rs.getString(5)));
+            }
+            s.close();
+        } catch (Exception e) {
+            Icon icon = new ImageIcon(ThongKe.class.getResource("/asserts/X-icon.png"));
+            System.out.println("Loi! [Class: ThongKe - Method: layPhieuChi]");
+            JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return new ArrayList<PhieuChi>();
+        }
+        return list;
+    }
+    
+    public static boolean xoaPhieuChi(String MaPC){
         Program.ConnectDB();
         try {
             PreparedStatement s = con.prepareStatement("DELETE FROM `htql_banhang`.`phieuchi` WHERE (`mapc` = ?);");

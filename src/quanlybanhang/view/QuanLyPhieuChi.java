@@ -4,6 +4,8 @@
  */
 package quanlybanhang.view;
 
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -13,6 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import quanlybanhang.control.Program;
@@ -24,7 +27,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.model.Ban;
 import quanlybanhang.model.PhieuChi;
@@ -253,6 +258,13 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        searchTextField1 = new quanlybanhang.view.item.SearchTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        StartDate = new com.toedter.calendar.JDateChooser();
+        EndDate = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -388,7 +400,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
@@ -423,6 +435,93 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             }
         });
 
+        jPanel8.setOpaque(false);
+
+        searchTextField1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/search-item-30.png"))); // NOI18N
+        searchTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                searchTextField1KeyTyped(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(searchTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
+        );
+
+        jPanel9.setOpaque(false);
+
+        jLabel3.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        jLabel3.setText("Từ ngày");
+
+        StartDate.setBackground(new java.awt.Color(255, 255, 255));
+        StartDate.setToolTipText("Chọn ngày bắt đầu");
+        StartDate.setDateFormatString("dd/MM/yyyy");
+        StartDate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        StartDate.setMaxSelectableDate(new java.util.Date(253370743307000L));
+        StartDate.setMinSelectableDate(new java.util.Date(-631173493000L));
+        ((JTextFieldDateEditor) StartDate.getDateEditor()).setEditable(false);
+        ((JTextFieldDateEditor) StartDate.getDateEditor()).setBackground(Color.WHITE);
+        StartDate.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                StartDatePropertyChange(evt);
+            }
+        });
+
+        EndDate.setBackground(new java.awt.Color(255, 255, 255));
+        EndDate.setToolTipText("Chọn ngày kết thúc");
+        EndDate.setDateFormatString("dd/MM/yyyy");
+        EndDate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        EndDate.setMinSelectableDate(new java.util.Date(-631173534000L));
+        EndDate.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                EndDatePropertyChange(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        jLabel4.setText("Đến ngày");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(StartDate, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                    .addComponent(EndDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(StartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(EndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        ((JTextFieldDateEditor) EndDate.getDateEditor()).setEditable(false);
+        ((JTextFieldDateEditor) EndDate.getDateEditor()).setBackground(Color.WHITE);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -431,13 +530,26 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -485,7 +597,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -556,7 +668,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
                     .addComponent(jSeparator1))
                 .addContainerGap())
         );
@@ -590,7 +702,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(EditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE))
+                .addComponent(EditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE))
         );
 
         EditPanel.getAccessibleContext().setAccessibleParent(this);
@@ -683,23 +795,80 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         SoTienTF.setText("");
     }//GEN-LAST:event_DatLaiLabelMouseClicked
 
+    private void searchTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextField1KeyTyped
+        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> rs = new TableRowSorter<>(m);
+        jTable1.setRowSorter(rs);
+
+        // Lấy văn bản từ ô nhập liệu
+        String searchText = searchTextField1.getText().trim();
+
+        // Thiết lập bộ lọc cho mỗi cột
+        rs.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
+    }//GEN-LAST:event_searchTextField1KeyTyped
+
+    private void StartDatePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_StartDatePropertyChange
+        if (evt.getPropertyName().equals("date") && (evt.getOldValue() != evt.getNewValue())
+                && !Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())) {
+            if (StartDate.getDate().before(EndDate.getDate())) {
+                reload();
+            } else {
+//                System.out.println("Khong hop le");
+            }
+        }
+    }//GEN-LAST:event_StartDatePropertyChange
+
+    private void EndDatePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_EndDatePropertyChange
+        if (evt.getPropertyName().equals("date") && (evt.getOldValue() != evt.getNewValue())
+                && !Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())) {
+            if (StartDate.getDate().before(EndDate.getDate())) {
+                reload();
+            } else {
+//                System.out.println("Khong hop le");
+            }
+        }
+    }//GEN-LAST:event_EndDatePropertyChange
+
     private void reload() {
         Program.ConnectDB();
-        try {
-            ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi();
-            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-            m.setRowCount(0);
-            int stt = 1;
-            for (PhieuChi pc : list) {
-                Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
-                    Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
-                m.addRow(obj);
-                stt++;
+        if (Objects.isNull(StartDate.getDate()) || Objects.isNull(EndDate.getDate())) {
+            try {
+                ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi();
+                DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+                m.setRowCount(0);
+                int stt = 1;
+                for (PhieuChi pc : list) {
+                    Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
+                        Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
+                    m.addRow(obj);
+                    stt++;
+                }
+            } catch (Exception ex) {
+                System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
+                ex.printStackTrace();
             }
-        } catch (Exception ex) {
-            System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
-            ex.printStackTrace();
+            return;
+        } else if(!Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())){
+            if (StartDate.getDate().before(EndDate.getDate())) {
+                try {
+                ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
+                DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+                m.setRowCount(0);
+                int stt = 1;
+                for (PhieuChi pc : list) {
+                    Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
+                        Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
+                    m.addRow(obj);
+                    stt++;
+                }
+            } catch (Exception ex) {
+                System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
+                ex.printStackTrace();
+            }
+            return;
+            }
         }
+
     }
 
     public static void paintEditPanel() {
@@ -765,14 +934,18 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DatLaiLabel;
     private javax.swing.JPanel EditPanel;
+    private com.toedter.calendar.JDateChooser EndDate;
     private javax.swing.JLabel LuuLabel;
     private javax.swing.JTextField MaPCTF;
     private javax.swing.JTextField NoiDungTF;
     private javax.swing.JTextField SoTienTF;
+    private com.toedter.calendar.JDateChooser StartDate;
     private javax.swing.JLabel addBtn;
     private javax.swing.JLabel deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -780,11 +953,14 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel reloadBtn;
+    private quanlybanhang.view.item.SearchTextField searchTextField1;
     // End of variables declaration//GEN-END:variables
 }

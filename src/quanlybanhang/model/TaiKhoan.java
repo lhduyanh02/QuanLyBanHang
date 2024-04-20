@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package quanlybanhang.model;
 
 import java.security.MessageDigest;
@@ -19,10 +15,6 @@ import quanlybanhang.view.DoiMatKhau;
 import quanlybanhang.view.QuanLyTaiKhoan;
 import quanlybanhang.view.WelcomeUI;
 
-/**
- *
- * @author nguyenthituyetngan
- */
 public class TaiKhoan {
 
     private String username;
@@ -254,7 +246,6 @@ public class TaiKhoan {
                 String passwd = rs.getString(1);
                 int access = rs.getInt(2);
                 String HashedPass = passwordHash(pass);
-                System.out.println(HashedPass);
                 if (access != -1) {
                     if (passwd.equals(HashedPass)) {
                         WelcomeUI.getInstance();
