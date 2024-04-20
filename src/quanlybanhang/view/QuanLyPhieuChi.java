@@ -275,19 +275,19 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         });
 
         MaPCTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        MaPCTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã phiếu chi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+        MaPCTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Mã phiếu chi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 18))); // NOI18N
 
         NoiDungTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        NoiDungTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nội dung chi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+        NoiDungTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nội dung chi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 18))); // NOI18N
 
         SoTienTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        SoTienTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Số tiền ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 14))); // NOI18N
+        SoTienTF.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Số tiền ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 1, 18))); // NOI18N
 
         jPanel7.setBackground(new java.awt.Color(240, 240, 240));
         jPanel7.setMinimumSize(new java.awt.Dimension(420, 81));
         jPanel7.setLayout(new java.awt.GridBagLayout());
 
-        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
+        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         LuuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LuuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
         LuuLabel.setText("Lưu");
@@ -307,7 +307,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 40);
         jPanel7.add(LuuLabel, gridBagConstraints);
 
-        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         DatLaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
         DatLaiLabel.setText("Đặt Lại");
@@ -642,11 +642,14 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             if (r == -1) {
                 JOptionPane.showMessageDialog(this, "Không có phiếu chi nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
-                boolean rslt = PhieuChi.xoaPhieuChi((String) jTable1.getModel().getValueAt(r, 1));
-                if (rslt) {
-                    Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-                    JOptionPane.showMessageDialog(this, "Xóa phiếu chi thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
-                    closeEditPanel();
+                int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xoá phiếu chi không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    boolean rslt = PhieuChi.xoaPhieuChi((String) jTable1.getModel().getValueAt(r, 1));
+                    if (rslt) {
+                        Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                        JOptionPane.showMessageDialog(this, "Xóa phiếu chi thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
+                        closeEditPanel();
+                    }
                 }
             }
             reload();
@@ -699,6 +702,11 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         }
     }
 
+    public static void paintEditPanel() {
+        instance.EditPanel.repaint();
+        instance.EditPanel.revalidate();
+    }
+
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;
@@ -720,9 +728,6 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    reloadBtn.setEnabled(false);
-                    addBtn.setEnabled(false);
-                    jTable1.setEnabled(false);
                     for (int i = 0; i <= width; i += 5) {
                         EditPanel.setSize(i, getContentPane().getHeight());
                         try {
@@ -739,9 +744,6 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private void closeEditPanel() {
         if (isOpen) {
             isOpen = false;
-            reloadBtn.setEnabled(true);
-            addBtn.setEnabled(true);
-            jTable1.setEnabled(true);
             new Thread(new Runnable() {
                 @Override
                 public void run() {

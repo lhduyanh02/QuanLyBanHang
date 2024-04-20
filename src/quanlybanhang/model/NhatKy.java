@@ -5,6 +5,7 @@
 package quanlybanhang.model;
 
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class NhatKy {
         }
         return list;
     }
+
     public static ArrayList<String> getLog() {
         Program.ConnectDB();
         ArrayList<String> list = new ArrayList<String>();
@@ -77,13 +79,16 @@ public class NhatKy {
         }
         return list;
     }
-    
-    public static void writeLog(String act, String des){
+
+    public static void writeLog(String act, String des) {
         Program.ConnectDB();
         try {
             String us = DangNhap.getUser();
-            Statement s = con.createStatement();
-            s.executeUpdate("INSERT INTO htql_banhang.activity_log (user, action, description) VALUES ('"+us+"', '"+act+"', '"+des+"');");
+            PreparedStatement s = con.prepareStatement("INSERT INTO htql_banhang.activity_log (user, action, description) VALUES (?, ?, ?);");
+            s.setString(1, us);
+            s.setString(2, act);
+            s.setString(3, des);
+            s.executeUpdate();
             s.close();
         } catch (Exception e) {
             System.out.println("Loi! [Class: NhatKy - Method: writeLog]");
@@ -92,7 +97,7 @@ public class NhatKy {
             e.printStackTrace();
         }
     }
-    
+
     public static ArrayList<String> getAction() {
         Program.ConnectDB();
         ArrayList<String> actions = new ArrayList<>();

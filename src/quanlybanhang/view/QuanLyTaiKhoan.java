@@ -274,7 +274,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         jPanel7.setMinimumSize(new java.awt.Dimension(420, 81));
         jPanel7.setLayout(new java.awt.GridBagLayout());
 
-        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 15)); // NOI18N
+        LuuLabel.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         LuuLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LuuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-save.png"))); // NOI18N
         LuuLabel.setText("Lưu");
@@ -293,7 +293,7 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 30);
         jPanel7.add(LuuLabel, gridBagConstraints);
 
-        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        DatLaiLabel.setFont(new java.awt.Font("Helvetica", 1, 18)); // NOI18N
         DatLaiLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         DatLaiLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
         DatLaiLabel.setText("Đặt Lại");

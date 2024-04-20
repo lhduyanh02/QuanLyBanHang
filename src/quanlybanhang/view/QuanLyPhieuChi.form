@@ -142,7 +142,7 @@
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true"/>
                       </Border>
-                      <Font PropertyName="font" name="Helvetica" size="14" style="1"/>
+                      <Font PropertyName="font" name="Helvetica" size="18" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>
@@ -159,7 +159,7 @@
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true"/>
                       </Border>
-                      <Font PropertyName="font" name="Helvetica" size="14" style="1"/>
+                      <Font PropertyName="font" name="Helvetica" size="18" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>
@@ -176,7 +176,7 @@
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder roundedCorners="true"/>
                       </Border>
-                      <Font PropertyName="font" name="Helvetica" size="14" style="1"/>
+                      <Font PropertyName="font" name="Helvetica" size="18" style="1"/>
                     </TitledBorder>
                   </Border>
                 </Property>
@@ -197,7 +197,7 @@
                 <Component class="javax.swing.JLabel" name="LuuLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Helvetica" size="15" style="1"/>
+                      <Font name="Helvetica" size="18" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -223,7 +223,7 @@
                 <Component class="javax.swing.JLabel" name="DatLaiLabel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Helvetica" size="14" style="1"/>
+                      <Font name="Helvetica" size="18" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
