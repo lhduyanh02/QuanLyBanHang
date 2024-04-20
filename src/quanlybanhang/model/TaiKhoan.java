@@ -4,8 +4,10 @@
  */
 package quanlybanhang.model;
 
+import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -15,6 +17,7 @@ import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.view.DoiMatKhau;
 import quanlybanhang.view.QuanLyTaiKhoan;
+import quanlybanhang.view.WelcomeUI;
 
 /**
  *
@@ -78,9 +81,12 @@ public class TaiKhoan {
             return false;
         }
         try {
-            Statement s = con.createStatement();
-            s.executeUpdate("INSERT INTO htql_banhang.taikhoan "
-                    + "(usname, passwd, access) VALUES (N'" + TK.username + "', N'" + TK.password + "', '" + TK.loai + "');");
+            PreparedStatement s = con.prepareStatement("INSERT INTO htql_banhang.taikhoan "
+                    + "(usname, passwd, access) VALUES (?, ?, ?);");
+            s.setString(1, TK.username);
+            s.setString(2, passwordHash(TK.password));
+            s.setInt(3, TK.loai);
+            s.executeUpdate();
             s.close();
             NhatKy.writeLog("Tài khoản", "Thêm tài khoản: " + TK.username + " - Loại: " + TK.loai);
             return true;
@@ -119,16 +125,25 @@ public class TaiKhoan {
         }
 
         try {
-            Statement s = con.createStatement();
+            PreparedStatement s;
             if (TK.password.equals("")) {
-                int rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET usname = N'" + TK.username + "', access = '" + TK.loai + "' WHERE (usname = '" + usname + "');");
+                s = con.prepareStatement("UPDATE htql_banhang.taikhoan SET usname = ?, access = ? WHERE (usname = ?);");
+                s.setString(1, TK.username);
+                s.setInt(2, TK.loai);
+                s.setString(3, usname);
+                int rs = s.executeUpdate();
                 s.close();
                 if (rs == 1) {
                     NhatKy.writeLog("Tài khoản", "Sửa tài khoản: " + usname + " -> " + TK.username + " - " + TK.loai);
                     return true;
                 }
             } else {
-                int rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET usname = N'" + TK.username + "', passwd = '" + TK.password + "', access = '" + TK.loai + "' WHERE (usname = '" + usname + "');");
+                s = con.prepareStatement("UPDATE htql_banhang.taikhoan SET usname = ?, passwd = ?, access = ? WHERE (usname = ?);");
+                s.setString(1,TK.username);
+                s.setString(2, passwordHash(TK.password));
+                s.setInt(3, TK.loai);
+                s.setString(4, usname);
+                int rs = s.executeUpdate();
                 s.close();
                 if (rs == 1) {
                     NhatKy.writeLog("Tài khoản", "Sửa tài khoản và mật khẩu: " + usname + " -> " + TK.username + " - " + TK.loai);
@@ -183,13 +198,17 @@ public class TaiKhoan {
         Program.ConnectDB();
         Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
         try {
-            Statement s = con.createStatement();
+            PreparedStatement s = con.prepareStatement("SELECT passwd FROM htql_banhang.taikhoan WHERE usname = ?;");
             int rs = 0;
-            ResultSet r = s.executeQuery("SELECT passwd FROM htql_banhang.taikhoan WHERE usname = '" + usname + "';");
+            s.setString(1, usname);
+            ResultSet r = s.executeQuery();
             r.next();
             String x = r.getString(1);
-            if (x.equals(oldpass)) {
-                rs = s.executeUpdate("UPDATE htql_banhang.taikhoan SET passwd = '" + newpass + "' WHERE (usname = '" + usname + "');");
+            if (x.equals(passwordHash(oldpass))) {
+                s = con.prepareStatement("UPDATE htql_banhang.taikhoan SET passwd = ? WHERE (usname = ?);");
+                s.setString(1, passwordHash(newpass));
+                s.setString(2, usname);
+                rs = s.executeUpdate();
                 s.close();
             } else {
                 JOptionPane.showMessageDialog(DoiMatKhau.getInstance(), "Sai mật khẩu, vui lòng kiểm tra lại!", "Sai mật khẩu", JOptionPane.ERROR_MESSAGE, icon);
@@ -205,5 +224,62 @@ public class TaiKhoan {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String passwordHash(String pass) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(pass.getBytes());
+            byte[] rbt = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : rbt) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: TaiKhoan - Method: passwordHash]");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int DangNhap(String us, String pass) {
+        Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
+        try {
+            Program.ConnectDB();
+            PreparedStatement s = con.prepareStatement("SELECT passwd, access FROM htql_banhang.taikhoan WHERE usname = ?;");
+            s.setString(1, us);
+            ResultSet rs = s.executeQuery();
+            if (rs.next()) {
+                String passwd = rs.getString(1);
+                int access = rs.getInt(2);
+                String HashedPass = passwordHash(pass);
+                System.out.println(HashedPass);
+                if (access != -1) {
+                    if (passwd.equals(HashedPass)) {
+                        WelcomeUI.getInstance();
+                        NhatKy.writeLog("Đăng nhập", "Đăng nhập thành công");
+                        return access;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
+                                "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
+                        NhatKy.writeLog("Đăng nhập", "Đăng nhập không thành công");
+                        return Integer.MIN_VALUE;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Tài khoản của bạn đã bị vô hiệu hóa, vui lòng liên hệ quản trị viên.",
+                            "Tài khoản vô hiệu", JOptionPane.ERROR_MESSAGE, icon);
+                    NhatKy.writeLog("Đăng nhập", "Tài khoản vô hiệu hóa đăng nhập");
+                    return -1;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Loi! [Class: TaiKhoan - Method: DangNhap]");
+            NhatKy.writeLog("Đăng nhập", "Lỗi trong quá trình đăng nhập");
+            JOptionPane.showMessageDialog(null, "Không thể đăng nhập, vui lòng kiểm tra lại",
+                    "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
+            return Integer.MIN_VALUE;
+        }
+        return Integer.MIN_VALUE;
     }
 }

@@ -37,6 +37,8 @@ public class ThanhToan extends javax.swing.JDialog {
         BanInf = new javax.swing.JLabel();
         NhanVienInf = new javax.swing.JLabel();
         NhanVienLabel = new javax.swing.JLabel();
+        NgayLabel5 = new javax.swing.JLabel();
+        Time = new javax.swing.JLabel();
         DSMonPanel = new javax.swing.JPanel();
         ScrollPane = new javax.swing.JScrollPane();
         ChiTietPanel = new javax.swing.JPanel();
@@ -92,6 +94,12 @@ public class ThanhToan extends javax.swing.JDialog {
         NhanVienLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         NhanVienLabel.setText("Nhân viên:");
 
+        NgayLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        NgayLabel5.setText("Thời gian thanh toán:");
+
+        Time.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Time.setText("<Ngay place>");
+
         javax.swing.GroupLayout TTHoaDonPanelLayout = new javax.swing.GroupLayout(TTHoaDonPanel);
         TTHoaDonPanel.setLayout(TTHoaDonPanelLayout);
         TTHoaDonPanelLayout.setHorizontalGroup(
@@ -100,20 +108,28 @@ public class ThanhToan extends javax.swing.JDialog {
             .addGroup(TTHoaDonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MaHDLabel)
-                    .addComponent(NgayLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MaHDInf, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                    .addComponent(NgayInf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
-                .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BanLabel)
-                    .addComponent(NhanVienLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BanInf, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NhanVienInf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(TTHoaDonPanelLayout.createSequentialGroup()
+                        .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MaHDLabel)
+                            .addComponent(NgayLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MaHDInf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NgayInf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(50, 50, 50))
+                    .addGroup(TTHoaDonPanelLayout.createSequentialGroup()
+                        .addComponent(NgayLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(TTHoaDonPanelLayout.createSequentialGroup()
+                        .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BanLabel)
+                            .addComponent(NhanVienLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BanInf, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NhanVienInf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Time, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         TTHoaDonPanelLayout.setVerticalGroup(
@@ -138,7 +154,11 @@ public class ThanhToan extends javax.swing.JDialog {
                         .addComponent(BanLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(NhanVienLabel)))
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(TTHoaDonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NgayLabel5)
+                    .addComponent(Time))
+                .addContainerGap())
         );
 
         DSMonPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -167,11 +187,11 @@ public class ThanhToan extends javax.swing.JDialog {
         DSMonPanel.setLayout(DSMonPanelLayout);
         DSMonPanelLayout.setHorizontalGroup(
             DSMonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+            .addComponent(ScrollPane)
         );
         DSMonPanelLayout.setVerticalGroup(
             DSMonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+            .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
         );
 
         TongKetPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -231,8 +251,8 @@ public class ThanhToan extends javax.swing.JDialog {
                         .addGap(56, 56, 56)
                         .addComponent(NgayLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChietKhauInf, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE))
+                        .addComponent(ChietKhauInf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
 
@@ -255,38 +275,32 @@ public class ThanhToan extends javax.swing.JDialog {
                 .addGroup(TongKetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TongKetPanelLayout.createSequentialGroup()
                         .addComponent(NgayLabel4)
-                        .addGap(0, 38, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout ThongTinPanelLayout = new javax.swing.GroupLayout(ThongTinPanel);
         ThongTinPanel.setLayout(ThongTinPanelLayout);
         ThongTinPanelLayout.setHorizontalGroup(
             ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
-            .addGroup(ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(TTHoaDonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(DSMonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TongKetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(TTHoaDonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(DSMonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(TongKetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         ThongTinPanelLayout.setVerticalGroup(
             ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ThongTinPanelLayout.createSequentialGroup()
-                .addGap(0, 708, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(ThongTinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(ThongTinPanelLayout.createSequentialGroup()
-                    .addGap(2, 2, 2)
-                    .addComponent(TTHoaDonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(DSMonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(TongKetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(ThongTinPanelLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addComponent(TTHoaDonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DSMonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TongKetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
         ControlPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -342,16 +356,26 @@ public class ThanhToan extends javax.swing.JDialog {
             .addComponent(ControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(ThongTinPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(698, Short.MAX_VALUE)
+                .addContainerGap(713, Short.MAX_VALUE)
                 .addComponent(ControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(ThongTinPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 47, Short.MAX_VALUE)))
+                    .addGap(0, 48, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(709, 709, 709)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(46, Short.MAX_VALUE)))
         );
 
         pack();
@@ -381,6 +405,7 @@ public class ThanhToan extends javax.swing.JDialog {
         ChietKhauInf.setText(String.valueOf(hd.getChietKhau())+"%");
         ThanhTienInf.setText(Float.valueOf(hd.getTongThanhToan()).intValue()+" VND");
         GhiChuTA.setText(hd.getGhiChu());
+        Time.setText(Program.getTimeNow());
         
         ChiTietPanel.removeAll();
         ChiTietPanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 2, 5));
@@ -423,12 +448,14 @@ public class ThanhToan extends javax.swing.JDialog {
     private javax.swing.JLabel NgayLabel2;
     private javax.swing.JLabel NgayLabel3;
     private javax.swing.JLabel NgayLabel4;
+    private javax.swing.JLabel NgayLabel5;
     private javax.swing.JLabel NhanVienInf;
     private javax.swing.JLabel NhanVienLabel;
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JPanel TTHoaDonPanel;
     private javax.swing.JLabel ThanhTienInf;
     private javax.swing.JPanel ThongTinPanel;
+    private javax.swing.JLabel Time;
     private javax.swing.JPanel TongKetPanel;
     private javax.swing.JLabel TongTienInf;
     private javax.swing.JScrollPane jScrollPane1;
