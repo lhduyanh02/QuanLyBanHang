@@ -20,7 +20,7 @@ public class CheckInputMethod {
     }
 
     public static boolean isValidPass(String s) {
-        String forbiddenCharacters = ".,:-_'\")(`+=~`/\\|:[]{} ";
+        String forbiddenCharacters = ".,;:-_'\")(`+=~`/\\|:[]{} ";
         for (char c : s.toCharArray()) {
             if (forbiddenCharacters.indexOf(c) != -1) {
                 return false;
