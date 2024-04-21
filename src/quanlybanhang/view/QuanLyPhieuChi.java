@@ -52,6 +52,9 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
 
     public QuanLyPhieuChi() {
         initComponents();
+        if(DangNhap.getAccess()!=0){
+            deleteBtn.setVisible(false);
+        }
         this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
         this.setTitle("Quản lý nhà hàng");
         try {
@@ -646,7 +649,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 20;
         gridBagConstraints.weightx = 0.5;
         jPanel4.add(addBtn, gridBagConstraints);
@@ -665,7 +668,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 20;
         gridBagConstraints.weightx = 0.5;
         jPanel4.add(deleteBtn, gridBagConstraints);

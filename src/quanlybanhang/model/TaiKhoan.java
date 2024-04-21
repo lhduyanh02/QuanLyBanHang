@@ -248,7 +248,6 @@ public class TaiKhoan {
                 String HashedPass = passwordHash(pass);
                 if (access != -1) {
                     if (passwd.equals(HashedPass)) {
-                        WelcomeUI.getInstance();
                         NhatKy.writeLog("Đăng nhập", "Đăng nhập thành công");
                         return access;
                     } else {
@@ -263,6 +262,10 @@ public class TaiKhoan {
                     NhatKy.writeLog("Đăng nhập", "Tài khoản vô hiệu hóa đăng nhập");
                     return -1;
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
+                                "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
+                return Integer.MIN_VALUE;
             }
         } catch (Exception e) {
             System.out.println("Loi! [Class: TaiKhoan - Method: DangNhap]");
@@ -271,6 +274,5 @@ public class TaiKhoan {
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return Integer.MIN_VALUE;
         }
-        return Integer.MIN_VALUE;
     }
 }

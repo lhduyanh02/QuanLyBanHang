@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package quanlybanhang.control;
 
 import java.sql.Statement;
@@ -13,10 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import static quanlybanhang.control.Program.con;
 
-/**
- *
- * @author Admin
- */
 public class ThongKe {
 
     private String ID;
