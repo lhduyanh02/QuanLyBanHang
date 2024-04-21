@@ -8,6 +8,7 @@ import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -51,6 +52,13 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
 
     public QuanLyPhieuChi() {
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         add(EditPanel, 0);
         EditPanel.setSize(0, getContentPane().getHeight());
         //THÊM SỰ KIỆN CHUỘT CHO JLABEL BTN
@@ -461,6 +469,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         jPanel9.setOpaque(false);
 
         jLabel3.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Từ ngày");
 
         StartDate.setBackground(new java.awt.Color(255, 255, 255));
@@ -489,6 +498,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Đến ngày");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -497,9 +507,9 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(StartDate, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
@@ -848,24 +858,24 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
             return;
-        } else if(!Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())){
+        } else if (!Objects.isNull(StartDate.getDate()) && !Objects.isNull(EndDate.getDate())) {
             if (StartDate.getDate().before(EndDate.getDate())) {
                 try {
-                ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
-                DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
-                m.setRowCount(0);
-                int stt = 1;
-                for (PhieuChi pc : list) {
-                    Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
-                        Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
-                    m.addRow(obj);
-                    stt++;
+                    ArrayList<PhieuChi> list = PhieuChi.layDSphieuchi(Program.formatDate(StartDate.getDate()), Program.formatDate(EndDate.getDate()));
+                    DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+                    m.setRowCount(0);
+                    int stt = 1;
+                    for (PhieuChi pc : list) {
+                        Object[] obj = {stt, pc.getMaPC(), pc.getNoiDung(),
+                            Program.formatTimestamp(pc.getTime()), (int) pc.getSoTien(), pc.getNhanVien()};
+                        m.addRow(obj);
+                        stt++;
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
+                    ex.printStackTrace();
                 }
-            } catch (Exception ex) {
-                System.out.println("Loi! [Class: QuanLyPhieuChi - Method: reload]");
-                ex.printStackTrace();
-            }
-            return;
+                return;
             }
         }
 

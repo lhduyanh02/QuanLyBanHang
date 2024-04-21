@@ -4,6 +4,7 @@
  */
 package quanlybanhang.view;
 
+import java.awt.Taskbar;
 import quanlybanhang.control.Program;
 import javaswingdev.drawer.Drawer;
 import javaswingdev.drawer.DrawerController;
@@ -23,6 +24,13 @@ public class WelcomeUI extends javax.swing.JFrame {
 
     public WelcomeUI() {
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         if (DangNhap.getAccess() == 0) {
             this.buildAdminDrawer();
         } else {

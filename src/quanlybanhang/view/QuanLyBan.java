@@ -6,6 +6,7 @@ package quanlybanhang.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,6 +46,13 @@ public class QuanLyBan extends javax.swing.JFrame {
 
     public QuanLyBan() {
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         add(EditPanel, 0);
         EditPanel.setSize(0, getContentPane().getHeight());
 
@@ -686,11 +694,14 @@ public class QuanLyBan extends javax.swing.JFrame {
             if (r == -1) {
                 JOptionPane.showMessageDialog(this, "Không có bàn nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
-                boolean rslt = Ban.xoaBan((String) jTable1.getModel().getValueAt(r, 1));
-                if (rslt) {
-                    Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-                    JOptionPane.showMessageDialog(this, "Xóa bàn thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
-                    closeEditPanel();
+                int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xoá bàn không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    boolean rslt = Ban.xoaBan((String) jTable1.getModel().getValueAt(r, 1));
+                    if (rslt) {
+                        Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                        JOptionPane.showMessageDialog(this, "Xóa bàn thành công!", "Đã xóa", JOptionPane.INFORMATION_MESSAGE, scicon);
+                        closeEditPanel();
+                    }
                 }
             }
             reload();

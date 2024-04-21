@@ -54,8 +54,8 @@ public class TaiKhoan {
     public static boolean themTK(TaiKhoan TK) {
         Program.ConnectDB();
         Icon icon = new ImageIcon(TaiKhoan.class.getResource("/asserts/X-icon.png"));
-        if (TK.username.equals("") || CheckInputMethod.containsWhitespace(TK.username) || CheckInputMethod.containsVietnamese(TK.username) || TK.username.length() > 15) {
-            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
+        if (TK.username.equals("") || CheckInputMethod.containsWhitespace(TK.username) || CheckInputMethod.containsVietnamese(TK.username) || TK.username.length() > 15 || CheckInputMethod.containsSpecialChars(TK.username)) {
+            JOptionPane.showMessageDialog(null, "Tên đăng nhập không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách và các ký tự đặc biệt.",
                     "Lỗi Tên Đăng Nhập", JOptionPane.ERROR_MESSAGE, icon);
             QuanLyTaiKhoan.paintEditPanel();
             return false;

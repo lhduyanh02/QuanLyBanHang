@@ -7,6 +7,7 @@ package quanlybanhang.view;
 import quanlybanhang.control.Program;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Taskbar;
 import java.awt.event.MouseAdapter;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -37,7 +38,13 @@ public class ThucDonNuoc extends javax.swing.JFrame {
 
     public ThucDonNuoc() {
         initComponents();
-
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         reloadBtn.addMouseListener(new Program.SharedMouseListener());
         addBtn.addMouseListener(new Program.SharedMouseListener());
         updateBtn.addMouseListener(new Program.SharedMouseListener());

@@ -6,6 +6,7 @@ package quanlybanhang.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,6 +46,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
 
     public QuanLyTaiKhoan() {
         initComponents();
+        this.setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        this.setTitle("Quản lý nhà hàng");
+        try {
+            Taskbar.getTaskbar().setIconImage(new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")).getImage());
+        } catch (Exception e) {
+            System.out.println("The OS does not support set Icon for Taskbar");
+        }
         add(EditPanel, 0);
         EditPanel.setSize(0, getContentPane().getHeight());
 
