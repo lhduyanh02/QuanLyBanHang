@@ -7,10 +7,12 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
 import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
+import quanlybanhang.view.DangNhap;
 import quanlybanhang.view.DoiMatKhau;
 import quanlybanhang.view.QuanLyTaiKhoan;
 import quanlybanhang.view.WelcomeUI;
@@ -131,7 +133,7 @@ public class TaiKhoan {
                 }
             } else {
                 s = con.prepareStatement("UPDATE htql_banhang.taikhoan SET usname = ?, passwd = ?, access = ? WHERE (usname = ?);");
-                s.setString(1,TK.username);
+                s.setString(1, TK.username);
                 s.setString(2, passwordHash(TK.password));
                 s.setInt(3, TK.loai);
                 s.setString(4, usname);
@@ -251,13 +253,17 @@ public class TaiKhoan {
                         NhatKy.writeLog("Đăng nhập", "Đăng nhập thành công");
                         return access;
                     } else {
-                        JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
+                        final JDialog d = new JDialog();
+                        d.setAlwaysOnTop(true);
+                        JOptionPane.showMessageDialog(d, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
                                 "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
                         NhatKy.writeLog("Đăng nhập", "Đăng nhập không thành công");
                         return Integer.MIN_VALUE;
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Tài khoản của bạn đã bị vô hiệu hóa, vui lòng liên hệ quản trị viên.",
+                    final JDialog d = new JDialog();
+                    d.setAlwaysOnTop(true);
+                    JOptionPane.showMessageDialog(d, "Tài khoản của bạn đã bị vô hiệu hóa, vui lòng liên hệ quản trị viên.",
                             "Tài khoản vô hiệu", JOptionPane.ERROR_MESSAGE, icon);
                     NhatKy.writeLog("Đăng nhập", "Tài khoản vô hiệu hóa đăng nhập");
                     return -1;
@@ -270,7 +276,9 @@ public class TaiKhoan {
         } catch (Exception e) {
             System.out.println("Loi! [Class: TaiKhoan - Method: DangNhap]");
             NhatKy.writeLog("Đăng nhập", "Lỗi trong quá trình đăng nhập");
-            JOptionPane.showMessageDialog(null, "Không thể đăng nhập, vui lòng kiểm tra lại",
+            final JDialog d = new JDialog();
+            d.setAlwaysOnTop(true);
+            JOptionPane.showMessageDialog(d, "Không thể đăng nhập, vui lòng kiểm tra lại",
                     "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             return Integer.MIN_VALUE;
         }
