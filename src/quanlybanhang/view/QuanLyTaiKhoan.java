@@ -307,6 +307,11 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
         DatLaiLabel.setText("Đặt Lại");
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
+        DatLaiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DatLaiLabelMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -745,11 +750,14 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             if (r == -1) {
                 JOptionPane.showMessageDialog(this, "Không có tài khoản nào được chọn!", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
             } else {
-                boolean rslt = TaiKhoan.vohieuhoa((String) jTable1.getModel().getValueAt(r, 1));
-                if (rslt) {
-                    Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-                    JOptionPane.showMessageDialog(this, "Vô hiệu hoá tài khoản thành công!", "Đã vô hiệu hoá", JOptionPane.INFORMATION_MESSAGE, scicon);
-                    closeEditPanel();
+                int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn vô hiệu hoá tài khoản không?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    boolean rslt = TaiKhoan.vohieuhoa((String) jTable1.getModel().getValueAt(r, 1));
+                    if (rslt) {
+                        Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
+                        JOptionPane.showMessageDialog(this, "Vô hiệu hoá tài khoản thành công!", "Đã vô hiệu hoá", JOptionPane.INFORMATION_MESSAGE, scicon);
+                        closeEditPanel();
+                    }
                 }
             }
             reload();
@@ -911,6 +919,13 @@ public class QuanLyTaiKhoan extends javax.swing.JFrame {
             }, 500);
         }
     }//GEN-LAST:event_NhapLaiMKTFMouseClicked
+
+    private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
+        TenDNhapTF.setText(null);
+        MatKhauTF.setText(null);
+        NhapLaiMKTF.setText(null);
+        buttonGroup1.clearSelection();
+    }//GEN-LAST:event_DatLaiLabelMouseClicked
 
     private void reload() {
         Program.ConnectDB();
