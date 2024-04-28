@@ -32,9 +32,9 @@ public class WelcomeUI extends javax.swing.JFrame {
             System.out.println("The OS does not support set Icon for Taskbar");
         }
         if (DangNhap.getAccess() == 0) {
-            this.buildAdminDrawer(this);
+            this.buildAdminDrawer();
         } else {
-            this.buildDrawer(this);
+            this.buildDrawer();
         }
 
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -46,8 +46,8 @@ public class WelcomeUI extends javax.swing.JFrame {
         });
     }
 
-    public void buildAdminDrawer(JFrame frame) {
-        drawer = Drawer.newDrawer(frame)
+    private void buildAdminDrawer() {
+        drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
                 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
@@ -119,8 +119,8 @@ public class WelcomeUI extends javax.swing.JFrame {
                 .build();
     }
 
-    public void buildDrawer(JFrame frame) {
-        drawer = Drawer.newDrawer(frame)
+    private void buildDrawer() {
+        drawer = Drawer.newDrawer(this)
                 .header(new HeaderDrawer())
                 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
