@@ -324,13 +324,16 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     while (true) {
+                        if(!instance.isVisible()){
+                            System.out.println("No update");
+                        } else
                         if (instance.searchTextField.isFocusOwner()) {
-//                            System.out.println("not update anything");
+                            System.out.println("not update anything");
                         } else if (!DangChuyenBan && !GhiChuTF.isFocusOwner() && !ChietKhauTF.isFocusOwner()) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
                                     reloadTableList(ChonBan);
-//                                    System.out.println("RELOAD THANH CONG");
+                                    System.out.println("RELOAD THANH CONG");
                                 }
                             });
                         } else if (GhiChuTF.isFocusOwner()) {
