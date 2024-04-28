@@ -199,15 +199,14 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
-                /*0*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*1*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*2*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*3*/.addFooter(new DrawerItem("aaa").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*4*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Giao diện thu ngân").icon(new ImageIcon(getClass().getResource("/asserts/icons-cart.png"))).build())
+                .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/icons-cost.png"))).build())
+                .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/icons-stocks-growth.png"))).build())
+                .addFooter(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/asserts/icons-password.png"))).build())
+                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
                     @Override
                     public void selected(int i, DrawerItem di) {
-//                        System.out.println(i + " - "+ di);
                         //Nút thoát
                         if (i == 4) {
                             try {
@@ -216,12 +215,26 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                                 System.out.println("Loi thoat chuong trinh");
                             }
                         }
-                        if (i == 3) {
-                            System.out.println("Doi mat khau");
-                        }
                         if (i == 0) {
+                            drawer.hide();
                             closeThisUI();
-                            ThucDonMonAn.getInstance();
+                            GiaoDienThuNgan.getInstance();
+                        }
+                       
+                        if (i == 1) {
+                            drawer.hide();
+                            closeThisUI();
+                            QuanLyPhieuChi.getInstance();
+                        }
+                        
+                        if (i == 2) {
+                            drawer.hide();
+                            closeThisUI();
+                            GiaoDienThongKe.getInstance();
+                        }
+                        if (i == 3) { //ĐỔI MẬT KHẨU
+                            drawer.hide();
+                            DoiMatKhau.getInstance();
                         }
                     }
 

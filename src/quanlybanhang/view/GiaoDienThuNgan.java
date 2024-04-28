@@ -24,12 +24,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import quanlybanhang.model.ChiTietHD;
 import quanlybanhang.model.HoaDon;
 import quanlybanhang.model.ThucDon;
 import quanlybanhang.view.item.SearchPanel;
+import quanlybanhang.view.item.SearchTextField;
 import quanlybanhang.view.item.TableActionCellEditor;
 import quanlybanhang.view.item.TableActionCellRenderer;
 import quanlybanhang.view.item.TableActionEvent;
@@ -74,6 +76,10 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public static void setChonHoaDon(HoaDon ChonHoaDon) {
         GiaoDienThuNgan.ChonHoaDon = ChonHoaDon;
+    }
+
+    public static SearchTextField getSearchTextField() {
+        return GiaoDienThuNgan.instance.searchTextField;
     }
 
     private static ArrayList<ThucDon> thucdon;
@@ -244,15 +250,14 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 //                .separator(2, new Color(0, 0, 0))
                 .drawerWidth(290)
                 .backgroundTransparent(0.5f)
-                /*0*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*1*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*2*/.addChild(new DrawerItem("ItemName").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*3*/.addFooter(new DrawerItem("aaa").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
-                /*4*/.addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
+                .addChild(new DrawerItem("Giao diện thu ngân").icon(new ImageIcon(getClass().getResource("/asserts/icons-cart.png"))).build())
+                .addChild(new DrawerItem("Quản lý phiếu chi").icon(new ImageIcon(getClass().getResource("/asserts/icons-cost.png"))).build())
+                .addChild(new DrawerItem("Thống kê").icon(new ImageIcon(getClass().getResource("/asserts/icons-stocks-growth.png"))).build())
+                .addFooter(new DrawerItem("Đổi mật khẩu").icon(new ImageIcon(getClass().getResource("/asserts/icons-password.png"))).build())
+                .addFooter(new DrawerItem("Thoát").icon(new ImageIcon(getClass().getResource("/asserts/exit.png"))).build())
                 .event(new EventDrawer() {
                     @Override
                     public void selected(int i, DrawerItem di) {
-//                        System.out.println(i + " - "+ di);
                         //Nút thoát
                         if (i == 4) {
                             try {
@@ -261,12 +266,26 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                                 System.out.println("Loi thoat chuong trinh");
                             }
                         }
-                        if (i == 3) {
-                            System.out.println("Doi mat khau");
-                        }
                         if (i == 0) {
+                            drawer.hide();
                             closeThisUI();
-                            ThucDonMonAn.getInstance();
+                            GiaoDienThuNgan.getInstance();
+                        }
+
+                        if (i == 1) {
+                            drawer.hide();
+                            closeThisUI();
+                            QuanLyPhieuChi.getInstance();
+                        }
+
+                        if (i == 2) {
+                            drawer.hide();
+                            closeThisUI();
+                            GiaoDienThongKe.getInstance();
+                        }
+                        if (i == 3) { //ĐỔI MẬT KHẨU
+                            drawer.hide();
+                            DoiMatKhau.getInstance();
                         }
                     }
 
@@ -282,18 +301,60 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             instance.resetUI();
             instance.setVisible(true);
+            instance.updateData();
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
             Program.ConnectDB();
             instance.resetUI();
             instance.setVisible(true);
+
+            instance.updateData();
             return instance;
         }
     }
 
     private static void closeThisUI() {
         instance.dispose();
+    }
+
+    private void updateData() {
+        if (instance.isVisible()) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        if (instance.searchTextField.isFocusOwner()) {
+//                            System.out.println("not update anything");
+                        } else if (!DangChuyenBan && !GhiChuTF.isFocusOwner() && !ChietKhauTF.isFocusOwner()) {
+                            SwingUtilities.invokeLater(new Runnable() {
+                                public void run() {
+                                    reloadTableList(ChonBan);
+//                                    System.out.println("RELOAD THANH CONG");
+                                }
+                            });
+                        } else if (GhiChuTF.isFocusOwner()) {
+                            if (GhiChuTF.getText().length() > 150) {
+                                GhiChuTF.setText(GhiChuTF.getText().substring(0, 149));
+                            }
+                            ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
+                            setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
+                        } else if (ChietKhauTF.isFocusOwner()) {
+                            if (ChonHoaDon != null && isValidDiscount(ChietKhauTF.getText()) != -1) {
+                                ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
+                                setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
+                            }
+                        }
+                        try {
+                            Thread.sleep(1000); // Dừng 1 giây
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+            thread.start();
+        }
     }
 
     public static void reloadChiTietHD(Ban b) {
@@ -384,6 +445,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     }
 
     public static void reloadTableList(Ban bancu) {
+        if (bancu == null) {
+            return;
+        }
         ChonBan = null;
         instance.banpanel.removeAll();
         instance.banpanel.setLayout(new wraplayout.WrapLayout(FlowLayout.CENTER, 12, 16));
@@ -905,13 +969,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
     private static float isValidDiscount(String ck) {
         Icon icon = new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/X-icon.png"));
         try {
-            if(ChonHoaDon==null){
+            if (ChonHoaDon == null) {
                 instance.ChietKhauTF.setText("");
                 instance.ChietKhauTF.setFocusable(false);
                 instance.ChietKhauTF.setFocusable(true);
             }
             float rs = Float.parseFloat(ck);
-            if (ChonHoaDon!=null && (rs > 100 || rs<0)) {
+            if (ChonHoaDon != null && (rs > 100 || rs < 0)) {
                 ChonHoaDon.capNhatChietKhau(0);
                 setThongTinHD(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
                 return -1;
@@ -931,7 +995,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         if (!Character.isDigit(evt.getKeyChar()) || evt.getKeyChar() == '.') {
             evt.consume();
         }
-        if (ChonHoaDon!=null && evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText()) != -1) {
+        if (ChonHoaDon != null && evt.getKeyChar() == KeyEvent.VK_ENTER && isValidDiscount(ChietKhauTF.getText()) != -1) {
             ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
             setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
             ChietKhauTF.setFocusable(false);

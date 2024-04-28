@@ -61,10 +61,14 @@ public class SearchMenuItem extends javax.swing.JPanel {
                     ChiTietHD.themChiTietHD(new ChiTietHD(mahd, data.getMaSP(), 1));
                     GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
                     GiaoDienThuNgan.setThongTinHD(GiaoDienThuNgan.getChonHoaDon());
+                    GiaoDienThuNgan.getSearchTextField().setFocusable(false);
+                    GiaoDienThuNgan.getSearchTextField().setFocusable(true);
                 } else {
                     ChiTietHD.themChiTietHD(new ChiTietHD(GiaoDienThuNgan.getSelectedBan().getTrangthai(), data.getMaSP(), 1));
                     GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
                     GiaoDienThuNgan.setThongTinHD(GiaoDienThuNgan.getChonHoaDon());
+                    GiaoDienThuNgan.getSearchTextField().setFocusable(false);
+                    GiaoDienThuNgan.getSearchTextField().setFocusable(true);
                 }
             }
 
