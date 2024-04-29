@@ -248,12 +248,12 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         if (instance == null) {
             instance = new QuanLyPhieuChi();
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            instance.reload();
+            instance.reset();
             instance.setVisible(true);
             return instance;
         } else {
             instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            instance.reload();
+            instance.reset();
             instance.setVisible(true);
             return instance;
         }
@@ -815,10 +815,18 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         reload();
     }//GEN-LAST:event_LuuLabelMouseClicked
 
-    private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
+    private void reset(){
+        ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
         MaPCTF.setText("");
         NoiDungTF.setText("");
         SoTienTF.setText("");
+        searchTextField1.setText("");
+        ((JTextFieldDateEditor) StartDate.getDateEditor()).setText("");
+        ((JTextFieldDateEditor) EndDate.getDateEditor()).setText("");
+    }
+    
+    private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
+        reset();
     }//GEN-LAST:event_DatLaiLabelMouseClicked
 
     private void searchTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextField1KeyTyped
