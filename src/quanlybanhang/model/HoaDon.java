@@ -192,7 +192,7 @@ public class HoaDon {
         }
     }
 
-    public static void doiBan(HoaDon hd, String MBmoi) {
+    public static boolean doiBan(HoaDon hd, String MBmoi) {
         Program.ConnectDB();
         Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/X-icon.png"));
         try {
@@ -201,7 +201,7 @@ public class HoaDon {
             if (!rs.next()) {
                 JOptionPane.showMessageDialog(null, "Bàn này không có sẵn, không thể chuyển bàn",
                         "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-                return;
+                return false;
             }
             s.close();
             try {
@@ -214,15 +214,18 @@ public class HoaDon {
                 con.commit();
             } catch (SQLException e) {
                 con.rollback();
+                con.setAutoCommit(true);
+                return false;
             } finally {
                 con.setAutoCommit(true);
             }
+            return true;
         } catch (Exception e) {
             System.out.println("Loi! [Class: HoaDon - Method: doiBan]");
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
                     "Không thể đổi bàn", "Lỗi", JOptionPane.ERROR_MESSAGE, icon);
-            return;
+            return false;
 
         }
     }

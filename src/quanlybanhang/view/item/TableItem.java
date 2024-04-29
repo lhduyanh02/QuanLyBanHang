@@ -39,13 +39,17 @@ public class TableItem extends javax.swing.JPanel {
                     GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
                 } else {
                     GiaoDienThuNgan.capNhatTTHoaDon();
-                    HoaDon.doiBan(GiaoDienThuNgan.getChonHoaDon(), ban.getMaban());
-                    ban.setTrangthai(GiaoDienThuNgan.getChonHoaDon().getMaHD());
-                    GiaoDienThuNgan.resetUI();
-                    GiaoDienThuNgan.setSelectedBan(ban);
-                    GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
-                    Icon icon = new ImageIcon(TableItem.class.getResource("/asserts/success-icon.png"));
-                    JOptionPane.showMessageDialog(null, "Chuyển bàn thành công!", "Đã chuyển bàn", JOptionPane.OK_OPTION, icon);
+                    boolean rs = HoaDon.doiBan(GiaoDienThuNgan.getChonHoaDon(), ban.getMaban());
+                    if (rs) {
+                        ban.setTrangthai(GiaoDienThuNgan.getChonHoaDon().getMaHD());
+                        GiaoDienThuNgan.resetUI();
+                        GiaoDienThuNgan.setSelectedBan(ban);
+                        GiaoDienThuNgan.reloadChiTietHD(GiaoDienThuNgan.getSelectedBan());
+                        Icon icon = new ImageIcon(TableItem.class.getResource("/asserts/success-icon.png"));
+                        JOptionPane.showMessageDialog(null, "Chuyển bàn thành công!", "Đã chuyển bàn", JOptionPane.OK_OPTION, icon);
+                    } else {
+                        GiaoDienThuNgan.reloadTableList(GiaoDienThuNgan.getSelectedBan());
+                    }
                 }
             }
 
