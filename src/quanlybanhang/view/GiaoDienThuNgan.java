@@ -325,24 +325,24 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 public void run() {
                     while (true) {
                         if(!instance.isVisible()){
-                            System.out.println("No update");
+//                            System.out.println("No update");
                         } else
                         if (instance.searchTextField.isFocusOwner()) {
-                            System.out.println("not update anything");
+//                            System.out.println("not update anything");
                         } else if (!DangChuyenBan && !GhiChuTF.isFocusOwner() && !ChietKhauTF.isFocusOwner()) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
                                     reloadTableList(ChonBan);
-                                    System.out.println("RELOAD THANH CONG");
+//                                    System.out.println("RELOAD THANH CONG");
                                 }
                             });
-                        } else if (GhiChuTF.isFocusOwner()) {
+                        } else if (GhiChuTF.isFocusOwner() && ChonHoaDon!=null) {
                             if (GhiChuTF.getText().length() > 150) {
                                 GhiChuTF.setText(GhiChuTF.getText().substring(0, 149));
                             }
                             ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
                             setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
-                        } else if (ChietKhauTF.isFocusOwner()) {
+                        } else if (ChietKhauTF.isFocusOwner() && ChonHoaDon!=null) {
                             if (ChonHoaDon != null && isValidDiscount(ChietKhauTF.getText()) != -1) {
                                 ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
                                 setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
@@ -1047,6 +1047,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/success-icon.png"));
             JOptionPane.showMessageDialog(null, "Đã hủy chuyển bàn!", "Thông báo", JOptionPane.OK_OPTION, icon);
         } else {
+            if(ChonHoaDon==null){
+                return;
+            }
             DangChuyenBan = true;
             Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/icons8-notice-48.png"));
             JOptionPane.showMessageDialog(null, "Vui lòng chọn bàn cần chuyển đến!", "Chuyển bàn", JOptionPane.OK_OPTION, icon);

@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import quanlybanhang.control.CheckInputMethod;
+import quanlybanhang.control.Program;
 import static quanlybanhang.control.Program.con;
 import quanlybanhang.view.QuanLyBan;
 
@@ -42,15 +43,18 @@ public class Ban {
     }
 
     public static boolean themBan(String MaBan, String TenBan) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
         if (CheckInputMethod.containsWhitespace(MaBan) || CheckInputMethod.containsVietnamese(MaBan) || MaBan.length() > 15) {
             JOptionPane.showMessageDialog(null, "Mã bàn phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
                     "Lỗi Mã Bàn", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyBan.paintEditPanel();
             return false;
         }
         if (TenBan.equals("") || TenBan.length() > 45) {
             JOptionPane.showMessageDialog(null, "Tên bàn không được rỗng và phải ít hơn 45 ký tự.",
                     "Lỗi Tên Bàn", JOptionPane.ERROR_MESSAGE, icon);
+            QuanLyBan.paintEditPanel();
             return false;
         }
         try {
@@ -78,6 +82,7 @@ public class Ban {
     }
 
     public static boolean suaBan(String MBCu, Ban BanMoi) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
         if (BanMoi.maban.equals("") || CheckInputMethod.containsWhitespace(BanMoi.maban) || CheckInputMethod.containsVietnamese(BanMoi.maban) || BanMoi.maban.length() > 15) {
             JOptionPane.showMessageDialog(null, "Mã bàn không được rỗng, phải ít hơn 15 ký tự và không chứa dấu Tiếng Việt, dấu cách.",
@@ -113,6 +118,7 @@ public class Ban {
     }
 
     public static boolean xoaBan(String MaBan) {
+        Program.ConnectDB();
         Icon icon = new ImageIcon(Ban.class.getResource("/asserts/X-icon.png"));
         try {
             Statement s = con.createStatement();
@@ -153,6 +159,7 @@ public class Ban {
     }
 
     public static ArrayList<Ban> layDSban() {
+        Program.ConnectDB();
         ArrayList<Ban> ReturnList = new ArrayList<Ban>();
         try {
             Statement s = con.createStatement();

@@ -160,6 +160,7 @@ public class AddDialog extends javax.swing.JDialog {
         NuocRadioBtn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Ghi chú", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Helvetica", 2, 18))); // NOI18N
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         GhiChuTF.setColumns(20);
         GhiChuTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -181,9 +182,9 @@ public class AddDialog extends javax.swing.JDialog {
                         .addComponent(MonAnRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(57, 57, 57)
                         .addComponent(NuocRadioBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(MaMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                    .addComponent(TenMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                    .addComponent(GiaMonTF, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                    .addComponent(MaMonTF)
+                    .addComponent(TenMonTF)
+                    .addComponent(GiaMonTF))
                 .addGap(88, 88, 88))
         );
         jPanel1Layout.setVerticalGroup(
