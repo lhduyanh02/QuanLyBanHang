@@ -823,6 +823,8 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         searchTextField1.setText("");
         ((JTextFieldDateEditor) StartDate.getDateEditor()).setText("");
         ((JTextFieldDateEditor) EndDate.getDateEditor()).setText("");
+        StartDate.setCalendar(null);
+        EndDate.setCalendar(null);
     }
     
     private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
@@ -913,6 +915,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private void openEditPanel() {
         if (!isOpen) {
             isOpen = true;
+            searchTextField1.setFocusable(false);
             EditPanel.setVisible(true);
             add(EditPanel, 0);
             MaPCTF.setText("");
@@ -947,6 +950,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     private void closeEditPanel() {
         if (isOpen) {
             isOpen = false;
+            searchTextField1.setFocusable(true);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
