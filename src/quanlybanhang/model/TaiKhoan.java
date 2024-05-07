@@ -269,7 +269,9 @@ public class TaiKhoan {
                     return -1;
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
+                final JDialog d = new JDialog();
+                d.setAlwaysOnTop(true);
+                        JOptionPane.showMessageDialog(d, "Tên đăng nhập hoặc mật khẩu chưa đúng, vui lòng kiểm tra lại",
                                 "Không thể đăng nhập", JOptionPane.ERROR_MESSAGE, icon);
                 return Integer.MIN_VALUE;
             }
