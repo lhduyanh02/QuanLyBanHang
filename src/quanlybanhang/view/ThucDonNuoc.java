@@ -524,7 +524,8 @@ public class ThucDonNuoc extends javax.swing.JFrame {
             String MaSP = (String) jTable1.getModel().getValueAt(r, 1);
             String TenSP = (String) jTable1.getModel().getValueAt(r, 2);
             int GiaSP = (int) jTable1.getModel().getValueAt(r, 3);
-            new EditDialog(this, rootPaneCheckingEnabled).getOldValue(MaSP, TenSP, GiaSP).setVisible(true);
+            String GhiChu = (String) jTable1.getModel().getValueAt(r, 4);
+            new EditDialog(this, rootPaneCheckingEnabled).getOldValue(MaSP, TenSP, GiaSP, GhiChu).setVisible(true);
 
         }
 
