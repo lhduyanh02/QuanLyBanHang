@@ -678,7 +678,7 @@ public class QuanLyBan extends javax.swing.JFrame {
             rslt = Ban.suaBan(MaBanCu, ban);
             if (rslt) {
                 Icon scicon = new ImageIcon(getClass().getResource("/asserts/success-icon.png"));
-                JOptionPane.showMessageDialog(this, "Sửa bàn thành công!", "Đã xong", JOptionPane.INFORMATION_MESSAGE, scicon);
+                JOptionPane.showMessageDialog(this, "Cập nhật bàn thành công!", "Đã xong", JOptionPane.INFORMATION_MESSAGE, scicon);
                 closeEditPanel();
             }
         }
