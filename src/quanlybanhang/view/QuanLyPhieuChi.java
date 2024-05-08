@@ -329,6 +329,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         LuuLabel.setText("Lưu");
         LuuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         LuuLabel.setOpaque(true);
+        LuuLabel.addMouseListener(new Program.SharedMouseListener());
         LuuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LuuLabelMouseClicked(evt);
@@ -349,6 +350,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
         DatLaiLabel.setText("Đặt Lại");
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
+        DatLaiLabel.addMouseListener(new Program.SharedMouseListener());
         DatLaiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DatLaiLabelMouseClicked(evt);
@@ -570,12 +572,12 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -812,7 +814,6 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thêm phiếu chi thành công!", "Đã thêm", JOptionPane.INFORMATION_MESSAGE, scicon);
             closeEditPanel();
         }
-        reload();
     }//GEN-LAST:event_LuuLabelMouseClicked
 
     private void reset(){
@@ -828,18 +829,16 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }
     
     private void DatLaiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DatLaiLabelMouseClicked
-        reset();
+        MaPCTF.setText("");
+        NoiDungTF.setText("");
+        SoTienTF.setText("");
     }//GEN-LAST:event_DatLaiLabelMouseClicked
 
     private void searchTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTextField1KeyTyped
         DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
         TableRowSorter<DefaultTableModel> rs = new TableRowSorter<>(m);
         jTable1.setRowSorter(rs);
-
-        // Lấy văn bản từ ô nhập liệu
         String searchText = searchTextField1.getText().trim();
-
-        // Thiết lập bộ lọc cho mỗi cột
         rs.setRowFilter(RowFilter.regexFilter("(?i)" + searchText));
     }//GEN-LAST:event_searchTextField1KeyTyped
 
@@ -866,6 +865,7 @@ public class QuanLyPhieuChi extends javax.swing.JFrame {
     }//GEN-LAST:event_EndDatePropertyChange
 
     private void reload() {
+        searchTextField1.setText("");
         Program.ConnectDB();
         if (Objects.isNull(StartDate.getDate()) || Objects.isNull(EndDate.getDate())) {
             try {

@@ -396,6 +396,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
     public static void resetUI() {
         DangChuyenBan = false;
+        instance.searchTextField.setText("");
         instance.UserTF.setText(DangNhap.getUser());
         instance.TenBanLabel.setText("- BÀN -");
         ChonBan = null;

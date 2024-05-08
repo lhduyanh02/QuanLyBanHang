@@ -302,6 +302,7 @@ public class QuanLyBan extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -486,6 +487,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         LuuLabel.setText("Lưu");
         LuuLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         LuuLabel.setOpaque(true);
+        LuuLabel.addMouseListener(new Program.SharedMouseListener());
         LuuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LuuLabelMouseClicked(evt);
@@ -504,6 +506,7 @@ public class QuanLyBan extends javax.swing.JFrame {
         DatLaiLabel.setText("Đặt Lại");
         DatLaiLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         DatLaiLabel.setOpaque(true);
+        DatLaiLabel.addMouseListener(new Program.SharedMouseListener());
         DatLaiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DatLaiLabelMouseClicked(evt);

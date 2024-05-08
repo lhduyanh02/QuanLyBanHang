@@ -60,7 +60,6 @@ public class ThucDon {
         this.GhiChu = GhiChu;
     }
 
-
     private String MaSP;
     private String Ten;
     private int Gia;
@@ -73,6 +72,7 @@ public class ThucDon {
             Statement s = con.createStatement();
             int rs = s.executeUpdate("UPDATE `htql_banhang`.`sanpham` SET loaiSP='-1' WHERE (`MaSP` = N'" + MaSP + "');");
             if (rs == 1) {
+                NhatKy.writeLog("Thực đơn", "Đã xóa món " + MaSP);
                 return true;
             } else {
                 JOptionPane.showMessageDialog(null, "Xoá không thành công", "Xoá không thành công", JOptionPane.INFORMATION_MESSAGE);
@@ -90,8 +90,18 @@ public class ThucDon {
         Program.ConnectDB();
         try {
             Statement s = con.createStatement();
-            s.executeUpdate("INSERT INTO htql_banhang.sanpham "
-                    + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaSP + "', N'" + TenSP + "', '" + GiaSP + "', '" + LoaiSP + "', N'" + GhiChu + "');");
+            int rs;
+            if (GhiChu == null || GhiChu.trim() == "" || GhiChu.length() == 0) {
+                rs = s.executeUpdate("INSERT INTO htql_banhang.sanpham "
+                        + "(MaSP, TenSP, GiaSP, LoaiSP) VALUES (N'" + MaSP + "', N'" + TenSP + "', '" + GiaSP + "', '" + LoaiSP + "');");
+
+            } else {
+                rs = s.executeUpdate("INSERT INTO htql_banhang.sanpham "
+                        + "(MaSP, TenSP, GiaSP, LoaiSP, GhiChu) VALUES (N'" + MaSP + "', N'" + TenSP + "', '" + GiaSP + "', '" + LoaiSP + "', N'" + GhiChu + "');");
+            }
+            if (rs == 1) {
+                NhatKy.writeLog("Thực đơn", "Đã thêm món " + MaSP);
+            }
             s.close();
             return true;
         } catch (Exception e) {
@@ -106,9 +116,17 @@ public class ThucDon {
         Program.ConnectDB();
         try {
             Statement s = con.createStatement();
-            //UPDATE htql_banhang.sanpham SET MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = N'" + GhiChu + "' WHERE (MaSP = '" + MaCu + "');
-            s.executeUpdate("UPDATE htql_banhang.sanpham SET "
-                    + "MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = N'" + GhiChu + "' WHERE (MaSP = '" + MaCu + "');");
+            int rs;
+            if (GhiChu == null || GhiChu.trim() == "" || GhiChu.length() == 0) {
+                rs = s.executeUpdate("UPDATE htql_banhang.sanpham SET "
+                        + "MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = NULL WHERE (MaSP = '" + MaCu + "');");
+            } else {
+                rs = s.executeUpdate("UPDATE htql_banhang.sanpham SET "
+                        + "MaSP = '" + MaSP + "', TenSP = N'" + TenSP + "', GiaSP = '" + GiaSP + "', GhiChu = '" + GhiChu + "' WHERE (MaSP = '" + MaCu + "');");
+            }
+            if (rs == 1) {
+                NhatKy.writeLog("Thực đơn", "Đã sửa món " + MaCu + " -> " + MaSP);
+            }
             s.close();
             return true;
         } catch (Exception e) {
@@ -118,14 +136,14 @@ public class ThucDon {
             return false;
         }
     }
-    
-    public static List<ThucDon> layDSThucDon(int loai){
+
+    public static List<ThucDon> layDSThucDon(int loai) {
         Program.ConnectDB();
         List<ThucDon> list = new ArrayList<ThucDon>();
         try {
             Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham WHERE loaisp = "+loai+";");
-            while(rs.next()){
+            ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham WHERE loaisp = " + loai + ";");
+            while (rs.next()) {
                 list.add(new ThucDon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5)));
             }
             s.close();
@@ -135,14 +153,14 @@ public class ThucDon {
         }
         return list;
     }
-    
-    public static ArrayList<ThucDon> layDSThucDon(){
+
+    public static ArrayList<ThucDon> layDSThucDon() {
         Program.ConnectDB();
         ArrayList<ThucDon> list = new ArrayList<ThucDon>();
         try {
             Statement s = con.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM htql_banhang.sanpham WHERE loaisp <> -1");
-            while(rs.next()){
+            while (rs.next()) {
                 list.add(new ThucDon(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5)));
             }
             s.close();

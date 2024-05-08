@@ -90,7 +90,7 @@ public class Ban {
             return false;
         }
         if (BanMoi.tenban.equals("") || BanMoi.tenban.length() > 45) {
-            JOptionPane.showMessageDialog(null, "Tên bàn phải ít hơn 45 ký tự.",
+            JOptionPane.showMessageDialog(null, "Tên bàn phải ít hơn 45 ký tự và không rỗng.",
                     "Lỗi Tên Bàn", JOptionPane.ERROR_MESSAGE, icon);
             return false;
         }
@@ -100,6 +100,7 @@ public class Ban {
             if(!r.next()){
                 JOptionPane.showMessageDialog(null, "Bàn này hiện không thể sửa, hãy thử lại sau.",
                     "Không thể sửa", JOptionPane.ERROR_MESSAGE, icon);
+                QuanLyBan.paintEditPanel();
             return false;
             }
 //            int rs = s.executeUpdate("UPDATE htql_banhang.ban SET maban = N'" + BanMoi.maban + "', tenban = '" + BanMoi.tenban + "', trangthai = '" + BanMoi.trangthai + "' WHERE (maban = '" + MBCu + "');");
