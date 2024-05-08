@@ -2,12 +2,16 @@ package quanlybanhang.view.item;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.ToolTipUI;
 import quanlybanhang.model.ChiTietHD;
 import quanlybanhang.model.HoaDon;
 import quanlybanhang.model.ThucDon;
@@ -96,6 +100,11 @@ public class SearchMenuItem extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(430, 35));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
+        });
 
         NameLabel.setText("Item...");
 
@@ -124,6 +133,13 @@ public class SearchMenuItem extends javax.swing.JPanel {
             .addComponent(PriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+        UIManager.put("ToolTip.background", Color.white);
+        UIManager.put("ToolTip.font", new Font("Arial", Font.PLAIN, 14));
+        UIManager.put("ToolTip.border", new LineBorder(Color.BLACK, 1));
+        this.setToolTipText(data.getGhiChu());
+    }//GEN-LAST:event_formMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
