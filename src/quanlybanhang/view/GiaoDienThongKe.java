@@ -19,6 +19,8 @@ import javaswingdev.drawer.DrawerItem;
 import javaswingdev.drawer.EventDrawer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import quanlybanhang.control.ThongKe;
 import quanlybanhang.model.PhieuChi;
@@ -324,6 +326,11 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
         ExportBtn.setText("Export");
         ExportBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ExportBtn.setOpaque(true);
+        ExportBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ExportBtnMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout ControlPanelLayout = new javax.swing.GroupLayout(ControlPanel);
         ControlPanel.setLayout(ControlPanelLayout);
@@ -648,6 +655,12 @@ public class GiaoDienThongKe extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_EndDatePropertyChange
+
+    private void ExportBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExportBtnMouseClicked
+        JLabel label = new JLabel("Chức năng này sắp ra mắt :D");
+        label.setFont(new Font("Helvetica", Font.BOLD, 18));
+        JOptionPane.showMessageDialog(this, label, "Sắp ra mắt", JOptionPane.OK_OPTION, new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")));
+    }//GEN-LAST:event_ExportBtnMouseClicked
 
     private void reload() {
         if (Objects.isNull(StartDate.getDate()) || Objects.isNull(EndDate.getDate())) {
