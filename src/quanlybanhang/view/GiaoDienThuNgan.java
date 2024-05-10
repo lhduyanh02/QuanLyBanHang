@@ -3,6 +3,7 @@ package quanlybanhang.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -324,10 +325,9 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     while (true) {
-                        if(!instance.isVisible()){
+                        if (!instance.isVisible()) {
 //                            System.out.println("No update");
-                        } else
-                        if (instance.searchTextField.isFocusOwner()) {
+                        } else if (instance.searchTextField.isFocusOwner()) {
 //                            System.out.println("not update anything");
                         } else if (!DangChuyenBan && !GhiChuTF.isFocusOwner() && !ChietKhauTF.isFocusOwner()) {
                             SwingUtilities.invokeLater(new Runnable() {
@@ -336,13 +336,13 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 //                                    System.out.println("RELOAD THANH CONG");
                                 }
                             });
-                        } else if (GhiChuTF.isFocusOwner() && ChonHoaDon!=null) {
+                        } else if (GhiChuTF.isFocusOwner() && ChonHoaDon != null) {
                             if (GhiChuTF.getText().length() > 150) {
                                 GhiChuTF.setText(GhiChuTF.getText().substring(0, 149));
                             }
                             ChonHoaDon.capNhatGhiChu(GhiChuTF.getText());
                             setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
-                        } else if (ChietKhauTF.isFocusOwner() && ChonHoaDon!=null) {
+                        } else if (ChietKhauTF.isFocusOwner() && ChonHoaDon != null) {
                             if (ChonHoaDon != null && isValidDiscount(ChietKhauTF.getText()) != -1) {
                                 ChonHoaDon.capNhatChietKhau(isValidDiscount(ChietKhauTF.getText()));
                                 setChonHoaDon(HoaDon.layThongTinHD(ChonHoaDon.getMaHD()));
@@ -749,6 +749,11 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
         InTTBtn.setText("In tạm tính");
         InTTBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         InTTBtn.setOpaque(true);
+        InTTBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                InTTBtnMouseClicked(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -1048,7 +1053,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             Icon icon = new ImageIcon(HoaDon.class.getResource("/asserts/success-icon.png"));
             JOptionPane.showMessageDialog(null, "Đã hủy chuyển bàn!", "Thông báo", JOptionPane.OK_OPTION, icon);
         } else {
-            if(ChonHoaDon==null){
+            if (ChonHoaDon == null) {
                 return;
             }
             DangChuyenBan = true;
@@ -1072,6 +1077,12 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
             ChietKhauTF.setFocusable(true);
         }
     }//GEN-LAST:event_ChietKhauTFFocusLost
+
+    private void InTTBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InTTBtnMouseClicked
+        JLabel label = new JLabel("Chức năng này sắp ra mắt :D");
+        label.setFont(new Font("Helvetica", Font.BOLD, 18));
+        JOptionPane.showMessageDialog(this, label, "Sắp ra mắt", JOptionPane.OK_OPTION, new ImageIcon(GiaoDienThuNgan.class.getResource("/asserts/icons-app.png")));
+    }//GEN-LAST:event_InTTBtnMouseClicked
 
     private List<ThucDon> searchMenu(String search) {
         List<ThucDon> list = new ArrayList<>();
