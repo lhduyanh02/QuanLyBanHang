@@ -760,7 +760,7 @@ public class GiaoDienThuNgan extends javax.swing.JFrame {
 
         ReloadBtn.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         ReloadBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ReloadBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-move.png"))); // NOI18N
+        ReloadBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asserts/icons-reset.png"))); // NOI18N
         ReloadBtn.setText("Tải lại");
         ReloadBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ReloadBtn.setOpaque(true);

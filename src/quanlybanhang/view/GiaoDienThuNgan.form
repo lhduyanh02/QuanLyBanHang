@@ -500,7 +500,7 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/asserts/icons-move.png"/>
+                          <Image iconType="3" name="/asserts/icons-reset.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="T&#x1ea3;i l&#x1ea1;i"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
